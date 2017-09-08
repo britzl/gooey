@@ -163,7 +163,7 @@ The state table contains the following fields:
 Perform input and state handling for a list of items
 
 **PARAMETERS**
-* ```root_id``` (string|hash) - Id of the root node to which the list items are children. This node should be as high as the visible part of the list.
+* ```root_id``` (string|hash) - Id of the root node to which the list items are children. **IMPORTANT** This node should be as high as the visible part of the list
 * ```item_ids``` (table) - Table with a list of list item ids (hash|string)
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
@@ -178,8 +178,9 @@ The state table contains the following fields:
 * ```enabled``` (boolean) - true if the node is enabled
 * ```items``` (table) - The list items as nodes
 * ```over``` (boolean) - true if user action is over any list item
-* ```over_item_now``` (number) - Index of the list item the user action moved inside this call or nil
-* ```out_item_now``` (number) - Index of the list item the user action moved outside this call or nil
+* ```over_item``` (number) - Index of the list item the user action is over
+* ```over_item_now``` (number) - Index of the list item the user action moved inside this call
+* ```out_item_now``` (number) - Index of the list item the user action moved outside this call
 
 * ```selected_item``` (number) - Index of the selected list item
 * ```pressed_item``` (number) - Index of the pressed list item (ie mouse/touch down but not yet released)
@@ -205,5 +206,56 @@ The state table contains the following fields:
 	function on_input(self, action_id, action)
 		update_list(gooey.list("list/root", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, function(list)
 			print("selected", list.selected_index)
+		end))
+	end
+
+## gooey.input(node_id, group, action_id, action, fn)
+Perform input and state handling for a text input field
+
+**PARAMETERS**
+* ```node_id``` (string|hash) - Id of the node representing the clickable area
+* ```action_id``` (hash) - Action id as received from on_input()
+* ```action``` (table) - Action as received from on_input()
+* ```fn``` (function) - Function to call when the radio button is selected. A radio button is considered selected if both a pressed and released action has been detected inside the bounds of the node. The function will get the same state table as described below passed as its first argument
+
+**RETURN**
+* ```radio``` (table) - State data for the radio button based on current and previous input actions
+
+The state table contains the following fields:
+
+* ```node``` (node) - The node itself
+* ```enabled``` (boolean) - true if the node is enabled
+* ```over``` (boolean) - true if user action is inside the node
+* ```over_now``` (boolean) - true if user action moved inside the node this call
+* ```out_now``` (boolean) - true if user action moved outside the node this call
+* ```selected``` (boolean) - The radio button state
+* ```pressed``` (boolean) - true if the radio button is pressed (ie mouse/touch down but not yet released)
+* ```pressed_now``` (boolean) - true if the radio button was pressed this call
+* ```released_now``` (boolean) - true if the radio button was released this call
+
+**EXAMPLE**
+
+	local gooey = require "gooey.gooey"
+
+	local function update_radio(radio)
+		if radio.released_now then
+			if radio.selected then
+				gui.play_flipbook(radio.node, hash("radio_selected"))
+			else
+				gui.play_flipbook(radio.node, hash("radio_normal"))
+			end
+		elseif not radio.pressed and radio.over_now then
+			gui.play_flipbook(radio.node, hash("radio_over"))
+		elseif not radio.pressed and radio.out_now then
+			gui.play_flipbook(radio.node, hash("radio_normal"))
+		end
+	end
+
+	function on_input(self, action_id, action)
+		update_radio(gooey.radio("radio1/bg", "MYGROUP", action_id, action, function(radio)
+			print("selected 1", radio.selected)
+		end))
+		update_radio(gooey.radio("radio2/bg", "MYGROUP", action_id, action, function(radio)
+			print("selected 2", radio.selected)
 		end))
 	end

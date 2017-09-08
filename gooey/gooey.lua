@@ -1,9 +1,9 @@
 local M = {}
 
-local TOUCH = hash("touch")
-local TEXT = hash("text")
-local MARKED_TEXT = hash("marked_text")
-local BACKSPACE = hash("backspace")
+M.TOUCH = hash("touch")
+M.TEXT = hash("text")
+M.MARKED_TEXT = hash("marked_text")
+M.BACKSPACE = hash("backspace")
 
 local EMPTY = hash("")
 
@@ -100,7 +100,7 @@ function M.button(node_id, action_id, action, fn)
 		button.pressed_now = false
 		button.released_now = false
 	else
-		local touch = action_id == TOUCH
+		local touch = action_id == M.TOUCH
 		local pressed = touch and action.pressed and button.over
 		local released = touch and action.released
 		button.pressed_now = pressed and not button.pressed
@@ -132,7 +132,7 @@ function M.checkbox(node_id, action_id, action, fn)
 		checkbox.pressed_now = false
 		checkbox.released_now = false
 	else
-		local touch = action_id == TOUCH
+		local touch = action_id == M.TOUCH
 		local pressed = touch and action.pressed and checkbox.over
 		local released = touch and action.released
 		checkbox.pressed_now = pressed and not checkbox.pressed
@@ -167,7 +167,7 @@ function M.radio(node_id, group_id, action_id, action, fn)
 		radio.pressed_now = false
 		radio.released_now = false
 	else
-		local touch = action_id == TOUCH
+		local touch = action_id == M.TOUCH
 		local pressed = touch and action.pressed and radio.over
 		local released = touch and action.released
 		radio.pressed_now = pressed and not radio.pressed
@@ -176,7 +176,7 @@ function M.radio(node_id, group_id, action_id, action, fn)
 		if radio.released_now and radio.over then
 			radio.selected = true
 			for _,rb in pairs(radiobuttons) do
-				if rb ~= radio and rb.group == radio.group then
+				if rb ~= radio and rb.group == radio.group and rb.selected then
 					rb.selected = false
 				end
 			end
@@ -221,7 +221,7 @@ function M.list(root_id, item_ids, action_id, action, fn)
 	list.released_item_now = nil
 	list.pressed_item_now = nil
 	if list.enabled then
-		local touch = action_id == TOUCH
+		local touch = action_id == M.TOUCH
 		local pressed = touch and action.pressed and list.over
 		local released = touch and action.released
 
@@ -273,51 +273,67 @@ function M.input(node_id, keyboard_type, action_id, action)
 	local input = instance(node_id, inputfields)
 	input.enabled = M.is_enabled(node)
 	input.node = node
-	input.over = gui.pick_node(node, action.x, action.y)
+
+	local over = gui.pick_node(node, action.x, action.y)
+	input.over_now = over and not input.over
+	input.out_now = not over and input.over
+	input.over = over
+
 	input.text = input.text or ""
 	input.marked_text = input.marked_text or ""
 	input.keyboard_type = keyboard_type
 
-	if action.pressed then
-		input.pressed = true
-	elseif action.released then
-		if input.over then
+	if input.enabled then
+
+		local touch = action_id == M.TOUCH
+		local pressed = touch and action.pressed and input.over
+		local released = touch and action.released
+		input.deselected_now = false
+		input.pressed_now = pressed and not input.pressed
+		input.released_now = released and input.pressed
+		input.pressed = pressed or (input.pressed and not released)
+		if input.released_now then
+			input.selected = input.over
+			input.marked_text = ""
 			gui.reset_keyboard()
 			gui.show_keyboard(keyboard_type, true)
-			input.selected = true
-			input.marked_text = ""
-		else
-			if input.pressed then
-				gui.hide_keyboard()
-			end
+		elseif released and input.selected then
+			input.deselected_now = true
 			input.selected = false
+			gui.hide_keyboard()
 		end
-		input.pressed = false
-	end
 	
-	if input.selected then
-		-- new raw text input
-		if action_id == TEXT then
-			input.text = input.text .. action.text
-			input.marked_text = ""
-		-- new marked text input (uncommitted text)
-		elseif action_id == MARKEDTEXT then
-			input.marked_text = action.text or ""
-		-- input deletion
-		elseif action_id == BACKSPACE and (action.pressed or action.repeated) then
-			local last_s = 0
-			for uchar in string.gfind(input.text, utf8_gfind) do
-				last_s = string.len(uchar)
+		if input.selected then
+			-- new raw text input
+			if action_id == M.TEXT then
+				input.text = input.text .. action.text
+				input.marked_text = ""
+			-- new marked text input (uncommitted text)
+			elseif action_id == M.MARKEDTEXT then
+				input.marked_text = action.text or ""
+			-- input deletion
+			elseif action_id == M.BACKSPACE and (action.pressed or action.repeated) then
+				local last_s = 0
+				for uchar in string.gfind(input.text, utf8_gfind) do
+					last_s = string.len(uchar)
+				end
+				input.text = string.sub(input.text, 1, string.len(input.text) - last_s)
 			end
-			input.text = string.sub(input.text, 1, string.len(input.text) - last_s)
+			
+			if keyboard_type == gui.KEYBOARD_TYPE_PASSWORD then
+				input.masked_text = M.mask_text(input.text, "*")
+				input.masked_marked_text = M.mask_text(input.marked_text, "*")
+			else
+				input.masked_text = nil
+				input.masked_marked_text = nil
+			end			
 		end
-		
-		if keyboard_type == gui.KEYBOARD_TYPE_PASSWORD then
-			input.masked_text = M.mask_text(input.text, "*")
-			input.masked_marked_text = M.mask_text(input.marked_text, "*")
-		else
-			input.masked_text = nil
-			input.masked_marked_text = nil
+
+		local text = input.masked_text or input.text
+		local marked_text = input.masked_marked_text or input.marked_text
+		input.empty = #text == 0 and #marked_text == 0
+		if input.selected then
+			gui.set_text(input.node, text .. marked_text)
 		end
 	end
 	
