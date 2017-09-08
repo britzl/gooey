@@ -209,17 +209,17 @@ The state table contains the following fields:
 		end))
 	end
 
-## gooey.input(node_id, group, action_id, action, fn)
+## gooey.input(node_id, keyboard_type, action_id, action)
 Perform input and state handling for a text input field
 
 **PARAMETERS**
-* ```node_id``` (string|hash) - Id of the node representing the clickable area
+* ```node_id``` (string|hash) - Id of the text node
+* ```keyboard_type``` (number) - Keyboard type from gui.KEYBOARD_TYPE_*
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
-* ```fn``` (function) - Function to call when the radio button is selected. A radio button is considered selected if both a pressed and released action has been detected inside the bounds of the node. The function will get the same state table as described below passed as its first argument
 
 **RETURN**
-* ```radio``` (table) - State data for the radio button based on current and previous input actions
+* ```input``` (table) - State data for the input field based on current and previous input actions
 
 The state table contains the following fields:
 
@@ -228,34 +228,32 @@ The state table contains the following fields:
 * ```over``` (boolean) - true if user action is inside the node
 * ```over_now``` (boolean) - true if user action moved inside the node this call
 * ```out_now``` (boolean) - true if user action moved outside the node this call
-* ```selected``` (boolean) - The radio button state
-* ```pressed``` (boolean) - true if the radio button is pressed (ie mouse/touch down but not yet released)
-* ```pressed_now``` (boolean) - true if the radio button was pressed this call
-* ```released_now``` (boolean) - true if the radio button was released this call
+* ```selected``` (boolean) - true if the text field is selected
+* ```selected_now``` (boolean) - true if the text field was selected this call
+* ```deselected_now``` (boolean) - true if the text field was deselected this call
+* ```pressed``` (boolean) - true if the text field is pressed (ie mouse/touch down but not yet released)
+* ```pressed_now``` (boolean) - true if the text field was pressed this call
+* ```released_now``` (boolean) - true if the text field was released this call
+* ```text``` (string) - The text in the field
+* ```marked_text``` (string) - The marked (non-committed) text
+* ```keyboard_type``` (number)
+* ```masked_text``` (string) - If the keyboard type is gui.KEYBOARD_TYPE_PASSWORD then this string represents a masked version of the text
+* ```masked_marked_text``` (string) - If the keyboard type is gui.KEYBOARD_TYPE_PASSWORD then this string represents a masked version of the marked text
+* ```text_width``` (number) - The width of the text
+* ```marked_text_width``` (number) - The width of the marked text
 
 **EXAMPLE**
 
 	local gooey = require "gooey.gooey"
 
-	local function update_radio(radio)
-		if radio.released_now then
-			if radio.selected then
-				gui.play_flipbook(radio.node, hash("radio_selected"))
-			else
-				gui.play_flipbook(radio.node, hash("radio_normal"))
-			end
-		elseif not radio.pressed and radio.over_now then
-			gui.play_flipbook(radio.node, hash("radio_over"))
-		elseif not radio.pressed and radio.out_now then
-			gui.play_flipbook(radio.node, hash("radio_normal"))
+	local function update_input(input)
+		if input.released_now and input.selected then
+			gui.play_flipbook(input.node, hash("input_selected"))
+		elseif input.deselected_now then
+			gui.play_flipbook(input.node, hash("input_normal"))
 		end
 	end
 
 	function on_input(self, action_id, action)
-		update_radio(gooey.radio("radio1/bg", "MYGROUP", action_id, action, function(radio)
-			print("selected 1", radio.selected)
-		end))
-		update_radio(gooey.radio("radio2/bg", "MYGROUP", action_id, action, function(radio)
-			print("selected 2", radio.selected)
-		end))
+		update_input(gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT, action_id, action))
 	end

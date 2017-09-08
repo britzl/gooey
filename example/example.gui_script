@@ -73,7 +73,7 @@ local function update_list(list)
 end
 
 local function update_input(input, empty_text, cursor_id, bg_id)
-	if input.released_now and input.selected then
+	if input.selected_now then
 		gui.play_flipbook(gui.get_node(bg_id), hash("blue_button05"))
 	elseif input.deselected_now then
 		gui.play_flipbook(gui.get_node(bg_id), hash("blue_button03"))
@@ -85,12 +85,8 @@ local function update_input(input, empty_text, cursor_id, bg_id)
 
 	local cursor = gui.get_node(cursor_id)
 	if input.selected then
-		local text = input.masked_text or input.text
-		local marked_text = input.masked_marked_text or input.marked_text
-		local m_t = gui.get_text_metrics(gui.get_font(input.node), text, 0, false, 0, 0)
-		local m_m = gui.get_text_metrics(gui.get_font(input.node), marked_text, 0, false, 0, 0)
 		gui.set_enabled(cursor, true)
-		gui.set_position(cursor, vmath.vector3(4 + m_t.width, 0, 0))
+		gui.set_position(cursor, vmath.vector3(4 + input.text_width, 0, 0))
 		gui.cancel_animation(cursor, gui.PROP_COLOR)
 		gui.set_color(cursor, vmath.vector4(1))
 		gui.animate(cursor, gui.PROP_COLOR, vmath.vector4(1,1,1,0), gui.EASING_INSINE, 0.8, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
@@ -98,7 +94,6 @@ local function update_input(input, empty_text, cursor_id, bg_id)
 		gui.set_enabled(cursor, false)
 		gui.cancel_animation(cursor, gui.PROP_COLOR)
 	end
-	
 end
 
 

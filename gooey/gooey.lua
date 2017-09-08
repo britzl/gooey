@@ -291,9 +291,10 @@ function M.input(node_id, keyboard_type, action_id, action)
 		input.deselected_now = false
 		input.pressed_now = pressed and not input.pressed
 		input.released_now = released and input.pressed
+		input.selected_now = released and input.pressed and input.over
 		input.pressed = pressed or (input.pressed and not released)
-		if input.released_now then
-			input.selected = input.over
+		if input.selected_now then
+			input.selected = true
 			input.marked_text = ""
 			gui.reset_keyboard()
 			gui.show_keyboard(keyboard_type, true)
@@ -332,6 +333,8 @@ function M.input(node_id, keyboard_type, action_id, action)
 		local text = input.masked_text or input.text
 		local marked_text = input.masked_marked_text or input.marked_text
 		input.empty = #text == 0 and #marked_text == 0
+		input.text_width = gui.get_text_metrics(gui.get_font(input.node), text, 0, false, 0, 0).width
+		input.marked_text_width = gui.get_text_metrics(gui.get_font(input.node), marked_text, 0, false, 0, 0).width
 		if input.selected then
 			gui.set_text(input.node, text .. marked_text)
 		end
