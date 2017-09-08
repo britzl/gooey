@@ -7,7 +7,18 @@ You can use Gooey in your own project by adding this project as a [Defold librar
 https://github.com/britzl/gooey/archive/master.zip
 
 # Usage
-The Gooey system is encapsulated in a single Lua module without any visual components. It makes very little assumptions of the look and feel of the UI components it supports. Instead Gooey focuses on providing stable input and state handling and lets the user decide which states matter and how they should be presented visually. Gooey supports the following component types:
+The Gooey system is encapsulated in a single Lua module without any visual components. It makes very little assumptions of the look and feel of the UI components it supports. Instead Gooey focuses on providing stable input and state handling and lets the user decide which states matter and how they should be presented visually.
+
+## Input bindings
+For Gooey to work it requires a couple of input bindings:
+
+* Mouse trigger - ```mouse-button-1``` -> ```touch```
+* Key trigger - ```key-backspace``` -> ```backspace```
+* Text trigger - ```text``` -> ```text```
+* Text trigger - ```marked-text``` -> ```marked_text```
+
+## Supported components
+Gooey supports the following component types:
 
 * Button
 * Checkbox
@@ -15,7 +26,7 @@ The Gooey system is encapsulated in a single Lua module without any visual compo
 * List
 * Input text
 
-## gooey.button(node_id, action_id, action, fn)
+### gooey.button(node_id, action_id, action, fn)
 Perform input and state handling for a button
 
 **PARAMETERS**
@@ -60,7 +71,7 @@ The state table contains the following fields:
 		end))
 	end
 
-## gooey.checkbox(node_id, action_id, action, fn)
+### gooey.checkbox(node_id, action_id, action, fn)
 Perform input and state handling for a checkbox
 
 **PARAMETERS**
@@ -108,7 +119,7 @@ The state table contains the following fields:
 		end))
 	end
 
-## gooey.radio(node_id, group, action_id, action, fn)
+### gooey.radio(node_id, group, action_id, action, fn)
 Perform input and state handling for a radio button
 
 **PARAMETERS**
@@ -159,7 +170,7 @@ The state table contains the following fields:
 		end))
 	end
 
-## gooey.list(node_id, group, action_id, action, fn)
+### gooey.list(node_id, group, action_id, action, fn)
 Perform input and state handling for a list of items
 
 **PARAMETERS**
@@ -209,7 +220,7 @@ The state table contains the following fields:
 		end))
 	end
 
-## gooey.input(node_id, keyboard_type, action_id, action)
+### gooey.input(node_id, keyboard_type, action_id, action)
 Perform input and state handling for a text input field
 
 **PARAMETERS**
@@ -247,7 +258,7 @@ The state table contains the following fields:
 	local gooey = require "gooey.gooey"
 
 	local function update_input(input)
-		if input.released_now and input.selected then
+		if input.selected_now then
 			gui.play_flipbook(input.node, hash("input_selected"))
 		elseif input.deselected_now then
 			gui.play_flipbook(input.node, hash("input_normal"))
