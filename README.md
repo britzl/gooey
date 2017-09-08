@@ -40,25 +40,25 @@ The state table contains the following fields:
 
 **EXAMPLE**
 
-local gooey = require "gooey.gooey"
+	local gooey = require "gooey.gooey"
 
-local function update_button(button)
-	if button.pressed_now then
-		gui.play_flipbook(button.node, hash("button_pressed"))
-	elseif button.released_now then
-		gui.play_flipbook(button.node, hash("button_normal"))
-	elseif not button.pressed and button.over_now then
-		gui.play_flipbook(button.node, hash("button_over"))
-	elseif not button.pressed and button.out_now then
-		gui.play_flipbook(button.node, hash("button_normal"))
+	local function update_button(button)
+		if button.pressed_now then
+			gui.play_flipbook(button.node, hash("button_pressed"))
+		elseif button.released_now then
+			gui.play_flipbook(button.node, hash("button_normal"))
+		elseif not button.pressed and button.over_now then
+			gui.play_flipbook(button.node, hash("button_over"))
+		elseif not button.pressed and button.out_now then
+			gui.play_flipbook(button.node, hash("button_normal"))
+		end
 	end
-end
 
-function on_input(self, action_id, action)
-	update_button(gooey.button("button/bg", action_id, action, function(button)
-		print("pressed")
-	end))
-end
+	function on_input(self, action_id, action)
+		update_button(gooey.button("button/bg", action_id, action, function(button)
+			print("pressed")
+		end))
+	end
 
 ## gooey.checkbox(node_id, action_id, action, fn)
 Perform input and state handling for a checkbox
@@ -86,27 +86,27 @@ The state table contains the following fields:
 
 **EXAMPLE**
 
-local gooey = require "gooey.gooey"
+	local gooey = require "gooey.gooey"
 
-local function update_checkbox(checkbox)
-	if checkbox.released_now then
-		if checkbox.checked then
-			gui.play_flipbook(checkbox.node, hash("checkbox_checked"))
-		else
-			gui.play_flipbook(checkbox.node, hash("checkbox_unchecked"))
+	local function update_checkbox(checkbox)
+		if checkbox.released_now then
+			if checkbox.checked then
+				gui.play_flipbook(checkbox.node, hash("checkbox_checked"))
+			else
+				gui.play_flipbook(checkbox.node, hash("checkbox_unchecked"))
+			end
+		elseif not checkbox.pressed and checkbox.over_now then
+			gui.play_flipbook(checkbox.node, hash("checkbox_over"))
+		elseif not checkbox.pressed and checkbox.out_now then
+			gui.play_flipbook(checkbox.node, hash("checkbox_normal"))
 		end
-	elseif not checkbox.pressed and checkbox.over_now then
-		gui.play_flipbook(checkbox.node, hash("checkbox_over"))
-	elseif not checkbox.pressed and checkbox.out_now then
-		gui.play_flipbook(checkbox.node, hash("checkbox_normal"))
 	end
-end
 
-function on_input(self, action_id, action)
-	update_checkbox(gooey.checkbox("checkbox/bg", action_id, action, function(checkbox)
-		print("checked", checkbox.checked)
-	end))
-end
+	function on_input(self, action_id, action)
+		update_checkbox(gooey.checkbox("checkbox/bg", action_id, action, function(checkbox)
+			print("checked", checkbox.checked)
+		end))
+	end
 
 ## gooey.radio(node_id, group, action_id, action, fn)
 Perform input and state handling for a radio button
