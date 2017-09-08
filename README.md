@@ -29,7 +29,7 @@ Perform input and state handling for a button
 
 The state table contains the following fields:
 
-* ```node``` (userdata) - The node itself
+* ```node``` (node) - The node itself
 * ```enabled``` (boolean) - true if the node is enabled
 * ```over``` (boolean) - true if user action is inside the node
 * ```over_now``` (boolean) - true if user action moved inside the node this call
@@ -74,7 +74,7 @@ Perform input and state handling for a checkbox
 
 The state table contains the following fields:
 
-* ```node``` (userdata) - The node itself
+* ```node``` (node) - The node itself
 * ```enabled``` (boolean) - true if the node is enabled
 * ```over``` (boolean) - true if user action is inside the node
 * ```over_now``` (boolean) - true if user action moved inside the node this call
@@ -122,7 +122,7 @@ Perform input and state handling for a radio button
 
 The state table contains the following fields:
 
-* ```node``` (userdata) - The node itself
+* ```node``` (node) - The node itself
 * ```enabled``` (boolean) - true if the node is enabled
 * ```over``` (boolean) - true if user action is inside the node
 * ```over_now``` (boolean) - true if user action moved inside the node this call
@@ -156,5 +156,54 @@ The state table contains the following fields:
 		end))
 		update_radio(gooey.radio("radio2/bg", "MYGROUP", action_id, action, function(radio)
 			print("selected 2", radio.selected)
+		end))
+	end
+
+## gooey.list(node_id, group, action_id, action, fn)
+Perform input and state handling for a list of items
+
+**PARAMETERS**
+* ```root_id``` (string|hash) - Id of the root node to which the list items are children. This node should be as high as the visible part of the list.
+* ```item_ids``` (table) - Table with a list of list item ids (hash|string)
+* ```action_id``` (hash) - Action id as received from on_input()
+* ```action``` (table) - Action as received from on_input()
+* ```fn``` (function) - Function to call when a list item is selected. A list item is considered selected if both a pressed and released action has been detected inside the bounds of the item. The function will get the same state table as described below passed as its first argument
+
+**RETURN**
+* ```list``` (table) - State data for the list based on current and previous input actions
+
+The state table contains the following fields:
+
+* ```root``` (node) - The root node
+* ```enabled``` (boolean) - true if the node is enabled
+* ```items``` (table) - The list items as nodes
+* ```over``` (boolean) - true if user action is over any list item
+* ```over_item_now``` (number) - Index of the list item the user action moved inside this call or nil
+* ```out_item_now``` (number) - Index of the list item the user action moved outside this call or nil
+
+* ```selected_item``` (number) - Index of the selected list item
+* ```pressed_item``` (number) - Index of the pressed list item (ie mouse/touch down but not yet released)
+* ```pressed_item_now``` (number) - Index of the list item the user action pressed this call
+* ```released_item_now``` (number) - Index of the list item the user action released this call
+
+**EXAMPLE**
+
+	local gooey = require "gooey.gooey"
+
+	local function update_list(list)
+		for i,item in ipairs(list.items) do
+			if i == list.pressed_item then
+				gui.play_flipbook(item, hash("item_pressed"))
+			elseif i == list.selected_item then
+				gui.play_flipbook(item, hash("item_selected"))
+			else
+				gui.play_flipbook(item, hash("item_normal"))
+			end
+		end
+	end
+
+	function on_input(self, action_id, action)
+		update_list(gooey.list("list/root", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, function(list)
+			print("selected", list.selected_index)
 		end))
 	end
