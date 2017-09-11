@@ -1,11 +1,11 @@
-script: "/example/example.gui_script"
+script: "/example/kenneyblue.gui_script"
 fonts {
   name: "system_font"
   font: "/builtins/fonts/system_font.font"
 }
 textures {
   name: "gooey"
-  texture: "/assets/gooey.atlas"
+  texture: "/gooey/themes/kenneyblue/images/kenneyblue.atlas"
 }
 background_color {
   x: 0.0
@@ -15,8 +15,8 @@ background_color {
 }
 nodes {
   position {
-    x: 911.434
-    y: 616.743
+    x: 299.85
+    y: 1039.61
     z: 0.0
     w: 1.0
   }
@@ -34,7 +34,7 @@ nodes {
   }
   size {
     x: 420.0
-    y: 600.0
+    y: 320.0
     z: 0.0
     w: 1.0
   }
@@ -88,7 +88,7 @@ nodes {
   }
   size {
     x: 420.0
-    y: 580.0
+    y: 300.0
     z: 0.0
     w: 1.0
   }
@@ -143,7 +143,7 @@ nodes {
   }
   size {
     x: 0.0
-    y: 580.0
+    y: 300.0
     z: 0.0
     w: 1.0
   }
@@ -214,7 +214,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/listitem.gui"
+  template: "/gooey/themes/kenneyblue/components/listitem.gui"
   template_node_child: false
 }
 nodes {
@@ -372,7 +372,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/listitem.gui"
+  template: "/gooey/themes/kenneyblue/components/listitem.gui"
   template_node_child: false
 }
 nodes {
@@ -530,7 +530,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/listitem.gui"
+  template: "/gooey/themes/kenneyblue/components/listitem.gui"
   template_node_child: false
 }
 nodes {
@@ -688,7 +688,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/listitem.gui"
+  template: "/gooey/themes/kenneyblue/components/listitem.gui"
   template_node_child: false
 }
 nodes {
@@ -846,7 +846,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/listitem.gui"
+  template: "/gooey/themes/kenneyblue/components/listitem.gui"
   template_node_child: false
 }
 nodes {
@@ -1004,7 +1004,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/listitem.gui"
+  template: "/gooey/themes/kenneyblue/components/listitem.gui"
   template_node_child: false
 }
 nodes {
@@ -1162,7 +1162,7 @@ nodes {
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/listitem.gui"
+  template: "/gooey/themes/kenneyblue/components/listitem.gui"
   template_node_child: false
 }
 nodes {
@@ -1285,8 +1285,62 @@ nodes {
 }
 nodes {
   position {
+    x: 298.859
+    y: 383.431
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
     x: 0.0
-    y: -449.311
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 420.0
+    y: 400.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "gooey/blue_panel"
+  id: "panel"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  adjust_mode: ADJUST_MODE_FIT
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 5.0
+    y: 5.0
+    z: 5.0
+    w: 5.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: false
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: 1.381
+    y: 75.166
     z: 0.0
     w: 1.0
   }
@@ -1315,12 +1369,12 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "listitem8"
-  parent: "listroot"
+  id: "button"
+  parent: "panel"
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/listitem.gui"
+  template: "/gooey/themes/kenneyblue/components/button.gui"
   template_node_child: false
 }
 nodes {
@@ -1343,8 +1397,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 60.0
+    x: 192.0
+    y: 51.0
     z: 0.0
     w: 1.0
   }
@@ -1357,30 +1411,30 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "gooey/blue_button04"
-  id: "listitem8/bg"
+  id: "button/bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "listitem8"
+  parent: "button"
   layer: "below"
   inherit_alpha: true
   slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 11.0
+    x: 6.0
+    y: 6.0
+    z: 6.0
+    w: 10.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0
   template_node_child: true
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
-    x: -185.0
+    x: 0.0
     y: 0.0
     z: 0.0
     w: 1.0
@@ -1398,8 +1452,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 60.0
+    x: 200.0
+    y: 100.0
     z: 0.0
     w: 1.0
   }
@@ -1411,12 +1465,12 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "LIST ITEM"
+  text: "BUTTON"
   font: "example"
-  id: "listitem8/text"
+  id: "button/label"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_W
+  pivot: PIVOT_CENTER
   outline {
     x: 1.0
     y: 1.0
@@ -1431,7 +1485,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "listitem8/bg"
+  parent: "button/bg"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -1443,8 +1497,8 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
-    y: -509.311
+    x: -68.482
+    y: 12.823
     z: 0.0
     w: 1.0
   }
@@ -1473,12 +1527,12 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "listitem9"
-  parent: "listroot"
+  id: "checkbox"
+  parent: "panel"
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/listitem.gui"
+  template: "/gooey/themes/kenneyblue/components/checkbox.gui"
   template_node_child: false
 }
 nodes {
@@ -1501,8 +1555,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 60.0
+    x: 40.0
+    y: 38.0
     z: 0.0
     w: 1.0
   }
@@ -1514,31 +1568,31 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_button04"
-  id: "listitem9/bg"
+  texture: "gooey/grey_box"
+  id: "checkbox/box"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "listitem9"
+  parent: "checkbox"
   layer: "below"
   inherit_alpha: true
   slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 11.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0
   template_node_child: true
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
-    x: -185.0
+    x: 30.0
     y: 0.0
     z: 0.0
     w: 1.0
@@ -1556,8 +1610,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 60.0
+    x: 200.0
+    y: 100.0
     z: 0.0
     w: 1.0
   }
@@ -1569,9 +1623,9 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "LIST ITEM"
+  text: "CHECKBOX"
   font: "example"
-  id: "listitem9/text"
+  id: "checkbox/label"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_W
@@ -1589,7 +1643,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "listitem9/bg"
+  parent: "checkbox"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -1601,8 +1655,8 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
-    y: -569.311
+    x: -68.666
+    y: -42.672
     z: 0.0
     w: 1.0
   }
@@ -1631,12 +1685,12 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "listitem10"
-  parent: "listroot"
+  id: "radio1"
+  parent: "panel"
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/listitem.gui"
+  template: "/gooey/themes/kenneyblue/components/radiobutton.gui"
   template_node_child: false
 }
 nodes {
@@ -1659,8 +1713,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 60.0
+    x: 38.0
+    y: 38.0
     z: 0.0
     w: 1.0
   }
@@ -1672,31 +1726,31 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_button04"
-  id: "listitem10/bg"
+  texture: "gooey/grey_circle"
+  id: "radio1/button"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "listitem10"
+  parent: "radio1"
   layer: "below"
   inherit_alpha: true
   slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 11.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0
   template_node_child: true
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
-    x: -185.0
+    x: 30.0
     y: 0.0
     z: 0.0
     w: 1.0
@@ -1714,8 +1768,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 60.0
+    x: 200.0
+    y: 100.0
     z: 0.0
     w: 1.0
   }
@@ -1727,9 +1781,9 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "LIST ITEM"
+  text: "RADIO"
   font: "example"
-  id: "listitem10/text"
+  id: "radio1/label"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_W
@@ -1747,7 +1801,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "listitem10/bg"
+  parent: "radio1"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -1759,8 +1813,8 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
-    y: -629.311
+    x: -68.666
+    y: -92.672
     z: 0.0
     w: 1.0
   }
@@ -1789,12 +1843,12 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "listitem11"
-  parent: "listroot"
+  id: "radio2"
+  parent: "panel"
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/listitem.gui"
+  template: "/gooey/themes/kenneyblue/components/radiobutton.gui"
   template_node_child: false
 }
 nodes {
@@ -1817,8 +1871,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 60.0
+    x: 38.0
+    y: 38.0
     z: 0.0
     w: 1.0
   }
@@ -1830,31 +1884,31 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_button04"
-  id: "listitem11/bg"
+  texture: "gooey/grey_circle"
+  id: "radio2/button"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "listitem11"
+  parent: "radio2"
   layer: "below"
   inherit_alpha: true
   slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 11.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0
   template_node_child: true
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
-    x: -185.0
+    x: 30.0
     y: 0.0
     z: 0.0
     w: 1.0
@@ -1872,8 +1926,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 60.0
+    x: 200.0
+    y: 100.0
     z: 0.0
     w: 1.0
   }
@@ -1885,9 +1939,9 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "LIST ITEM"
+  text: "RADIO"
   font: "example"
-  id: "listitem11/text"
+  id: "radio2/label"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_W
@@ -1905,7 +1959,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "listitem11/bg"
+  parent: "radio2"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -1917,8 +1971,8 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
-    y: -689.311
+    x: -68.666
+    y: -142.672
     z: 0.0
     w: 1.0
   }
@@ -1947,12 +2001,12 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "listitem12"
-  parent: "listroot"
+  id: "radio3"
+  parent: "panel"
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/listitem.gui"
+  template: "/gooey/themes/kenneyblue/components/radiobutton.gui"
   template_node_child: false
 }
 nodes {
@@ -1975,8 +2029,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 60.0
+    x: 38.0
+    y: 38.0
     z: 0.0
     w: 1.0
   }
@@ -1988,31 +2042,31 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_button04"
-  id: "listitem12/bg"
+  texture: "gooey/grey_circle"
+  id: "radio3/button"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "listitem12"
+  parent: "radio3"
   layer: "below"
   inherit_alpha: true
   slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 11.0
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
   alpha: 1.0
   template_node_child: true
-  size_mode: SIZE_MODE_MANUAL
+  size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
-    x: -185.0
+    x: 30.0
     y: 0.0
     z: 0.0
     w: 1.0
@@ -2030,8 +2084,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 60.0
+    x: 200.0
+    y: 100.0
     z: 0.0
     w: 1.0
   }
@@ -2043,9 +2097,9 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "LIST ITEM"
+  text: "RADIO"
   font: "example"
-  id: "listitem12/text"
+  id: "radio3/label"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_W
@@ -2063,7 +2117,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "listitem12/bg"
+  parent: "radio3"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
@@ -2075,8 +2129,8 @@ nodes {
 }
 nodes {
   position {
-    x: 227.618
-    y: 581.439
+    x: 0.0
+    y: 149.191
     z: 0.0
     w: 1.0
   }
@@ -2106,10 +2160,11 @@ nodes {
   }
   type: TYPE_TEMPLATE
   id: "input"
+  parent: "panel"
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/input.gui"
+  template: "/gooey/themes/kenneyblue/components/input.gui"
   template_node_child: false
 }
 nodes {
@@ -2287,62 +2342,8 @@ nodes {
 }
 nodes {
   position {
-    x: 180.98
-    y: 228.339
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 300.0
-    y: 400.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_panel"
-  id: "panel"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
-  layer: ""
-  inherit_alpha: true
-  slice9 {
-    x: 5.0
-    y: 5.0
-    z: 5.0
-    w: 5.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
-}
-nodes {
-  position {
-    x: 1.381
-    y: 118.723
+    x: 113.214
+    y: 1090.268
     z: 0.0
     w: 1.0
   }
@@ -2371,12 +2372,11 @@ nodes {
     w: 1.0
   }
   type: TYPE_TEMPLATE
-  id: "button"
-  parent: "panel"
+  id: "back"
   layer: ""
   inherit_alpha: true
   alpha: 1.0
-  template: "/example/templates/button.gui"
+  template: "/gooey/themes/kenneyblue/components/button.gui"
   template_node_child: false
 }
 nodes {
@@ -2413,12 +2413,12 @@ nodes {
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
   texture: "gooey/blue_button04"
-  id: "button/bg"
+  id: "back/bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  parent: "button"
+  parent: "back"
   layer: "below"
   inherit_alpha: true
   slice9 {
@@ -2467,9 +2467,9 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "BUTTON"
+  text: "< BACK"
   font: "example"
-  id: "button/label"
+  id: "back/label"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -2487,644 +2487,13 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
-  parent: "button/bg"
+  parent: "back/bg"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0
   outline_alpha: 1.0
   shadow_alpha: 1.0
-  template_node_child: true
-  text_leading: 1.0
-  text_tracking: 0.0
-}
-nodes {
-  position {
-    x: -68.482
-    y: 56.38
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEMPLATE
-  id: "checkbox"
-  parent: "panel"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  template: "/example/templates/checkbox.gui"
-  template_node_child: false
-}
-nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 40.0
-    y: 38.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/grey_box"
-  id: "checkbox/box"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
-  parent: "checkbox"
-  layer: "below"
-  inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: true
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: 60.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "CHECKBOX"
-  font: "example"
-  id: "checkbox/label"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "checkbox"
-  layer: "text"
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: true
-  text_leading: 1.0
-  text_tracking: 0.0
-}
-nodes {
-  position {
-    x: -68.666
-    y: 0.885
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEMPLATE
-  id: "radio1"
-  parent: "panel"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  template: "/example/templates/radiobutton.gui"
-  template_node_child: false
-}
-nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 38.0
-    y: 38.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/grey_circle"
-  id: "radio1/button"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
-  parent: "radio1"
-  layer: "below"
-  inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: true
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: 60.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "RADIO"
-  font: "example"
-  id: "radio1/label"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "radio1"
-  layer: "text"
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: true
-  text_leading: 1.0
-  text_tracking: 0.0
-}
-nodes {
-  position {
-    x: -68.666
-    y: -49.115
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEMPLATE
-  id: "radio2"
-  parent: "panel"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  template: "/example/templates/radiobutton.gui"
-  template_node_child: false
-}
-nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 38.0
-    y: 38.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/grey_circle"
-  id: "radio2/button"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
-  parent: "radio2"
-  layer: "below"
-  inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: true
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: 60.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "RADIO"
-  font: "example"
-  id: "radio2/label"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "radio2"
-  layer: "text"
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
-  template_node_child: true
-  text_leading: 1.0
-  text_tracking: 0.0
-}
-nodes {
-  position {
-    x: -68.666
-    y: -99.115
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEMPLATE
-  id: "radio3"
-  parent: "panel"
-  layer: ""
-  inherit_alpha: true
-  alpha: 1.0
-  template: "/example/templates/radiobutton.gui"
-  template_node_child: false
-}
-nodes {
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 38.0
-    y: 38.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/grey_circle"
-  id: "radio3/button"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  adjust_mode: ADJUST_MODE_FIT
-  parent: "radio3"
-  layer: "below"
-  inherit_alpha: true
-  slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: true
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: 60.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_TEXT
-  blend_mode: BLEND_MODE_ALPHA
-  text: "RADIO"
-  font: "example"
-  id: "radio3/label"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
-  outline {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  shadow {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  adjust_mode: ADJUST_MODE_FIT
-  line_break: false
-  parent: "radio3"
-  layer: "text"
-  inherit_alpha: true
-  alpha: 1.0
-  outline_alpha: 1.0
-  shadow_alpha: 1.0
+  overridden_fields: 8
   template_node_child: true
   text_leading: 1.0
   text_tracking: 0.0

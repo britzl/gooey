@@ -1,0 +1,111 @@
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_boxCheckmark.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_boxCross.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_boxTick.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button00.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button01.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button02.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button03.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button04.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button05.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button06.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button07.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button08.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button09.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button10.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button11.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button12.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_button13.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_checkmark.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_circle.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_cross.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_panel.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_sliderDown.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_sliderLeft.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_sliderRight.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_sliderUp.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/blue_tick.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/dropdownBottom.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/dropdownMid.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/dropdownTop.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/grey_box.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/grey_circle.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/grey_boxTick.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/grey_boxCheckmark.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/grey_boxCross.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/transparent1px.png"
+}
+images {
+  image: "/gooey/themes/kenneyblue/images/grey_button02.png"
+}
+margin: 0
+extrude_borders: 1
+inner_padding: 1

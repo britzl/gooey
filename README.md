@@ -139,6 +139,7 @@ The state table contains the following fields:
 * ```over_now``` (boolean) - true if user action moved inside the node this call
 * ```out_now``` (boolean) - true if user action moved outside the node this call
 * ```selected``` (boolean) - The radio button state
+* ```selected_now``` (boolean) - true if the radio button was selected this call
 * ```pressed``` (boolean) - true if the radio button is pressed (ie mouse/touch down but not yet released)
 * ```pressed_now``` (boolean) - true if the radio button was pressed this call
 * ```released_now``` (boolean) - true if the radio button was released this call

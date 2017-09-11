@@ -1,0 +1,34 @@
+local dirtylarry = require "gooey.themes.dirtylarry.dirtylarry"
+
+function init(self)
+	dirtylarry.acquire_input()
+end
+
+function on_input(self, action_id, action)
+	dirtylarry.button("button", action_id,action, function(button)
+		print("button1 pressed")
+	end)
+	
+	dirtylarry.button("back", action_id,action, function(button)
+		msg.post("controller:/go", "show_menu")
+	end)
+	
+	dirtylarry.checkbox("checkbox", action_id, action, function(checkbox)
+		print("checkbox", checkbox.checked)
+	end)
+	
+	dirtylarry.radiogroup("MYGROUP", action_id, action, function(group_id, action_id, action)
+		dirtylarry.radio("radio1", group_id, action_id, action, function(radio)
+			print("radio 1", radio.selected)
+		end)
+		dirtylarry.radio("radio2", group_id, action_id, action, function(radio)
+			print("radio 2", radio.selected)
+		end)
+		dirtylarry.radio("radio3", group_id, action_id, action, function(radio)
+			print("radio 3", radio.selected)
+		end)
+		
+	end)
+	
+	local input = dirtylarry.input("input", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, "EMPTY")
+end

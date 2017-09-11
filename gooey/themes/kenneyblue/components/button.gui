@@ -1,11 +1,11 @@
 script: ""
 fonts {
   name: "example"
-  font: "/assets/example.font"
+  font: "/gooey/themes/kenneyblue/fonts/kenneyblue.font"
 }
 textures {
   name: "gooey"
-  texture: "/assets/gooey.atlas"
+  texture: "/gooey/themes/kenneyblue/images/kenneyblue.atlas"
 }
 background_color {
   x: 0.0
@@ -33,8 +33,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 40.0
-    y: 38.0
+    x: 192.0
+    y: 51.0
     z: 0.0
     w: 1.0
   }
@@ -46,8 +46,8 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/grey_box"
-  id: "box"
+  texture: "gooey/blue_button04"
+  id: "bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
@@ -55,10 +55,10 @@ nodes {
   layer: "below"
   inherit_alpha: true
   slice9 {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 0.0
+    x: 6.0
+    y: 6.0
+    z: 6.0
+    w: 10.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
@@ -69,7 +69,7 @@ nodes {
 }
 nodes {
   position {
-    x: 60.0
+    x: 0.0
     y: 0.0
     z: 0.0
     w: 1.0
@@ -100,7 +100,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "CHECKBOX"
+  text: "BUTTON"
   font: "example"
   id: "label"
   xanchor: XANCHOR_NONE
@@ -120,6 +120,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
+  parent: "bg"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0

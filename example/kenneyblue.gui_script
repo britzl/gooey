@@ -1,0 +1,51 @@
+local gooey = require "gooey.gooey"
+local kenneyblue = require "gooey.themes.kenneyblue.kenneyblue"
+
+
+
+
+function init(self)
+	gooey.acquire_input()
+	self.list_ids = {
+		"listitem1/bg", "listitem2/bg", "listitem3/bg", "listitem4/bg", "listitem5/bg",
+		"listitem6/bg", "listitem7/bg"
+	}
+	kenneyblue.input("input", gui.KEYBOARD_TYPE_DEFAULT, nil, { x=0, y=0 }, "EMPTY TEXT")
+end
+
+function on_input(self, action_id, action)
+	kenneyblue.button("button", action_id, action, function(button)
+		print("pressed button")
+	end)
+	
+	kenneyblue.button("back", action_id, action, function(button)
+		msg.post("controller:/go", "show_menu")
+	end)
+	
+	kenneyblue.checkbox("checkbox", action_id, action, function(checkbox)
+		print("checked", checkbox.checked)
+	end)
+	
+	kenneyblue.radiogroup("GROUP1", action_id, action, function(group_id, action_id, action)
+		kenneyblue.radio("radio1", group_id, action_id, action, function(radio)
+			print("selected 1", radio.selected)
+		end)
+		kenneyblue.radio("radio2", group_id, action_id, action, function(radio)
+			print("selected 2", radio.selected)
+		end)
+		kenneyblue.radio("radio3", group_id, action_id, action, function(radio)
+			print("selected 3", radio.selected)
+		end)
+	end)
+	
+	kenneyblue.list("listroot", self.list_ids, action_id, action, function(list)
+		print("selected list item", list.selected_item)
+	end)
+	
+	kenneyblue.input("input", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, "EMPTY TEXT")
+end
+
+function on_reload(self)
+	-- Add input-handling code here
+	-- Remove this function if not needed
+end

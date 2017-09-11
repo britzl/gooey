@@ -13,13 +13,15 @@ local radiobuttons = {}
 local lists = {}
 local inputfields = {}
 
+local groups = {}
+
 local utf8_gfind = "([%z\1-\127\194-\244][\128-\191]*)"
 
 -- Convert string to hash, unless it's already a hash
 -- @param str String to convert
 -- @return The hashed string
 local function to_hash(str)
-	return type(str) == "string" and hash(str) or id
+	return type(str) == "string" and hash(str) or str
 end
 
 --- Create a unique key for an hash by combining the id with the current url
@@ -33,13 +35,13 @@ local function to_key(hsh)
 		.. hash_to_hex(hsh)
 end
 
---- Get an instance (table) for a node or create one if it doesn't
+--- Get an instance (table) for an id or create one if it doesn't
 -- exist
--- @param node_id
+-- @param id (hash|string)
 -- @param instances
 -- @return Instance for the node
-local function instance(node_id, instances)
-	local key = to_key(node_id)
+local function instance(id, instances)
+	local key = to_key(id)
 	instances[key] = instances[key] or {}
 	return instances[key]
 end	
@@ -147,6 +149,40 @@ function M.checkbox(node_id, action_id, action, fn)
 end
 
 
+
+function M.radiogroup(group_id, action_id, action, fn)
+	local group_id = to_hash(group_id)
+	
+	fn(group_id, action_id, action)
+
+	-- get the group and empty it
+	local group = instance(group_id, groups)
+	for k,_ in pairs(group) do
+		group[k] = nil
+	end
+	
+	local selected_radio
+	local group_key = to_key(group_id)
+	for _,radio in pairs(radiobuttons) do
+		if radio.group == group_key then
+			if radio.selected_now then
+				selected_radio = radio
+			end
+			table.insert(group, radio)
+		end
+	end
+	
+	if selected_radio then
+		for _,radio in ipairs(group) do
+			if radio ~= selected_radio then
+				radio.selected = false
+			end
+		end
+	end
+	return group
+end
+
+
 function M.radio(node_id, group_id, action_id, action, fn)
 	node_id = to_hash(node_id)
 	group_id = to_hash(group_id)
@@ -166,6 +202,7 @@ function M.radio(node_id, group_id, action_id, action, fn)
 	if not radio.enabled then
 		radio.pressed_now = false
 		radio.released_now = false
+		radio.selected_now = false
 	else
 		local touch = action_id == M.TOUCH
 		local pressed = touch and action.pressed and radio.over
@@ -173,13 +210,9 @@ function M.radio(node_id, group_id, action_id, action, fn)
 		radio.pressed_now = pressed and not radio.pressed
 		radio.released_now = released and radio.pressed
 		radio.pressed = pressed or (radio.pressed and not released)
-		if radio.released_now and radio.over then
+		radio.selected_now = radio.released_now and radio.over
+		if radio.selected_now then
 			radio.selected = true
-			for _,rb in pairs(radiobuttons) do
-				if rb ~= radio and rb.group == radio.group and rb.selected then
-					rb.selected = false
-				end
-			end
 			fn(radio)
 		end
 	end
