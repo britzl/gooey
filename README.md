@@ -20,11 +20,11 @@ For Gooey to work it requires a couple of input bindings:
 ## Supported components
 Gooey supports the following component types:
 
-* Button
-* Checkbox
-* Radio button
-* List
-* Input text
+* Button - ```gooey.button()```
+* Checkbox - ```gooey.checkbox()```
+* Radio button - ```gooey.radio()```
+* List - ```gooey.list()```
+* Input text - ```gooey.input()```
 
 ### gooey.button(node_id, action_id, action, fn)
 Perform input and state handling for a button
