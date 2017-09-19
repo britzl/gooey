@@ -290,6 +290,8 @@ Gooey comes shipped with two themes: Dirty Larry and Kenneyblue. You can use the
 ## Example app
 See the [example app](example/) for examples of how to use Gooey on its own and how to use the themes.
 
+[Try the HTML5 version of the example app](http://britzl.github.io/Gooey).
+
 # Credits
 * Assets for the Dirty Larry theme from [Dirty Larry](https://github.com/andsve/dirtylarry)
 * Assets for the Kenneyblue theme from [Kenney](http://www.kenney.nl)
