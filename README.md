@@ -269,3 +269,27 @@ The state table contains the following fields:
 	function on_input(self, action_id, action)
 		update_input(gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT, action_id, action))
 	end
+
+## Gooey Themes
+Gooey comes shipped with two themes: Dirty Larry and Kenneyblue. You can use these as they are or make a copy and modify. Each theme consists of a Lua module wrapping Gooey, a couple of GUI templates, a font and an atlas containing the visual representation of the buttons. Use the themes like this:
+
+	local kenneyblue = require "gooey.themes.kenneyblue.kenneyblue"
+
+	function on_input(self, action_id, action)
+		kenneyblue.button("button", action_id, action, function(button)
+			print("pressed button")
+		end)
+	end
+
+![](images/dirtylarry.png)
+*Dirty Larry theme*
+
+![](images/kenneyblue.png)
+*Kenneyblue theme*
+
+## Example app
+See the [example app](example/) for examples of how to use Gooey on its own and how to use the themes.
+
+# Credits
+* Assets for the Dirty Larry theme from [Dirty Larry](https://github.com/andsve/dirtylarry)
+* Assets for the Kenneyblue theme from [Kenney](http://www.kenney.nl)
