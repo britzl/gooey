@@ -218,7 +218,7 @@ The state table contains the following fields:
 
 	function on_input(self, action_id, action)
 		update_list(gooey.list("list/root", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, function(list)
-			print("selected", list.selected_index)
+			print("selected", list.selected_item)
 		end))
 	end
 
