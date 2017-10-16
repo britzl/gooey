@@ -7,6 +7,8 @@ You can use Gooey in your own project by adding this project as a [Defold librar
 
 https://github.com/britzl/gooey/archive/master.zip
 
+Or point to the ZIP file of a [specific release](https://github.com/britzl/gooey/releases).
+
 # Usage
 The Gooey system is encapsulated in a single Lua module without any visual components. It makes very little assumptions of the look and feel of the UI components it supports. Instead Gooey focuses on providing stable input and state handling and lets the user decide which states matter and how they should be presented visually.
 
