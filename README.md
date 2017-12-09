@@ -20,6 +20,9 @@ For Gooey to work it requires a couple of input bindings:
 * Text trigger - ```text``` -> ```text```
 * Text trigger - ```marked-text``` -> ```marked_text```
 
+![](docs/key_mouse_bindings.png)
+![](docs/text_bindings.png)
+
 ## Supported components
 Gooey supports the following component types:
 
