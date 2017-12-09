@@ -347,11 +347,17 @@ function M.input(node_id, keyboard_type, action_id, action, config)
 		if input.selected then
 			-- new raw text input
 			if action_id == M.TEXT then
-				input.text = input.text .. action.text
-				if config and config.max_length then
-					input.text = input.text:sub(1, config.max_length)
+				local hex = string.gsub(action.text,"(.)", function (c)
+					return string.format("%02X%s",string.byte(c), "")
+				end)
+				-- ignore arrow keys
+				if not string.match(hex, "EF9C8[0-3]") then
+					input.text = input.text .. action.text
+					if config and config.max_length then
+						input.text = input.text:sub(1, config.max_length)
+					end
+					input.marked_text = ""
 				end
-				input.marked_text = ""
 			-- new marked text input (uncommitted text)
 			elseif action_id == M.MARKEDTEXT then
 				input.marked_text = action.text or ""
