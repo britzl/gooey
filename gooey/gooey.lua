@@ -15,6 +15,8 @@ local inputfields = {}
 
 local groups = {}
 
+local space_width = {}
+
 local utf8_gfind = "([%z\1-\127\194-\244][\128-\191]*)"
 
 -- Convert string to hash, unless it's already a hash
@@ -306,6 +308,33 @@ function M.list(root_id, item_ids, action_id, action, fn)
 	return list
 end
 
+
+-- calculate space width with font
+local function get_space_width(font)
+	if not space_width[font] then
+		local no_space = gui.get_text_metrics(font, "1", 0, false, 0, 0).width
+		local with_space = gui.get_text_metrics(font, " 1", 0, false, 0, 0).width
+		space_width[font] = with_space - no_space
+	end 
+	return space_width[font]
+end
+
+
+-- calculate text width with font with respect to trailing space (issue DEF-1761)
+local function get_text_width(node, text)
+	local font = gui.get_font(node)
+	local result = gui.get_text_metrics(font, text, 0, false, 0, 0).width
+	for i=#text, 1, -1 do
+		local c = string.sub(text, i, i)
+		if c ~= ' ' then
+			break
+		end
+		result = result + get_space_width(font)
+	end
+	return result
+end
+
+
 --- Input text
 -- (from dirty larry with modifications)
 -- @param node_id Id of a text node
@@ -391,8 +420,10 @@ function M.input(node_id, keyboard_type, action_id, action, config)
 		local text = input.masked_text or input.text
 		local marked_text = input.masked_marked_text or input.marked_text
 		input.empty = #text == 0 and #marked_text == 0
-		input.text_width = gui.get_text_metrics(gui.get_font(input.node), text, 0, false, 0, 0).width
-		input.marked_text_width = gui.get_text_metrics(gui.get_font(input.node), marked_text, 0, false, 0, 0).width
+		
+		input.text_width = get_text_width(input.node, text)		
+		input.marked_text_width = get_text_width(input.node, marked_text)
+		
 		if input.selected then
 			gui.set_text(input.node, text .. marked_text)
 		end
