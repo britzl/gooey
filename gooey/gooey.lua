@@ -42,8 +42,17 @@ end
 -- @return Instance for the node
 local function instance(id, instances)
 	local key = to_key(id)
-	instances[key] = instances[key] or {}
-	return instances[key]
+	local instance = instances[key]
+	-- detect a reload (unload and load cycle) and start with an
+	-- empty instance
+	-- if the script instance has changed then we're certain that
+	-- it's reloaded
+	local script_instance = _G.__dm_script_instance__
+	if instance and instance.__script ~= script_instance then
+		instances[key] = nil
+	end
+	instances[key] = instances[key] or { __script = script_instance, data = {} }
+	return instances[key].data
 end	
 
 --- Convenience function to acquire input focus
