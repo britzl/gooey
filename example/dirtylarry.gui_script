@@ -2,6 +2,8 @@ local dirtylarry = require "gooey.themes.dirtylarry.dirtylarry"
 
 function init(self)
 	dirtylarry.acquire_input()
+
+	dirtylarry.input("input", gui.KEYBOARD_TYPE_DEFAULT, nil, { x=0, y=0 }, { empty_text = "EMPTY, MAX 8 CHARS" })
 end
 
 function on_input(self, action_id, action)
@@ -30,5 +32,5 @@ function on_input(self, action_id, action)
 		
 	end)
 	
-	local input = dirtylarry.input("input", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, "EMPTY")
+	local input = dirtylarry.input("input", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, { empty_text = "EMPTY, MAX 8 CHARS", max_length = 8 })
 end

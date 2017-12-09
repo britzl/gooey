@@ -224,7 +224,7 @@ The state table contains the following fields:
 		end))
 	end
 
-### gooey.input(node_id, keyboard_type, action_id, action)
+### gooey.input(node_id, keyboard_type, action_id, action, config)
 Perform input and state handling for a text input field
 
 **PARAMETERS**
@@ -232,6 +232,13 @@ Perform input and state handling for a text input field
 * ```keyboard_type``` (number) - Keyboard type from gui.KEYBOARD_TYPE_*
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
+* ```config``` (table) - Optional configuration values.
+
+The configuration table accepts the following values:
+
+* ```max_length``` (number) - Maximum length of entered text
+
+NOTE: ```max_length``` currently measures string length in bytes so the value will be misleading for any characters longer than a single byte.
 
 **RETURN**
 * ```input``` (table) - State data for the input field based on current and previous input actions

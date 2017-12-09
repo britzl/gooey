@@ -297,8 +297,15 @@ function M.list(root_id, item_ids, action_id, action, fn)
 	return list
 end
 
--- from dirty larry with modifications
-function M.input(node_id, keyboard_type, action_id, action)
+--- Input text
+-- (from dirty larry with modifications)
+-- @param node_id Id of a text node
+-- @param keyboard_type Keyboard type to use (from gui.KEYBOARD_TYPE_*)
+-- @param action_id
+-- @param action
+-- @param config Optional config table. Accepted values
+--	* max_length (number) - Maximum number of characters that can be entered
+function M.input(node_id, keyboard_type, action_id, action, config)
 	node_id = to_hash(node_id)
 	local node = gui.get_node(node_id)
 	assert(node)
@@ -341,6 +348,9 @@ function M.input(node_id, keyboard_type, action_id, action)
 			-- new raw text input
 			if action_id == M.TEXT then
 				input.text = input.text .. action.text
+				if config and config.max_length then
+					input.text = input.text:sub(1, config.max_length)
+				end
 				input.marked_text = ""
 			-- new marked text input (uncommitted text)
 			elseif action_id == M.MARKEDTEXT then

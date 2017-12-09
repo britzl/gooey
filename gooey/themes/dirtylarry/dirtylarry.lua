@@ -61,11 +61,11 @@ function M.radio(node_id, group_id, action_id, action, fn)
 end
 
 
-function M.input(node_id, keyboard_type, action_id, action, empty_text)
-	local input = gooey.input(node_id .. "/text", keyboard_type, action_id, action)
+function M.input(node_id, keyboard_type, action_id, action, config)
+	local input = gooey.input(node_id .. "/text", keyboard_type, action_id, action, config)
 	
 	if input.empty and not input.selected then
-		gui.set_text(input.node, empty_text)
+		gui.set_text(input.node, config and config.empty_text or "")
 	end
 
 	local cursor = gui.get_node(node_id .. "/cursor")

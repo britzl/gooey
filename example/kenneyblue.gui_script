@@ -10,7 +10,7 @@ function init(self)
 		"listitem1/bg", "listitem2/bg", "listitem3/bg", "listitem4/bg", "listitem5/bg",
 		"listitem6/bg", "listitem7/bg"
 	}
-	kenneyblue.input("input", gui.KEYBOARD_TYPE_DEFAULT, nil, { x=0, y=0 }, "EMPTY TEXT")
+	kenneyblue.input("input", gui.KEYBOARD_TYPE_DEFAULT, nil, { x=0, y=0 }, { empty_text = "EMPTY, MAX 8 CHARS" })
 end
 
 function on_input(self, action_id, action)
@@ -42,7 +42,7 @@ function on_input(self, action_id, action)
 		print("selected list item", list.selected_item)
 	end)
 	
-	kenneyblue.input("input", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, "EMPTY TEXT")
+	kenneyblue.input("input", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, { empty_text = "EMPTY, MAX 8 CHARS", max_length = 8 })
 end
 
 function on_reload(self)
