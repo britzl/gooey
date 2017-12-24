@@ -231,7 +231,7 @@ function M.radio(node_id, group_id, action_id, action, fn)
 end
 
 
-function M.list(root_id, item_ids, action_id, action, fn)
+function M.list(root_id, stencil_id, item_ids, action_id, action, fn)
 	root_id = to_hash(root_id)
 	local root = gui.get_node(root_id)
 	assert(root)
@@ -242,12 +242,15 @@ function M.list(root_id, item_ids, action_id, action, fn)
 	list.items = {}
 
 	if #item_ids == 0 then return list end
-	
+
+	local stencil = gui.get_node(stencil_id)
+	local over_stencil = gui.pick_node(stencil, action.x, action.y)
+		
 	local over_item
 	for i=1,#item_ids do
 		local item = gui.get_node(item_ids[i])
 		list.items[i] = item
-		if gui.pick_node(item, action.x, action.y) then
+		if over_stencil and gui.pick_node(item, action.x, action.y) then
 			over_item = i
 		end		
 	end

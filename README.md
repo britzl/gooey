@@ -177,11 +177,12 @@ The state table contains the following fields:
 		end))
 	end
 
-### gooey.list(node_id, group, action_id, action, fn)
+### gooey.list(root_id, stencil_id, node_id, group, action_id, action, fn)
 Perform input and state handling for a list of items
 
 **PARAMETERS**
 * ```root_id``` (string|hash) - Id of the root node to which the list items are children. **IMPORTANT** This node should be as high as the visible part of the list
+* ```stencil_id``` (string|hash) - Id of the stencil node that is used to clip the list. Touch events outside this are will be ignored when it comes to picking of list items.
 * ```item_ids``` (table) - Table with a list of list item ids (hash|string)
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
@@ -222,7 +223,7 @@ The state table contains the following fields:
 	end
 
 	function on_input(self, action_id, action)
-		update_list(gooey.list("list/root", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, function(list)
+		update_list(gooey.list("list/root", "list/stencil", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, function(list)
 			print("selected", list.selected_item)
 		end))
 	end

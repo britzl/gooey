@@ -108,8 +108,8 @@ function M.input(node_id, keyboard_type, action_id, action, config)
 end
 
 
-function M.list(root_id, item_ids, action_id, action, fn)
-	local list = gooey.list(root_id, item_ids, action_id, action, fn)
+function M.list(root_id, stencil_id, item_ids, action_id, action, fn)
+	local list = gooey.list(root_id, stencil_id, item_ids, action_id, action, fn)
 	for i,item in pairs(list.items) do
 		local pos = gui.get_position(item)
 		if i == list.selected_item then
