@@ -11,6 +11,9 @@ function on_input(self, action_id, action)
 	gooey.button("kenneybutton", action_id, action, function()
 		msg.post("controller:/go", "show_kenneyblue")
 	end)
+	gooey.button("rpgbutton", action_id, action, function()
+		msg.post("controller:/go", "show_rpg")
+	end)
 end
 
 function on_reload(self)
