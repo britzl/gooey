@@ -175,6 +175,7 @@ function M.radiogroup(group_id, action_id, action, fn)
 	local selected_radio
 	local group_key = to_key(group_id)
 	for _,radio in pairs(radiobuttons) do
+		radio = radio.data
 		if radio.group == group_key then
 			if radio.selected_now then
 				selected_radio = radio
