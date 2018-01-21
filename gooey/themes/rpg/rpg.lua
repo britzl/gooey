@@ -114,19 +114,19 @@ function M.list(root_id, stencil_id, item_ids, action_id, action, fn)
 		local pos = gui.get_position(item)
 		if i == list.selected_item then
 			pos.x = 4
-			gui.play_flipbook(item, hash("blue_button03"))
+			gui.play_flipbook(item, hash("panel_blue"))
 		elseif i == list.pressed_item then
 			pos.x = 1
-			gui.play_flipbook(item, hash("blue_button03"))
+			gui.play_flipbook(item, hash("panel_blue"))
 		elseif i == list.over_item_now then
 			pos.x = 1
-			gui.play_flipbook(item, hash("blue_button04"))
+			gui.play_flipbook(item, hash("panel_blue"))
 		elseif i == list.out_item_now then
 			pos.x = 0
-			gui.play_flipbook(item, hash("blue_button04"))
+			gui.play_flipbook(item, hash("panel_blue"))
 		elseif i ~= list.over_item then
 			pos.x = 0
-			gui.play_flipbook(item, hash("blue_button04"))
+			gui.play_flipbook(item, hash("panel_blue"))
 		end
 		gui.set_position(item, pos)
 	end

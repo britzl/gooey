@@ -31,6 +31,9 @@ images {
 images {
   image: "/gooey/themes/dirtylarry/images/radio_pressed.png"
 }
+images {
+  image: "/gooey/themes/dirtylarry/images/transparent1px.png"
+}
 margin: 0
 extrude_borders: 1
 inner_padding: 0

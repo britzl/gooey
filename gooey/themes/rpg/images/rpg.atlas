@@ -43,6 +43,9 @@ images {
 images {
   image: "/gooey/themes/rpg/images/checkbox_blue.png"
 }
+images {
+  image: "/gooey/themes/rpg/images/transparent1px.png"
+}
 margin: 0
 extrude_borders: 2
 inner_padding: 0
