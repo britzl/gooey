@@ -309,3 +309,5 @@ See the [example app](example/) for examples of how to use Gooey on its own and 
 # Credits
 * Assets for the Dirty Larry theme from [Dirty Larry](https://github.com/andsve/dirtylarry)
 * Assets for the Kenneyblue theme from [Kenney](http://www.kenney.nl)
+* Assets for the RPG theme from [Kenney](http://www.kenney.nl)
+* Font Alagard used in RPG theme by [Hewett Tsoi](https://www.dafont.com/hewett-tsoi.d4888)

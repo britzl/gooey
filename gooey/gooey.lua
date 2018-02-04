@@ -389,6 +389,10 @@ function M.input(node_id, keyboard_type, action_id, action, config)
 		if input.selected then
 			-- new raw text input
 			if action_id == M.TEXT then
+				-- ignore return key
+				if action.text == "\n" or action.text == "\r" then
+					return input
+				end
 				local hex = string.gsub(action.text,"(.)", function (c)
 					return string.format("%02X%s",string.byte(c), "")
 				end)
