@@ -22,8 +22,7 @@ function M.acquire_input()
 end
 
 
-function M.button(node_id, action_id, action, fn)
-	local button = gooey.button(node_id .. "/bg", action_id, action, fn)
+local function refresh_button(button)
 	if button.pressed_now or button.released_now then
 		shake(button.node, vmath.vector3(1))
 	end
@@ -32,12 +31,13 @@ function M.button(node_id, action_id, action, fn)
 	else
 		gui.play_flipbook(button.node, hash("blue_button04"))
 	end
-	return button
+end
+function M.button(node_id, action_id, action, fn)
+	return gooey.button(node_id .. "/bg", action_id, action, fn, refresh_button)
 end
 
 
-function M.checkbox(node_id, action_id, action, fn)
-	local checkbox = gooey.checkbox(node_id .. "/box", action_id, action, fn)
+local function refresh_checkbox(checkbox)
 	if checkbox.pressed_now or checkbox.released_now then
 		shake(checkbox.node, vmath.vector3(1))
 	end
@@ -48,7 +48,9 @@ function M.checkbox(node_id, action_id, action, fn)
 	else
 		gui.play_flipbook(checkbox.node, hash("grey_box"))
 	end
-	return checkbox
+end
+function M.checkbox(node_id, action_id, action, fn)
+	return gooey.checkbox(node_id .. "/box", action_id, action, fn, refresh_checkbox)
 end
 
 
@@ -64,31 +66,21 @@ local function update_radiobutton(radio)
 		gui.play_flipbook(radio.node, hash("grey_circle"))
 	end		
 end
-
 function M.radiogroup(group_id, action_id, action, fn)
-	local radiobuttons = gooey.radiogroup(group_id, action_id, action, fn)
-	for _,radio in ipairs(radiobuttons) do
-		update_radiobutton(radio)
-	end
-	return radiobuttons
+	return gooey.radiogroup(group_id, action_id, action, fn)
 end
-
 function M.radio(node_id, group_id, action_id, action, fn)
-	local radio = gooey.radio(node_id .. "/button", group_id, action_id, action, fn)
-	update_radiobutton(radio)
-	return radio
+	return gooey.radio(node_id .. "/button", group_id, action_id, action, fn, update_radiobutton)
 end
 
 
-function M.input(node_id, keyboard_type, action_id, action, config)
-	local input = gooey.input(node_id .. "/text", keyboard_type, action_id, action, config)
-
+local function update_input(input, config, node_id)
 	if input.selected_now then
 		gui.play_flipbook(gui.get_node(node_id .. "/bg"), hash("blue_button05"))
 	elseif input.deselected_now then
 		gui.play_flipbook(gui.get_node(node_id .. "/bg"), hash("blue_button03"))
 	end
-	
+
 	if input.empty and not input.selected then
 		gui.set_text(input.node, config and config.empty_text or "")
 	end
@@ -104,12 +96,15 @@ function M.input(node_id, keyboard_type, action_id, action, config)
 		gui.set_enabled(cursor, false)
 		gui.cancel_animation(cursor, gui.PROP_COLOR)
 	end
-	return input
+end
+function M.input(node_id, keyboard_type, action_id, action, config)
+	return gooey.input(node_id .. "/text", keyboard_type, action_id, action, config, function(input)
+		update_input(input, config, node_id)
+	end)
 end
 
 
-function M.list(root_id, stencil_id, item_ids, action_id, action, fn)
-	local list = gooey.list(root_id, stencil_id, item_ids, action_id, action, fn)
+local function update_list(list)
 	for i,item in pairs(list.items) do
 		local pos = gui.get_position(item)
 		if i == list.selected_item then
@@ -130,6 +125,9 @@ function M.list(root_id, stencil_id, item_ids, action_id, action, fn)
 		end
 		gui.set_position(item, pos)
 	end
+end
+function M.list(root_id, stencil_id, item_ids, action_id, action, fn)
+	return gooey.list(root_id, stencil_id, item_ids, action_id, action, fn, update_list)
 end
 
 return M

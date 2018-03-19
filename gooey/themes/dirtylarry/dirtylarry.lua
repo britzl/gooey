@@ -8,19 +8,20 @@ function M.acquire_input()
 	gooey.acquire_input()
 end
 
-function M.button(node_id, action_id, action, fn)
-	local button = gooey.button(node_id .. "/bg", action_id, action, fn)
+
+local function refresh_button(button)
 	if button.pressed then
 		gui.play_flipbook(button.node, "button_pressed")
 	else
 		gui.play_flipbook(button.node, "button_normal")
 	end
-	return button
+end
+function M.button(node_id, action_id, action, fn)
+	return gooey.button(node_id .. "/bg", action_id, action, fn, refresh_button)
 end
 
 
-function M.checkbox(node_id, action_id, action, fn)
-	local checkbox = gooey.checkbox(node_id .. "/box", action_id, action, fn)
+local function refresh_checkbox(checkbox)
 	if checkbox.pressed and not checkbox.checked then
 		gui.play_flipbook(checkbox.node, "checkbox_pressed")
 	elseif checkbox.pressed and checkbox.checked then
@@ -30,11 +31,13 @@ function M.checkbox(node_id, action_id, action, fn)
 	else
 		gui.play_flipbook(checkbox.node, "checkbox_normal")
 	end
-	return checkbox
+end
+function M.checkbox(node_id, action_id, action, fn)
+	return gooey.checkbox(node_id .. "/box", action_id, action, fn, refresh_checkbox)
 end
 
 
-local function update_radiobutton(radio)
+local function refresh_radiobutton(radio)
 	if radio.pressed and not radio.selected then
 		gui.play_flipbook(radio.node, "radio_pressed")
 	elseif radio.pressed and radio.selected then
@@ -45,25 +48,15 @@ local function update_radiobutton(radio)
 		gui.play_flipbook(radio.node, "radio_normal")
 	end
 end
-
 function M.radiogroup(group_id, action_id, action, fn)
-	local radiobuttons = gooey.radiogroup(group_id, action_id, action, fn)
-	for _,radio in ipairs(radiobuttons) do
-		update_radiobutton(radio)
-	end
-	return radiobuttons
+	return gooey.radiogroup(group_id, action_id, action, fn)
 end
-
 function M.radio(node_id, group_id, action_id, action, fn)
-	local radio = gooey.radio(node_id .. "/button", group_id, action_id, action, fn)
-	update_radiobutton(radio)
-	return radio
+	return gooey.radio(node_id .. "/button", group_id, action_id, action, fn, refresh_radiobutton)
 end
 
 
-function M.input(node_id, keyboard_type, action_id, action, config)
-	local input = gooey.input(node_id .. "/text", keyboard_type, action_id, action, config)
-	
+local function refresh_input(input, config, node_id)
 	if input.empty and not input.selected then
 		gui.set_text(input.node, config and config.empty_text or "")
 	end
@@ -79,7 +72,11 @@ function M.input(node_id, keyboard_type, action_id, action, config)
 		gui.set_enabled(cursor, false)
 		gui.cancel_animation(cursor, gui.PROP_COLOR)
 	end
-	return input
+end
+function M.input(node_id, keyboard_type, action_id, action, config)
+	return gooey.input(node_id .. "/text", keyboard_type, action_id, action, config, function(input)
+		refresh_input(input, config, node_id)
+	end)
 end
 
 return M

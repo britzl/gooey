@@ -2,6 +2,7 @@
 # Gooey
 Gooey is a GUI system for the [Defold](https://www.defold.com) game engine. It is inspired by the excellent [Dirty Larry](https://github.com/andsve/dirtylarry) library.
 
+
 # Installation
 You can use Gooey in your own project by adding this project as a [Defold library dependency](http://www.defold.com/manuals/libraries/). Open your game.project file and in the dependencies field under project add:
 
@@ -9,8 +10,10 @@ https://github.com/britzl/gooey/archive/master.zip
 
 Or point to the ZIP file of a [specific release](https://github.com/britzl/gooey/releases).
 
+
 # Usage
 The Gooey system is encapsulated in a single Lua module without any visual components. It makes very little assumptions of the look and feel of the UI components it supports. Instead Gooey focuses on providing stable input and state handling and lets the user decide which states matter and how they should be presented visually.
+
 
 ## Input bindings
 For Gooey to work it requires a couple of input bindings:
@@ -23,6 +26,7 @@ For Gooey to work it requires a couple of input bindings:
 ![](docs/key_mouse_bindings.png)
 ![](docs/text_bindings.png)
 
+
 ## Supported components
 Gooey supports the following component types:
 
@@ -32,7 +36,8 @@ Gooey supports the following component types:
 * List - ```gooey.list()```
 * Input text - ```gooey.input()```
 
-### gooey.button(node_id, action_id, action, fn)
+
+### gooey.button(node_id, action_id, action, fn, refresh_fn)
 Perform input and state handling for a button
 
 **PARAMETERS**
@@ -40,6 +45,7 @@ Perform input and state handling for a button
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
 * ```fn``` (function) - Function to call when the button is clicked/tapped on. A button is considered clicked/tapped if both a pressed and released action has been detected inside the bounds of the node. The function will get the same state table as described below passed as its first argument
+* ```refresh_fn``` (function) - Optional function to call when the state of the button has been updated. Use this to update the visual representation.
 
 **RETURN**
 * ```button``` (table) - State data for the button based on current and previous input actions
@@ -71,13 +77,16 @@ The state table contains the following fields:
 		end
 	end
 
-	function on_input(self, action_id, action)
-		update_button(gooey.button("button/bg", action_id, action, function(button)
-			print("pressed")
-		end))
+	local function on_pressed(button)
+		print("pressed")
 	end
 
-### gooey.checkbox(node_id, action_id, action, fn)
+	function on_input(self, action_id, action)
+		gooey.button("button/bg", action_id, action, on_pressed, update_button)
+	end
+
+
+### gooey.checkbox(node_id, action_id, action, fn, refresh_fn)
 Perform input and state handling for a checkbox
 
 **PARAMETERS**
@@ -85,6 +94,7 @@ Perform input and state handling for a checkbox
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
 * ```fn``` (function) - Function to call when the checkbox is checked/unchecked on. A checkbox is considered checked/unchecked if both a pressed and released action has been detected inside the bounds of the node. The function will get the same state table as described below passed as its first argument
+* ```refresh_fn``` (function) - Optional function to call when the state of the checkbox has been updated. Use this to update the visual representation.
 
 **RETURN**
 * ```checkbox``` (table) - State data for the checkbox based on current and previous input actions
@@ -119,13 +129,21 @@ The state table contains the following fields:
 		end
 	end
 
-	function on_input(self, action_id, action)
-		update_checkbox(gooey.checkbox("checkbox/bg", action_id, action, function(checkbox)
-			print("checked", checkbox.checked)
-		end))
+	local function on_checked(checkbox)
+		print("checked", checkbox.checked)
 	end
 
-### gooey.radio(node_id, group, action_id, action, fn)
+	function on_input(self, action_id, action)
+		gooey.checkbox("checkbox/bg", action_id, action, on_checked, update_checkbox)
+	end
+
+**INITIAL STATE**
+It is possible to set the initial state of a checkbox:
+
+	update_checkbox(gooey.checkbox("checkbox/bg").check()
+
+
+### gooey.radio(node_id, group, action_id, action, fn, refresh_fn)
 Perform input and state handling for a radio button
 
 **PARAMETERS**
@@ -133,6 +151,7 @@ Perform input and state handling for a radio button
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
 * ```fn``` (function) - Function to call when the radio button is selected. A radio button is considered selected if both a pressed and released action has been detected inside the bounds of the node. The function will get the same state table as described below passed as its first argument
+* ```refresh_fn``` (function) - Optional function to call when the state of the radiobutton has been updated. Use this to update the visual representation.
 
 **RETURN**
 * ```radio``` (table) - State data for the radio button based on current and previous input actions
@@ -169,15 +188,21 @@ The state table contains the following fields:
 	end
 
 	function on_input(self, action_id, action)
-		update_radio(gooey.radio("radio1/bg", "MYGROUP", action_id, action, function(radio)
+		gooey.radio("radio1/bg", "MYGROUP", action_id, action, function(radio)
 			print("selected 1", radio.selected)
-		end))
-		update_radio(gooey.radio("radio2/bg", "MYGROUP", action_id, action, function(radio)
+		end, update_radio)
+		gooey.radio("radio2/bg", "MYGROUP", action_id, action, function(radio)
 			print("selected 2", radio.selected)
-		end))
+		end), update_radio)
 	end
 
-### gooey.list(root_id, stencil_id, node_id, group, action_id, action, fn)
+**INITIAL STATE**
+It is possible to set the initial state of a radiobutton:
+
+	update_radio(gooey.radio("radio1/bg").select()
+
+
+### gooey.list(root_id, stencil_id, node_id, group, action_id, action, fn, refresh_fn)
 Perform input and state handling for a list of items
 
 **PARAMETERS**
@@ -187,6 +212,7 @@ Perform input and state handling for a list of items
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
 * ```fn``` (function) - Function to call when a list item is selected. A list item is considered selected if both a pressed and released action has been detected inside the bounds of the item. The function will get the same state table as described below passed as its first argument
+* ```refresh_fn``` (function) - Optional function to call when the state of the list has been updated. Use this to update the visual representation.
 
 **RETURN**
 * ```list``` (table) - State data for the list based on current and previous input actions
@@ -222,13 +248,16 @@ The state table contains the following fields:
 		end
 	end
 
-	function on_input(self, action_id, action)
-		update_list(gooey.list("list/root", "list/stencil", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, function(list)
-			print("selected", list.selected_item)
-		end))
+	local function on_item_selected(list)
+		print("selected", list.selected_item)
 	end
 
-### gooey.input(node_id, keyboard_type, action_id, action, config)
+	function on_input(self, action_id, action)
+		gooey.list("list/root", "list/stencil", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, on_item_selected, update_list)
+	end
+
+
+### gooey.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 Perform input and state handling for a text input field
 
 **PARAMETERS**
@@ -237,6 +266,7 @@ Perform input and state handling for a text input field
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
 * ```config``` (table) - Optional configuration values.
+* ```refresh_fn``` (function) - Optional function to call when the state of the input field has been updated. Use this to update the visual representation.
 
 The configuration table accepts the following values:
 
@@ -281,8 +311,9 @@ The state table contains the following fields:
 	end
 
 	function on_input(self, action_id, action)
-		update_input(gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT, action_id, action))
+		gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, update_input)
 	end
+
 
 ## Gooey Themes
 Gooey comes shipped with two themes: Dirty Larry and Kenneyblue. You can use these as they are or make a copy and modify. Each theme consists of a Lua module wrapping Gooey, a couple of GUI templates, a font and an atlas containing the visual representation of the buttons. Use the themes like this:
@@ -301,10 +332,12 @@ Gooey comes shipped with two themes: Dirty Larry and Kenneyblue. You can use the
 ![](images/kenneyblue.png)
 *Kenneyblue theme*
 
+
 ## Example app
 See the [example app](example/) for examples of how to use Gooey on its own and how to use the themes.
 
 [Try the HTML5 version of the example app](http://britzl.github.io/Gooey).
+
 
 # Credits
 * Assets for the Dirty Larry theme from [Dirty Larry](https://github.com/andsve/dirtylarry)
