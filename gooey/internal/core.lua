@@ -53,8 +53,8 @@ function M.instance(id, instances, functions)
 		local data = {}
 		instances[key].data = data
 		for name,fn in pairs(functions or {}) do
-			data[name] = function()
-				fn(data)
+			data[name] = function(...)
+				fn(data, ...)
 			end
 		end
 	end
