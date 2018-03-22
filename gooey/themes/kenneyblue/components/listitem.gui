@@ -1,10 +1,10 @@
 script: ""
 fonts {
-  name: "example"
+  name: "kenneyblue"
   font: "/gooey/themes/kenneyblue/fonts/kenneyblue.font"
 }
 textures {
-  name: "gooey"
+  name: "kenneyblue"
   texture: "/gooey/themes/kenneyblue/images/kenneyblue.atlas"
 }
 background_color {
@@ -46,7 +46,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_button04"
+  texture: "kenneyblue/blue_button04"
   id: "bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -101,7 +101,7 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "LIST ITEM"
-  font: "example"
+  font: "kenneyblue"
   id: "text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
