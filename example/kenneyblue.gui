@@ -16,7 +16,7 @@ background_color {
 nodes {
   position {
     x: 320.0
-    y: 492.942
+    y: 228.942
     z: 0.0
     w: 1.0
   }
@@ -1231,7 +1231,7 @@ nodes {
 nodes {
   position {
     x: 320.0
-    y: 1032.0
+    y: 1052.0
     z: 0.0
     w: 1.0
   }
@@ -1465,7 +1465,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_button04"
+  texture: "kenneyblue/blue_button04"
   id: "listitem1/bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -1521,7 +1521,7 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "LIST ITEM"
-  font: "example"
+  font: "kenneyblue"
   id: "listitem1/text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -1623,7 +1623,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_button04"
+  texture: "kenneyblue/blue_button04"
   id: "listitem2/bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -1679,7 +1679,7 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "LIST ITEM"
-  font: "example"
+  font: "kenneyblue"
   id: "listitem2/text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -1781,7 +1781,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_button04"
+  texture: "kenneyblue/blue_button04"
   id: "listitem3/bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -1837,7 +1837,7 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "LIST ITEM"
-  font: "example"
+  font: "kenneyblue"
   id: "listitem3/text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -1939,7 +1939,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_button04"
+  texture: "kenneyblue/blue_button04"
   id: "listitem4/bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -1995,7 +1995,7 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "LIST ITEM"
-  font: "example"
+  font: "kenneyblue"
   id: "listitem4/text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -2097,7 +2097,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_button04"
+  texture: "kenneyblue/blue_button04"
   id: "listitem5/bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -2153,7 +2153,7 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "LIST ITEM"
-  font: "example"
+  font: "kenneyblue"
   id: "listitem5/text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -2255,7 +2255,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_button04"
+  texture: "kenneyblue/blue_button04"
   id: "listitem6/bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -2311,7 +2311,7 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "LIST ITEM"
-  font: "example"
+  font: "kenneyblue"
   id: "listitem6/text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -2413,7 +2413,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gooey/blue_button04"
+  texture: "kenneyblue/blue_button04"
   id: "listitem7/bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -2469,7 +2469,7 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "LIST ITEM"
-  font: "example"
+  font: "kenneyblue"
   id: "listitem7/text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -2489,6 +2489,331 @@ nodes {
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
   parent: "listitem7/bg"
+  layer: "text"
+  inherit_alpha: true
+  alpha: 1.0
+  outline_alpha: 1.0
+  shadow_alpha: 1.0
+  template_node_child: true
+  text_leading: 1.0
+  text_tracking: 0.0
+}
+nodes {
+  position {
+    x: 320.0
+    y: 688.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_TEMPLATE
+  id: "dynamiclist"
+  layer: ""
+  inherit_alpha: true
+  alpha: 1.0
+  template: "/gooey/themes/kenneyblue/components/dynamiclist.gui"
+  template_node_child: false
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 420.0
+    y: 220.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "kenneyblue/blue_panel"
+  id: "dynamiclist/bg"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_N
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "dynamiclist"
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 7.0
+    y: 7.0
+    z: 7.0
+    w: 7.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  overridden_fields: 4
+  template_node_child: true
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: 0.0
+    y: -10.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 420.0
+    y: 200.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "kenneyblue/transparent1px"
+  id: "dynamiclist/stencil"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_N
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "dynamiclist/bg"
+  layer: "below"
+  inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_STENCIL
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  overridden_fields: 4
+  template_node_child: true
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 0.0
+    y: 200.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "kenneyblue/transparent1px"
+  id: "dynamiclist/root"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_N
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "dynamiclist/stencil"
+  layer: "below"
+  inherit_alpha: true
+  slice9 {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 0.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  overridden_fields: 4
+  template_node_child: true
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: 0.0
+    y: -29.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 400.0
+    y: 60.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "kenneyblue/blue_button04"
+  id: "dynamiclist/listitem_bg"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_CENTER
+  adjust_mode: ADJUST_MODE_FIT
+  parent: "dynamiclist/root"
+  layer: "below"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 11.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: true
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: -185.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 400.0
+    y: 60.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_TEXT
+  blend_mode: BLEND_MODE_ALPHA
+  text: "LIST ITEM"
+  font: "kenneyblue"
+  id: "dynamiclist/listitem_text"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_W
+  outline {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  shadow {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  adjust_mode: ADJUST_MODE_FIT
+  line_break: false
+  parent: "dynamiclist/listitem_bg"
   layer: "text"
   inherit_alpha: true
   alpha: 1.0

@@ -79,4 +79,31 @@ function M.input(node_id, keyboard_type, action_id, action, config)
 	end)
 end
 
+
+local function update_list(list)
+	for i,item in pairs(list.items) do
+		local pos = gui.get_position(item)
+		if i == list.selected_item then
+			pos.x = 4
+			gui.play_flipbook(item, hash("blue_button03"))
+		elseif i == list.pressed_item then
+			pos.x = 1
+			gui.play_flipbook(item, hash("blue_button03"))
+		elseif i == list.over_item_now then
+			pos.x = 1
+			gui.play_flipbook(item, hash("blue_button04"))
+		elseif i == list.out_item_now then
+			pos.x = 0
+			gui.play_flipbook(item, hash("blue_button04"))
+		elseif i ~= list.over_item then
+			pos.x = 0
+			gui.play_flipbook(item, hash("blue_button04"))
+		end
+		gui.set_position(item, pos)
+	end
+end
+function M.list(root_id, stencil_id, item_ids, action_id, action, fn)
+	return gooey.list(root_id, stencil_id, item_ids, action_id, action, fn, update_list)
+end
+
 return M

@@ -78,6 +78,10 @@ function M.list(root_id, stencil_id, item_ids, action_id, action, fn, refresh_fn
 	list.TOUCH = M.TOUCH
 	return list(root_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
 end
+function M.dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+	list.TOUCH = M.TOUCH
+	return list.dynamic(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+end
 
 
 --- Input text
