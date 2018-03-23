@@ -25,6 +25,11 @@ function M.button(node_id, action_id, action, fn, refresh_fn)
 	button.node = node
 	button.refresh_fn = refresh_fn
 
+	if not action then
+		button.refresh()
+		return button
+	end
+	
 	local over = gui.pick_node(node, action.x, action.y)
 	button.over_now = over and not button.over
 	button.out_now = not over and button.over

@@ -1,9 +1,9 @@
 local core = require "gooey.internal.core"
-local checkbox = require "gooey.component.checkbox"
-local button = require "gooey.component.button"
-local radio = require "gooey.component.radio"
-local list = require "gooey.component.list"
-local input = require "gooey.component.input"
+local checkbox = require "gooey.internal.checkbox"
+local button = require "gooey.internal.button"
+local radio = require "gooey.internal.radio"
+local list = require "gooey.internal.list"
+local input = require "gooey.internal.input"
 
 local M = {}
 
