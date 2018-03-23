@@ -20,6 +20,7 @@ local function get_instance(list_id, stencil_id, refresh_fn, lists)
 	local list, state = core.instance(stencil_id, lists, LIST)
 	list.id = list_id
 	state.stencil = state.stencil or gui.get_node(stencil_id)	
+	state.stencil_size = state.stencil_size or gui.get_size(state.stencil)
 	state.refresh_fn = refresh_fn
 	list.enabled = core.is_enabled(state.stencil)
 	return list, state
@@ -150,6 +151,28 @@ function M.static(list_id, stencil_id, item_ids, action_id, action, fn, refresh_
 end
 
 
+-- update the positions of the list items and set their data indices
+local function update_dynamic_listitem_positions(list, state)
+	local top_i = state.scroll_pos.y / list.item_size.y
+	local top_y = state.scroll_pos.y % list.item_size.y
+	local first_index = 1 + math.floor(top_i)
+	for i=1,#list.items do
+		local item = list.items[i]
+		local item_pos = gui.get_position(item.root)
+		local index = first_index + i - 1
+		item.index = index
+		item_pos.y = state.first_item_pos.y - (list.item_size.y * (i - 1)) + top_y
+		gui.set_position(item.root, item_pos)
+	end
+end
+
+-- assign new data to the list items
+local function update_dynamic_listitem_data(list, data)
+	for i=1,#list.items do
+		local item = list.items[i]
+		item.data = data[item.index] or ""
+	end
+end
 
 --- A dynamic list where the nodes are reused to present a large list of items
 function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
@@ -161,15 +184,13 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 		local item_node = gui.get_node(item_id)
 		local item_pos = gui.get_position(item_node)
 		local item_size = gui.get_size(item_node)
-		local stencil_size = gui.get_size(state.stencil)
-		local item_count = math.min(math.ceil(stencil_size.y / item_size.y) + 1, #data)
 		list.items = {}
 		list.item_size = item_size
 		state.first_item_pos = vmath.vector3(item_pos)
 		state.scroll_pos = vmath.vector3(0)
-		state.min_y = 0
-		state.max_y = (#data * item_size.y) - stencil_size.y
+		state.data_size = nil
 		
+		local item_count = math.ceil(state.stencil_size.y / item_size.y) + 1
 		for i=1,item_count do
 			local nodes = gui.clone_tree(item_node)
 			list.items[i] = {
@@ -185,40 +206,33 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 		gui.delete_node(item_node)
 	end
 
-	-- bail early if the list is empty
-	if #list.items == 0 then
-		if refresh_fn then refresh_fn(list) end
-		return list
-	end
-
-	if not action_id and not action then
-		if refresh_fn then refresh_fn(list) end
-		return list
+	-- recalculate size of list if the amount of data has changed
+	if not state.data_size or state.data_size ~= #data then
+		state.data_size = #data		
+		state.min_y = 0
+		state.max_y = (#data * list.item_size.y) - state.stencil_size.y
+		for i=1,#list.items do
+			local item = list.items[i]
+			gui.set_enabled(item.root, i <= #data)
+		end
 	end
 	
-	if list.enabled then
+	-- bail early if the list is empty
+	if state.data_size == 0 then
+		if refresh_fn then refresh_fn(list) end
+		return list
+	end
 
+	if list.enabled and (action_id or action) then
 		handle_list_interaction(list, state, action_id, action, fn)
-
 		-- re-position the list items if we're scrolling
 		-- re-assign list item indices and data
 		if state.scrolling then
-			local top_i = state.scroll_pos.y / list.item_size.y
-			local top_y = state.scroll_pos.y % list.item_size.y
-			local first_index = 1 + math.floor(top_i)
-
-			for i=1,#list.items do
-				local item = list.items[i]
-				local item_pos = gui.get_position(item.root)
-				item_pos.y = state.first_item_pos.y - (list.item_size.y * (i - 1)) + top_y
-				gui.set_position(item.root, item_pos)
-
-				local index = first_index + i - 1
-				item.index = index
-				item.data = data[index] or ""
-			end
+			update_dynamic_listitem_positions(list, state)
 		end
 	end
+
+	update_dynamic_listitem_data(list, data)
 
 	if refresh_fn then refresh_fn(list) end
 
