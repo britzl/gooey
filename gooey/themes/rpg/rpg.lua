@@ -1,20 +1,15 @@
 local gooey = require "gooey.gooey"
-
+local utils = require "gooey.themes.utils"
 
 local M = {}
 
-
-local function shake(node, initial_scale)
-	gui.cancel_animation(node, "scale.x")
-	gui.cancel_animation(node, "scale.y")
-	gui.set_scale(node, initial_scale)
-	local scale = gui.get_scale(node)
-	gui.set_scale(node, scale * 1.1)
-	gui.animate(node, "scale.x", scale.x, gui.EASING_OUTELASTIC, 0.9)
-	gui.animate(node, "scale.y", scale.y, gui.EASING_OUTELASTIC, 0.9, 0.05, function()
-		gui.set_scale(node, initial_scale)
-	end)
-end
+local PANEL_BLUE = hash("panel_blue")
+local BUTTON_SQUARE_PRESSED = hash("buttonSquare_blue_pressed")
+local BUTTON_SQUARE = hash("buttonSquare_blue")
+local CHECKBOX_PRESSED = hash("checkbox_blue_pressed")
+local CHECKBOX = hash("checkbox_blue")
+local RADIO_PRESSED = hash("buttonRound_blue_pressed")
+local RADIO = hash("buttonRound_blue")
 
 
 function M.acquire_input()
@@ -24,12 +19,12 @@ end
 
 local function update_button(button)
 	if button.pressed_now or button.released_now then
-		shake(button.node, vmath.vector3(1))
+		utils.shake(button.node, vmath.vector3(1))
 	end
 	if button.pressed then
-		gui.play_flipbook(button.node, hash("buttonSquare_blue_pressed"))
+		gui.play_flipbook(button.node, BUTTON_SQUARE_PRESSED)
 	else
-		gui.play_flipbook(button.node, hash("buttonSquare_blue"))
+		gui.play_flipbook(button.node, BUTTON_SQUARE)
 	end
 end
 function M.button(node_id, action_id, action, fn)
@@ -39,14 +34,14 @@ end
 
 local function update_checkbox(checkbox)
 	if checkbox.pressed_now or checkbox.released_now then
-		shake(checkbox.node, vmath.vector3(1))
+		utils.shake(checkbox.node, vmath.vector3(1))
 	end
 	if checkbox.pressed then
-		gui.play_flipbook(checkbox.node, hash("checkbox_blue_pressed"))
+		gui.play_flipbook(checkbox.node, CHECKBOX_PRESSED)
 	elseif checkbox.checked then
-		gui.play_flipbook(checkbox.node, hash("checkbox_blue_checked"))
+		gui.play_flipbook(checkbox.node, CHECKBOX_PRESSED)
 	else
-		gui.play_flipbook(checkbox.node, hash("checkbox_blue"))
+		gui.play_flipbook(checkbox.node, CHECKBOX)
 	end
 end
 function M.checkbox(node_id, action_id, action, fn)
@@ -56,14 +51,14 @@ end
 
 local function update_radiobutton(radio)
 	if radio.pressed_now or radio.released_now then
-		shake(radio.node, vmath.vector3(1))
+		utils.shake(radio.node, vmath.vector3(1))
 	end
 	if radio.pressed then
-		gui.play_flipbook(radio.node, hash("buttonRound_blue_pressed"))
+		gui.play_flipbook(radio.node, RADIO_PRESSED)
 	elseif radio.selected then
-		gui.play_flipbook(radio.node, hash("buttonRound_blue_selected"))
+		gui.play_flipbook(radio.node, RADIO_PRESSED)
 	else
-		gui.play_flipbook(radio.node, hash("buttonRound_blue"))
+		gui.play_flipbook(radio.node, RADIO)
 	end		
 end
 function M.radiogroup(group_id, action_id, action, fn)
@@ -76,9 +71,9 @@ end
 
 local function update_input(input, config, node_id)
 	if input.selected_now then
-		gui.play_flipbook(gui.get_node(node_id .. "/bg"), hash("buttonSquare_blue_pressed"))
+		gui.play_flipbook(gui.get_node(node_id .. "/bg"), BUTTON_SQUARE_PRESSED)
 	elseif input.deselected_now then
-		gui.play_flipbook(gui.get_node(node_id .. "/bg"), hash("buttonSquare_blue_pressed"))
+		gui.play_flipbook(gui.get_node(node_id .. "/bg"), BUTTON_SQUARE_PRESSED)
 	end
 
 	if input.empty and not input.selected then
@@ -108,19 +103,19 @@ local function update_listitem(list, item)
 	local pos = gui.get_position(item.root)
 	if item.index == list.selected_item then
 		pos.x = 4
-		gui.play_flipbook(item.root, hash("panel_blue"))
+		gui.play_flipbook(item.root, PANEL_BLUE)
 	elseif item.index == list.pressed_item then
 		pos.x = 1
-		gui.play_flipbook(item.root, hash("panel_blue"))
+		gui.play_flipbook(item.root, PANEL_BLUE)
 	elseif item.index == list.over_item_now then
 		pos.x = 1
-		gui.play_flipbook(item.root, hash("panel_blue"))
+		gui.play_flipbook(item.root, PANEL_BLUE)
 	elseif item.index == list.out_item_now then
 		pos.x = 0
-		gui.play_flipbook(item.root, hash("panel_blue"))
+		gui.play_flipbook(item.root, PANEL_BLUE)
 	elseif item.index ~= list.over_item then
 		pos.x = 0
-		gui.play_flipbook(item.root, hash("panel_blue"))
+		gui.play_flipbook(item.root, PANEL_BLUE)
 	end
 	gui.set_position(item.root, pos)
 end

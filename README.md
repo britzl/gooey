@@ -33,8 +33,10 @@ Gooey supports the following component types:
 * Button - ```gooey.button()```
 * Checkbox - ```gooey.checkbox()```
 * Radio button - ```gooey.radio()```
-* List - ```gooey.list()```
 * Input text - ```gooey.input()```
+* Lists
+ * ```gooey.static_list()``` All list item nodes are already added to the list. Good for showing a small data set or when the list item nodes should vary in composition and looks.
+ * ```gooey.dynamic_list()``` All list item nodes are created from the same template. The nodes are reused when scrolling. Good for showing a large data set.
 
 
 ### gooey.button(node_id, action_id, action, fn, refresh_fn)

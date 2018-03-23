@@ -1,20 +1,28 @@
 local gooey = require "gooey.gooey"
-
+local utils = require "gooey.themes.utils"
 
 local M = {}
 
+local INPUT_FOCUS = hash("blue_button05")
+local INPUT = hash("blue_button03")
 
-local function shake(node, initial_scale)
-	gui.cancel_animation(node, "scale.x")
-	gui.cancel_animation(node, "scale.y")
-	gui.set_scale(node, initial_scale)
-	local scale = gui.get_scale(node)
-	gui.set_scale(node, scale * 1.2)
-	gui.animate(node, "scale.x", scale.x, gui.EASING_OUTELASTIC, 0.8)
-	gui.animate(node, "scale.y", scale.y, gui.EASING_OUTELASTIC, 0.8, 0.05, function()
-		gui.set_scale(node, initial_scale)
-	end)
-end
+
+local BUTTON_PRESSED = hash("blue_button05")
+local BUTTON = hash("blue_button04")
+
+local LISTITEM_SELECTED = hash("blue_button03")
+local LISTITEM_PRESSED = hash("blue_button03")
+local LISTITEM = hash("blue_button04")
+
+local CHECKBOX_PRESSED = hash("grey_boxCross")
+local CHECKBOX_CHECKED = hash("blue_boxCross")
+local CHECKBOX = hash("grey_box")
+
+local RADIO_PRESSED = hash("grey_boxTick")
+local RADIO_SELECTED = hash("blue_boxTick")
+local RADIO = hash("grey_circle")
+
+
 
 
 function M.acquire_input()
@@ -24,12 +32,12 @@ end
 
 local function refresh_button(button)
 	if button.pressed_now or button.released_now then
-		shake(button.node, vmath.vector3(1))
+		utils.shake(button.node, vmath.vector3(1))
 	end
 	if button.pressed then
-		gui.play_flipbook(button.node, hash("blue_button05"))
+		gui.play_flipbook(button.node, BUTTON_PRESSED)
 	else
-		gui.play_flipbook(button.node, hash("blue_button04"))
+		gui.play_flipbook(button.node, BUTTON)
 	end
 end
 function M.button(node_id, action_id, action, fn)
@@ -39,14 +47,14 @@ end
 
 local function refresh_checkbox(checkbox)
 	if checkbox.pressed_now or checkbox.released_now then
-		shake(checkbox.node, vmath.vector3(1))
+		utils.shake(checkbox.node, vmath.vector3(1))
 	end
 	if checkbox.pressed then
-		gui.play_flipbook(checkbox.node, hash("grey_boxCross"))
+		gui.play_flipbook(checkbox.node, CHECKBOX_PRESSED)
 	elseif checkbox.checked then
-		gui.play_flipbook(checkbox.node, hash("blue_boxCross"))
+		gui.play_flipbook(checkbox.node, CHECKBOX_CHECKED)
 	else
-		gui.play_flipbook(checkbox.node, hash("grey_box"))
+		gui.play_flipbook(checkbox.node, CHECKBOX)
 	end
 end
 function M.checkbox(node_id, action_id, action, fn)
@@ -56,14 +64,14 @@ end
 
 local function update_radiobutton(radio)
 	if radio.pressed_now or radio.released_now then
-		shake(radio.node, vmath.vector3(1))
+		utils.shake(radio.node, vmath.vector3(1))
 	end
 	if radio.pressed then
-		gui.play_flipbook(radio.node, hash("grey_boxTick"))
+		gui.play_flipbook(radio.node, RADIO_PRESSED)
 	elseif radio.selected then
-		gui.play_flipbook(radio.node, hash("blue_boxTick"))
+		gui.play_flipbook(radio.node, RADIO_SELECTED)
 	else
-		gui.play_flipbook(radio.node, hash("grey_circle"))
+		gui.play_flipbook(radio.node, RADIO)
 	end		
 end
 function M.radiogroup(group_id, action_id, action, fn)
@@ -76,9 +84,9 @@ end
 
 local function update_input(input, config, node_id)
 	if input.selected_now then
-		gui.play_flipbook(gui.get_node(node_id .. "/bg"), hash("blue_button05"))
+		gui.play_flipbook(gui.get_node(node_id .. "/bg"), INPUT_FOCUS)
 	elseif input.deselected_now then
-		gui.play_flipbook(gui.get_node(node_id .. "/bg"), hash("blue_button03"))
+		gui.play_flipbook(gui.get_node(node_id .. "/bg"), INPUT)
 	end
 
 	if input.empty and not input.selected then
@@ -105,30 +113,30 @@ end
 
 
 local function update_listitem(list, item)
-	local pos = gui.get_position(item)
-	if item.index== list.selected_item then
+	local pos = gui.get_position(item.root)
+	if item.index == list.selected_item then
 		pos.x = 4
-		gui.play_flipbook(item, hash("blue_button03"))
+		gui.play_flipbook(item.root, LISTITEM_SELECTED)
 	elseif item.index == list.pressed_item then
 		pos.x = 1
-		gui.play_flipbook(item, hash("blue_button03"))
+		gui.play_flipbook(item.root, LISTITEM_PRESSED)
 	elseif item.index == list.over_item_now then
 		pos.x = 1
-		gui.play_flipbook(item, hash("blue_button04"))
+		gui.play_flipbook(item.root, LISTITEM)
 	elseif item.index == list.out_item_now then
 		pos.x = 0
-		gui.play_flipbook(item, hash("blue_button04"))
+		gui.play_flipbook(item.root, LISTITEM)
 	elseif item.index ~= list.over_item then
 		pos.x = 0
-		gui.play_flipbook(item, hash("blue_button04"))
+		gui.play_flipbook(item.root, LISTITEM)
 	end
-	gui.set_position(item, pos)
+	gui.set_position(item.root, pos)
 end
 
 
 local function update_static_list(list)
 	for _,item in ipairs(list.items) do
-		update_listitem(list, item.root)
+		update_listitem(list, item)
 	end
 end
 function M.list(root_id, stencil_id, item_ids, action_id, action, fn)
@@ -140,7 +148,7 @@ local function update_dynamic_list(list)
 	for _,item in ipairs(list.items) do
 		local item_text_node = item.nodes[hash(list.id .. "/listitem_text")]
 		gui.set_text(item_text_node, item.data)
-		update_listitem(list, item.root)
+		update_listitem(list, item)
 	end
 end
 function M.dynamic_list(list_id, data, action_id, action, fn)

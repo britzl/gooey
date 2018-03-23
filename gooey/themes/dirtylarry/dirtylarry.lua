@@ -4,6 +4,25 @@ local gooey = require "gooey.gooey"
 local M = {}
 
 
+local BUTTON_PRESSED = hash("button_pressed")
+local BUTTON_NORMAL = hash("button_normal")
+
+local CHEKCKBOX_PRESSED = hash("checkbox_pressed")
+local CHEKCKBOX_CHECKED_PRESSED = hash("checkbox_checked_pressed")
+local CHEKCKBOX_CHECKED_NORMAL = hash("checkbox_checked_normal")
+local CHEKCKBOX_NORMAL = hash("checkbox_normal")
+
+local RADIO_PRESSED = hash("radio_pressed")
+local RADIO_CHECKED_PRESSED = hash("radio_checked_pressed")
+local RADIO_CHECKED_NORMAL = hash("radio_checked_normal")
+local RADIO_NORMAL = hash("radio_normal")
+
+local LISTITEM_SELECTED = hash("button_pressed")
+local LISTITEM_PRESSED = hash("button_pressed")
+local LISTITEM_OVER = hash("button_normal")
+local LISTITEM_NORMAL = hash("button_normal")
+
+
 function M.acquire_input()
 	gooey.acquire_input()
 end
@@ -11,9 +30,9 @@ end
 
 local function refresh_button(button)
 	if button.pressed then
-		gui.play_flipbook(button.node, "button_pressed")
+		gui.play_flipbook(button.node, BUTTON_PRESSED)
 	else
-		gui.play_flipbook(button.node, "button_normal")
+		gui.play_flipbook(button.node, BUTTON_NORMAL)
 	end
 end
 function M.button(node_id, action_id, action, fn)
@@ -23,13 +42,13 @@ end
 
 local function refresh_checkbox(checkbox)
 	if checkbox.pressed and not checkbox.checked then
-		gui.play_flipbook(checkbox.node, "checkbox_pressed")
+		gui.play_flipbook(checkbox.node, CHEKCKBOX_PRESSED)
 	elseif checkbox.pressed and checkbox.checked then
-		gui.play_flipbook(checkbox.node, "checkbox_checked_pressed")
+		gui.play_flipbook(checkbox.node, CHEKCKBOX_CHECKED_PRESSED)
 	elseif checkbox.checked then
-		gui.play_flipbook(checkbox.node, "checkbox_checked_normal")
+		gui.play_flipbook(checkbox.node, CHEKCKBOX_CHECKED_NORMAL)
 	else
-		gui.play_flipbook(checkbox.node, "checkbox_normal")
+		gui.play_flipbook(checkbox.node, CHEKCKBOX_NORMAL)
 	end
 end
 function M.checkbox(node_id, action_id, action, fn)
@@ -39,13 +58,13 @@ end
 
 local function refresh_radiobutton(radio)
 	if radio.pressed and not radio.selected then
-		gui.play_flipbook(radio.node, "radio_pressed")
+		gui.play_flipbook(radio.node, RADIO_PRESSED)
 	elseif radio.pressed and radio.selected then
-		gui.play_flipbook(radio.node, "radio_checked_pressed")
+		gui.play_flipbook(radio.node, RADIO_CHECKED_PRESSED)
 	elseif radio.selected then
-		gui.play_flipbook(radio.node, "radio_checked_normal")
+		gui.play_flipbook(radio.node, RADIO_CHECKED_NORMAL)
 	else
-		gui.play_flipbook(radio.node, "radio_normal")
+		gui.play_flipbook(radio.node, RADIO_NORMAL)
 	end
 end
 function M.radiogroup(group_id, action_id, action, fn)
@@ -84,19 +103,19 @@ local function update_listitem(list, item)
 	local pos = gui.get_position(item.root)
 	if item.index == list.selected_item then
 		pos.x = 4
-		gui.play_flipbook(item.root, hash("button_pressed"))
+		gui.play_flipbook(item.root, LISTITEM_PRESSED)
 	elseif item.index == list.pressed_item then
 		pos.x = 1
-		gui.play_flipbook(item.root, hash("button_pressed"))
+		gui.play_flipbook(item.root, LISTITEM_SELECTED)
 	elseif item.index == list.over_item_now then
 		pos.x = 1
-		gui.play_flipbook(item.root, hash("button_normal"))
+		gui.play_flipbook(item.root, LISTITEM_OVER)
 	elseif item.index == list.out_item_now then
 		pos.x = 0
-		gui.play_flipbook(item.root, hash("button_normal"))
+		gui.play_flipbook(item.root, LISTITEM_NORMAL)
 	elseif item.index ~= list.over_item then
 		pos.x = 0
-		gui.play_flipbook(item.root, hash("button_normal"))
+		gui.play_flipbook(item.root, LISTITEM_NORMAL)
 	end
 	gui.set_position(item.root, pos)
 end
