@@ -10,11 +10,11 @@ function init(self)
 		"listitem1/bg", "listitem2/bg", "listitem3/bg", "listitem4/bg", "listitem5/bg",
 		"listitem6/bg", "listitem7/bg"
 	}
-	self.list_data = {
-		"Luke", "Leia", "Chewie", "Yoda", "Darth", "Boba", "C3PIO", "R2D2", "Han"
-	}
+	self.list_data = { "Luke", "Leia", "Chewie", "Yoda", "Darth", "Boba", "C3PIO", "R2D2", "Han" }
+
 	kenneyblue.checkbox("checkbox").check()
 	kenneyblue.input("input", gui.KEYBOARD_TYPE_DEFAULT, nil, { x=0, y=0 }, { empty_text = "EMPTY, MAX 8 CHARS" })
+	kenneyblue.dynamic_list("dynamiclist", self.list_data)
 end
 
 function on_input(self, action_id, action)

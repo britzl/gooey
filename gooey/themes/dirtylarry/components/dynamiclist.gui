@@ -1,11 +1,11 @@
 script: ""
 fonts {
-  name: "kenneyblue"
-  font: "/gooey/themes/kenneyblue/fonts/kenneyblue.font"
+  name: "dirtylarry"
+  font: "/gooey/themes/dirtylarry/fonts/dirtylarry.font"
 }
 textures {
-  name: "kenneyblue"
-  texture: "/gooey/themes/kenneyblue/images/kenneyblue.atlas"
+  name: "dirtylarry"
+  texture: "/gooey/themes/dirtylarry/images/dirtylarry.atlas"
 }
 background_color {
   x: 0.0
@@ -17,6 +17,60 @@ nodes {
   position {
     x: 0.0
     y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 420.0
+    y: 340.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "dirtylarry/button_pressed"
+  id: "bg"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_N
+  adjust_mode: ADJUST_MODE_FIT
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 20.0
+    y: 16.0
+    z: 20.0
+    w: 16.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: false
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: 0.0
+    y: -9.618
     z: 0.0
     w: 1.0
   }
@@ -46,61 +100,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "kenneyblue/blue_panel"
-  id: "bg"
-  xanchor: XANCHOR_NONE
-  yanchor: YANCHOR_NONE
-  pivot: PIVOT_N
-  adjust_mode: ADJUST_MODE_FIT
-  layer: ""
-  inherit_alpha: true
-  slice9 {
-    x: 7.0
-    y: 7.0
-    z: 7.0
-    w: 7.0
-  }
-  clipping_mode: CLIPPING_MODE_NONE
-  clipping_visible: true
-  clipping_inverted: false
-  alpha: 1.0
-  template_node_child: false
-  size_mode: SIZE_MODE_MANUAL
-}
-nodes {
-  position {
-    x: 0.0
-    y: -10.0
-    z: 0.0
-    w: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  size {
-    x: 420.0
-    y: 300.0
-    z: 0.0
-    w: 1.0
-  }
-  color {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-    w: 1.0
-  }
-  type: TYPE_BOX
-  blend_mode: BLEND_MODE_ALPHA
-  texture: "kenneyblue/transparent1px"
+  texture: "dirtylarry/transparent1px"
   id: "stencil"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -125,7 +125,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: -29.0
+    y: -32.0
     z: 0.0
     w: 1.0
   }
@@ -143,7 +143,7 @@ nodes {
   }
   size {
     x: 400.0
-    y: 60.0
+    y: 64.0
     z: 0.0
     w: 1.0
   }
@@ -155,7 +155,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "kenneyblue/blue_button04"
+  texture: "dirtylarry/button_normal"
   id: "listitem_bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -165,10 +165,10 @@ nodes {
   layer: "below"
   inherit_alpha: true
   slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 11.0
+    x: 12.0
+    y: 12.0
+    z: 12.0
+    w: 12.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
@@ -179,7 +179,7 @@ nodes {
 }
 nodes {
   position {
-    x: -185.0
+    x: -188.0
     y: 0.0
     z: 0.0
     w: 1.0
@@ -197,8 +197,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 60.0
+    x: 200.0
+    y: 100.0
     z: 0.0
     w: 1.0
   }
@@ -210,8 +210,8 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "LIST ITEM"
-  font: "kenneyblue"
+  text: "TEXT"
+  font: "dirtylarry"
   id: "listitem_text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE

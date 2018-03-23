@@ -36,7 +36,8 @@ end
 -- exist
 -- @param id (hash|string)
 -- @param instances
--- @return Instance for the node
+-- @return instance Instance data for the node (public data)
+-- @return state Internal state of the node (private data)
 function M.instance(id, instances, functions)
 	local key = M.to_key(id)
 	local instance = instances[key]
@@ -58,7 +59,10 @@ function M.instance(id, instances, functions)
 			end
 		end
 	end
-	return instances[key].data
+	if not instances[key].state then
+		instances[key].state = {}
+	end
+	return instances[key].data, instances[key].state
 end	
 
 return M

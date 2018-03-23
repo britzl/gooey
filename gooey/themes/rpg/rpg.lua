@@ -104,30 +104,44 @@ function M.input(node_id, keyboard_type, action_id, action, config)
 end
 
 
-local function update_list(list)
-	for i,item in pairs(list.items) do
-		local pos = gui.get_position(item)
-		if i == list.selected_item then
-			pos.x = 4
-			gui.play_flipbook(item, hash("panel_blue"))
-		elseif i == list.pressed_item then
-			pos.x = 1
-			gui.play_flipbook(item, hash("panel_blue"))
-		elseif i == list.over_item_now then
-			pos.x = 1
-			gui.play_flipbook(item, hash("panel_blue"))
-		elseif i == list.out_item_now then
-			pos.x = 0
-			gui.play_flipbook(item, hash("panel_blue"))
-		elseif i ~= list.over_item then
-			pos.x = 0
-			gui.play_flipbook(item, hash("panel_blue"))
-		end
-		gui.set_position(item, pos)
+local function update_listitem(list, item)
+	local pos = gui.get_position(item.root)
+	if item.index == list.selected_item then
+		pos.x = 4
+		gui.play_flipbook(item.root, hash("panel_blue"))
+	elseif item.index == list.pressed_item then
+		pos.x = 1
+		gui.play_flipbook(item.root, hash("panel_blue"))
+	elseif item.index == list.over_item_now then
+		pos.x = 1
+		gui.play_flipbook(item.root, hash("panel_blue"))
+	elseif item.index == list.out_item_now then
+		pos.x = 0
+		gui.play_flipbook(item.root, hash("panel_blue"))
+	elseif item.index ~= list.over_item then
+		pos.x = 0
+		gui.play_flipbook(item.root, hash("panel_blue"))
 	end
-end
-function M.list(root_id, stencil_id, item_ids, action_id, action, fn)
-	return gooey.list(root_id, stencil_id, item_ids, action_id, action, fn, update_list)
+	gui.set_position(item.root, pos)
 end
 
+local function update_static_list(list)
+	for _,item in ipairs(list.items) do
+		update_listitem(list, item)
+	end
+end
+function M.static_list(root_id, stencil_id, item_ids, action_id, action, fn)
+	return gooey.static_list(root_id, stencil_id, item_ids, action_id, action, fn, update_static_list)
+end
+
+
+local function update_dynamic_list(list)
+	for _,item in ipairs(list.items) do
+		update_listitem(list, item)
+		gui.set_text(item.nodes[hash(list.id .. "/listitem_text")], item.data or "EMPTY")
+	end
+end
+function M.dynamic_list(list_id, data, action_id, action, fn)
+	return gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data, action_id, action, fn, update_dynamic_list)
+end
 return M

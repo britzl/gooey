@@ -1,11 +1,11 @@
 script: ""
 fonts {
-  name: "kenneyblue"
-  font: "/gooey/themes/kenneyblue/fonts/kenneyblue.font"
+  name: "rpg"
+  font: "/gooey/themes/rpg/fonts/rpg.font"
 }
 textures {
-  name: "kenneyblue"
-  texture: "/gooey/themes/kenneyblue/images/kenneyblue.atlas"
+  name: "rpg"
+  texture: "/gooey/themes/rpg/images/rpg.atlas"
 }
 background_color {
   x: 0.0
@@ -46,7 +46,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "kenneyblue/blue_panel"
+  texture: "rpg/panel_blue"
   id: "bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -55,10 +55,10 @@ nodes {
   layer: ""
   inherit_alpha: true
   slice9 {
-    x: 7.0
-    y: 7.0
-    z: 7.0
-    w: 7.0
+    x: 20.0
+    y: 16.0
+    z: 20.0
+    w: 16.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
@@ -70,7 +70,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: -10.0
+    y: -9.618
     z: 0.0
     w: 1.0
   }
@@ -100,7 +100,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "kenneyblue/transparent1px"
+  texture: "rpg/transparent1px"
   id: "stencil"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -125,7 +125,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: -29.0
+    y: -31.0
     z: 0.0
     w: 1.0
   }
@@ -155,7 +155,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "kenneyblue/blue_button04"
+  texture: "rpg/panel_blue"
   id: "listitem_bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
@@ -165,10 +165,10 @@ nodes {
   layer: "below"
   inherit_alpha: true
   slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 11.0
+    x: 20.0
+    y: 26.0
+    z: 20.0
+    w: 26.0
   }
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
@@ -197,7 +197,7 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
+    x: 390.0
     y: 60.0
     z: 0.0
     w: 1.0
@@ -211,7 +211,7 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "LIST ITEM"
-  font: "kenneyblue"
+  font: "rpg"
   id: "listitem_text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE

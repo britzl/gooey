@@ -202,12 +202,12 @@ It is possible to set the initial state of a radiobutton:
 	update_radio(gooey.radio("radio1/bg").select()
 
 
-### gooey.list(root_id, stencil_id, node_id, group, action_id, action, fn, refresh_fn)
-Perform input and state handling for a list of items
+### gooey.static_list(root_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
+Perform input and state handling for a list of items where the list of nodes has already been created.
 
 **PARAMETERS**
 * ```root_id``` (string|hash) - Id of the root node to which the list items are children. **IMPORTANT** This node should be as high as the visible part of the list
-* ```stencil_id``` (string|hash) - Id of the stencil node that is used to clip the list. Touch events outside this are will be ignored when it comes to picking of list items.
+* ```stencil_id``` (string|hash) - Id of the stencil node that is used to clip the list. Touch events outside this area will be ignored when it comes to picking of list items.
 * ```item_ids``` (table) - Table with a list of list item ids (hash|string)
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
@@ -221,12 +221,11 @@ The state table contains the following fields:
 
 * ```root``` (node) - The root node
 * ```enabled``` (boolean) - true if the node is enabled
-* ```items``` (table) - The list items as nodes
+* ```items``` (table) - The list items as nodes. Each item is presented by a table with keys "root" (node) and nodes (table).
 * ```over``` (boolean) - true if user action is over any list item
 * ```over_item``` (number) - Index of the list item the user action is over
 * ```over_item_now``` (number) - Index of the list item the user action moved inside this call
 * ```out_item_now``` (number) - Index of the list item the user action moved outside this call
-
 * ```selected_item``` (number) - Index of the selected list item
 * ```pressed_item``` (number) - Index of the pressed list item (ie mouse/touch down but not yet released)
 * ```pressed_item_now``` (number) - Index of the list item the user action pressed this call
@@ -239,11 +238,11 @@ The state table contains the following fields:
 	local function update_list(list)
 		for i,item in ipairs(list.items) do
 			if i == list.pressed_item then
-				gui.play_flipbook(item, hash("item_pressed"))
+				gui.play_flipbook(item.root, hash("item_pressed"))
 			elseif i == list.selected_item then
-				gui.play_flipbook(item, hash("item_selected"))
+				gui.play_flipbook(item.root, hash("item_selected"))
 			else
-				gui.play_flipbook(item, hash("item_normal"))
+				gui.play_flipbook(item.root, hash("item_normal"))
 			end
 		end
 	end
@@ -254,6 +253,63 @@ The state table contains the following fields:
 
 	function on_input(self, action_id, action)
 		gooey.list("list/root", "list/stencil", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, on_item_selected, update_list)
+	end
+
+
+### gooey.dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+Perform input and state handling for a list of items where list item nodes are created dynamically and reused. This is preferred for large data sets.
+
+**PARAMETERS**
+* ```list_id``` (string) - Id of the template containing the list nodes.
+* ```stencil_id``` (string|hash) - Id of the stencil node that is used to clip the list. Touch events outside this area will be ignored when it comes to picking of list items. The size of this area will decide how many list item nodes to create. The system will create enough to fill the area plus one more to support scrolling.
+* ```item_id``` (string|hash) - Id of the single list item that is to be cloned to present the list data.
+* ```data``` (table) - Data to associate with the list. This decides how far the list of possible to scroll.
+* ```action_id``` (hash) - Action id as received from on_input()
+* ```action``` (table) - Action as received from on_input()
+* ```fn``` (function) - Function to call when a list item is selected. A list item is considered selected if both a pressed and released action has been detected inside the bounds of the item. The function will get the same state table as described below passed as its first argument
+* ```refresh_fn``` (function) - Optional function to call when the state of the list has been updated. Use this to update the visual representation.
+
+**RETURN**
+* ```list``` (table) - State data for the list based on current and previous input actions
+
+The ```list``` table contains the following fields:
+
+* ```id``` (string) - The ```list_id``` parameter above
+* ```enabled``` (boolean) - true if the node is enabled
+* ```items``` (table) - The list items as nodes. See below for table structure.
+* ```first_index``` (number) - Index into the ```data``` that is represented by the first entry in the ```items``` table
+* ```over``` (boolean) - true if user action is over any list item
+* ```over_item``` (number) - Index of the list item the user action is over
+* ```over_item_now``` (number) - Index of the list item the user action moved inside this call
+* ```out_item_now``` (number) - Index of the list item the user action moved outside this call
+* ```selected_item``` (number) - Index of the selected list item
+* ```pressed_item``` (number) - Index of the pressed list item (ie mouse/touch down but not yet released)
+* ```pressed_item_now``` (number) - Index of the list item the user action pressed this call
+* ```released_item_now``` (number) - Index of the list item the user action released this call
+
+The ```items``` table contains list items, each with the following fields:
+
+* ```root``` (node) - The root GUI node of the list item
+* ```nodes``` (table) - Node id to GUI node mappings (as returned from gui.clone_tree)
+* ```data``` (any) - The data associated with this list item
+* ```index``` (number) - Index of the list item
+
+**EXAMPLE**
+
+	local gooey = require "gooey.gooey"
+
+	local function update_list(list)
+		for i,item in ipairs(list.items) do
+			gui.set_text(item.nodes[hash("listitem/text")], item.data)
+		end
+	end
+
+	local function on_item_selected(list)
+		print("selected", list.selected_item)
+	end
+
+	function on_input(self, action_id, action)
+		gooey.dynamic_list("list/root", "list/stencil", "listitem/bg", { "Mr. White", "Mr. Pink", "Mr. Green", "Mr. Blue", "Mr. Yellow" }, action_id, action, on_item_selected, update_list)
 	end
 
 
