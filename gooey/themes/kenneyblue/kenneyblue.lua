@@ -146,9 +146,8 @@ end
 
 local function update_dynamic_list(list)
 	for _,item in ipairs(list.items) do
-		local item_text_node = item.nodes[hash(list.id .. "/listitem_text")]
-		gui.set_text(item_text_node, item.data)
 		update_listitem(list, item)
+		gui.set_text(item.nodes[hash(list.id .. "/listitem_text")], tostring(item.data or "-"))
 	end
 end
 function M.dynamic_list(list_id, data, action_id, action, fn)
