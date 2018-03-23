@@ -239,9 +239,9 @@ The state table contains the following fields:
 
 	local function update_list(list)
 		for i,item in ipairs(list.items) do
-			if i == list.pressed_item then
+			if item.index == list.pressed_item then
 				gui.play_flipbook(item.root, hash("item_pressed"))
-			elseif i == list.selected_item then
+			elseif item.index == list.selected_item then
 				gui.play_flipbook(item.root, hash("item_selected"))
 			else
 				gui.play_flipbook(item.root, hash("item_normal"))
@@ -279,7 +279,6 @@ The ```list``` table contains the following fields:
 * ```id``` (string) - The ```list_id``` parameter above
 * ```enabled``` (boolean) - true if the node is enabled
 * ```items``` (table) - The list items as nodes. See below for table structure.
-* ```first_index``` (number) - Index into the ```data``` that is represented by the first entry in the ```items``` table
 * ```over``` (boolean) - true if user action is over any list item
 * ```over_item``` (number) - Index of the list item the user action is over
 * ```over_item_now``` (number) - Index of the list item the user action moved inside this call

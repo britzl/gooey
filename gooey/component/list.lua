@@ -101,7 +101,6 @@ function M.static(root_id, stencil_id, item_ids, action_id, action, fn, refresh_
 		local total_height = last_item and (math.abs(gui.get_position(last_item).y) + gui.get_size(last_item).y / 2) or 0
 		local list_height = gui.get_size(list.root).y
 		
-		list.first_index = 1
 		state.scroll_pos = vmath.vector3(0)
 		state.min_y = 0
 		state.max_y = total_height - list_height
@@ -127,7 +126,6 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 	local list, state = get_instance(stencil_id, refresh_fn, dynamic_lists)
 	
 	list.id = list_id
-	list.data = data
 
 	-- create list items (once!)
 	if not list.items then
@@ -137,7 +135,7 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 		local item_pos = gui.get_position(item_node)
 		local item_size = gui.get_size(item_node)
 		local stencil_size = gui.get_size(state.stencil)
-		local item_count = math.min(math.ceil(stencil_size.y / item_size.y) + 1, #list.data)
+		local item_count = math.min(math.ceil(stencil_size.y / item_size.y) + 1, #data)
 		for i=1,item_count do
 			local nodes = gui.clone_tree(item_node)
 			list.items[i] = {
@@ -151,7 +149,6 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 		end
 		gui.delete_node(item_node)
 
-		list.first_index = 1
 		list.item_size = item_size
 		state.first_item_pos = gui.get_position(list.items[1].root)
 		state.scroll_pos = vmath.vector3(0)
@@ -179,7 +176,7 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 		if state.scrolling then
 			local top_i = state.scroll_pos.y / list.item_size.y
 			local top_y = state.scroll_pos.y % list.item_size.y
-			list.first_index = 1 + math.floor(top_i)
+			local first_index = 1 + math.floor(top_i)
 
 			
 			for i=1,#list.items do
@@ -188,9 +185,9 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 				item_pos.y = state.first_item_pos.y - (list.item_size.y * (i - 1)) + top_y
 				gui.set_position(item.root, item_pos)
 
-				local index = list.first_index + i - 1
+				local index = first_index + i - 1
 				item.index = index
-				item.data = list.data[index] or ""
+				item.data = data[index] or ""
 			end
 		end
 	end
