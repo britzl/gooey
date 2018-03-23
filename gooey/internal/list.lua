@@ -157,13 +157,19 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 
 	-- create list items (once!)
 	if not list.items then
-		list.items = {}
 		item_id = core.to_hash(item_id)
 		local item_node = gui.get_node(item_id)
 		local item_pos = gui.get_position(item_node)
 		local item_size = gui.get_size(item_node)
 		local stencil_size = gui.get_size(state.stencil)
 		local item_count = math.min(math.ceil(stencil_size.y / item_size.y) + 1, #data)
+		list.items = {}
+		list.item_size = item_size
+		state.first_item_pos = vmath.vector3(item_pos)
+		state.scroll_pos = vmath.vector3(0)
+		state.min_y = 0
+		state.max_y = (#data * item_size.y) - stencil_size.y
+		
 		for i=1,item_count do
 			local nodes = gui.clone_tree(item_node)
 			list.items[i] = {
@@ -177,12 +183,6 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 			gui.set_position(list.items[i].root, pos)
 		end
 		gui.delete_node(item_node)
-
-		list.item_size = item_size
-		state.first_item_pos = gui.get_position(list.items[1].root)
-		state.scroll_pos = vmath.vector3(0)
-		state.min_y = 0
-		state.max_y = (#data * item_size.y) - stencil_size.y
 	end
 
 	-- bail early if the list is empty
