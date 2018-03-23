@@ -126,8 +126,8 @@ local function update_static_list(list)
 		update_listitem(list, item)
 	end
 end
-function M.list(root_id, stencil_id, item_ids, action_id, action, fn)
-	return gooey.static_list(root_id, stencil_id, item_ids, action_id, action, fn, update_static_list)
+function M.static_list(list_id, item_ids, action_id, action, fn)
+	return gooey.static_list(root_id, list_id .. "/stencil", item_ids, action_id, action, fn, update_static_list)
 end
 
 

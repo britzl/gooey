@@ -3,8 +3,8 @@ local dirtylarry = require "gooey.themes.dirtylarry.dirtylarry"
 function init(self)
 	dirtylarry.acquire_input()
 
-	dirtylarry.checkbox("checkbox").check()
-	dirtylarry.radio("radio2").select()
+	dirtylarry.checkbox("checkbox").set_checked(true)
+	dirtylarry.radio("radio2").set_selected(true)
 	dirtylarry.input("input", gui.KEYBOARD_TYPE_DEFAULT, nil, { x=0, y=0 }, { empty_text = "EMPTY, MAX 8 CHARS" })
 
 	self.list_data = { "Sherlock", "Poirot", "Magnum", "Miss Marple", "Morse", "Columbo" }

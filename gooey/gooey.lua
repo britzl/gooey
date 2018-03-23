@@ -74,9 +74,9 @@ function M.radio(node_id, group_id, action_id, action, fn, refresh_fn)
 end
 
 
-function M.static_list(root_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
+function M.static_list(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
 	list.TOUCH = M.TOUCH
-	return list.static(root_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
+	return list.static(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
 end
 function M.list(...)
 	print("WARN! gooey.list() is deprecated. Use gooey.static_list()")

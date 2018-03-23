@@ -87,6 +87,11 @@ The state table contains the following fields:
 		gooey.button("button/bg", action_id, action, on_pressed, update_button)
 	end
 
+**INITIAL STATE**
+It is possible to set the initial state of a button:
+
+    update_button(gooey.button("button/bg").set_visible(false))
+
 
 ### gooey.checkbox(node_id, action_id, action, fn, refresh_fn)
 Perform input and state handling for a checkbox
@@ -142,7 +147,8 @@ The state table contains the following fields:
 **INITIAL STATE**
 It is possible to set the initial state of a checkbox:
 
-	update_checkbox(gooey.checkbox("checkbox/bg").check()
+	update_checkbox(gooey.checkbox("checkbox/bg").check())
+    update_checkbox(gooey.radio("checkbox/bg").set_visible(false))
 
 
 ### gooey.radio(node_id, group, action_id, action, fn, refresh_fn)
@@ -201,14 +207,15 @@ The state table contains the following fields:
 **INITIAL STATE**
 It is possible to set the initial state of a radiobutton:
 
-	update_radio(gooey.radio("radio1/bg").select()
+    update_radio(gooey.radio("radio1/bg").set_selected(true))
+    update_radio(gooey.radio("radio1/bg").set_visible(false))
 
 
-### gooey.static_list(root_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
+### gooey.static_list(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
 Perform input and state handling for a list of items where the list of nodes has already been created.
 
 **PARAMETERS**
-* ```root_id``` (string|hash) - Id of the root node to which the list items are children. **IMPORTANT** This node should be as high as the visible part of the list
+* ```list_id``` (string) - Id of the template containing the list nodes.
 * ```stencil_id``` (string|hash) - Id of the stencil node that is used to clip the list. Touch events outside this area will be ignored when it comes to picking of list items.
 * ```item_ids``` (table) - Table with a list of list item ids (hash|string)
 * ```action_id``` (hash) - Action id as received from on_input()
@@ -254,7 +261,7 @@ The state table contains the following fields:
 	end
 
 	function on_input(self, action_id, action)
-		gooey.list("list/root", "list/stencil", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, on_item_selected, update_list)
+		gooey.list("list", "list/stencil", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, on_item_selected, update_list)
 	end
 
 
@@ -373,7 +380,7 @@ The state table contains the following fields:
 
 
 ## Gooey Themes
-Gooey comes shipped with two themes: Dirty Larry and Kenneyblue. You can use these as they are or make a copy and modify. Each theme consists of a Lua module wrapping Gooey, a couple of GUI templates, a font and an atlas containing the visual representation of the buttons. Use the themes like this:
+Gooey comes shipped with two themes: Dirty Larry and Kenneyblue. You can use these as they are or make a copy and modify. Each theme consists of a Lua module wrapping Gooey, a couple of GUI templates, a font and an atlas containing the visual representation of the components. Use the themes like this:
 
 	local kenneyblue = require "gooey.themes.kenneyblue.kenneyblue"
 

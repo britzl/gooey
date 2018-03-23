@@ -5,11 +5,20 @@ local M = {}
 local static_lists = {}
 local dynamic_lists = {}
 
+local LIST = {
+	refresh = function(list)
+		if list.refresh_fn then list.refresh_fn(list) end
+	end,
+	set_visible = function(list, visible)
+		gui.set_enabled(list.node, visible)
+	end,
+}
 
 -- get a list instance and set up some basics of a list on the instance
-local function get_instance(stencil_id, refresh_fn, lists)
+local function get_instance(list_id, stencil_id, refresh_fn, lists)
 	stencil_id = core.to_hash(stencil_id)
-	local list, state = core.instance(stencil_id, static_lists)
+	local list, state = core.instance(stencil_id, lists, LIST)
+	list.id = list_id
 	state.stencil = state.stencil or gui.get_node(stencil_id)	
 	state.refresh_fn = refresh_fn
 	list.enabled = core.is_enabled(state.stencil)
@@ -80,11 +89,19 @@ local function handle_list_interaction(list, state, action_id, action, click_fn)
 end
 
 
--- A static list where the list item nodes are already created
-function M.static(root_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
-	local list, state = get_instance(stencil_id, refresh_fn, static_lists)
-	list.root = list.root or gui.get_node(root_id)
+local function arrange_items(items, start)
+	local item_pos = start
+	for i=1,#items do
+		local item = items[i]
+		item_pos.y = item_pos.y - item.size.y / 2
+		gui.set_position(item.root, item_pos)
+		item_pos.y = item_pos.y - item.size.y / 2
+	end
+end
 
+-- A static list where the list item nodes are already created
+function M.static(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
+	local list, state = get_instance(list_id, stencil_id, refresh_fn, static_lists)
 	-- populate list items (once!)
 	if not list.items then
 		list.items = {}
@@ -93,13 +110,16 @@ function M.static(root_id, stencil_id, item_ids, action_id, action, fn, refresh_
 			list.items[i] = {
 				root = node,
 				nodes = { [core.to_hash(item_id)] = node },
-				index = i
+				index = i,
+				size = gui.get_size(node),
 			}
+			gui.set_parent(node, state.stencil)
 		end
-
+		arrange_items(list.items, vmath.vector3(0))
+		
 		local last_item = list.items[#list.items].root
 		local total_height = last_item and (math.abs(gui.get_position(last_item).y) + gui.get_size(last_item).y / 2) or 0
-		local list_height = gui.get_size(list.root).y
+		local list_height = gui.get_size(state.stencil).y
 		
 		state.scroll_pos = vmath.vector3(0)
 		state.min_y = 0
@@ -110,10 +130,20 @@ function M.static(root_id, stencil_id, item_ids, action_id, action, fn, refresh_
 		if refresh_fn then refresh_fn(list) end
 		return list
 	end
-	
+
+	if not action_id and not action then
+		if refresh_fn then refresh_fn(list) end
+		return list
+	end
+		
 	if list.enabled then
 		handle_list_interaction(list, state, action_id, action, fn)
-		gui.set_position(list.root, state.scroll_pos)
+		
+		-- re-position the list items if we're scrolling
+		if state.scrolling then
+			arrange_items(list.items, vmath.vector3(state.scroll_pos))
+		end
+				
 	end
 	if refresh_fn then refresh_fn(list) end
 	return list
@@ -123,9 +153,7 @@ end
 
 --- A dynamic list where the nodes are reused to present a large list of items
 function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
-	local list, state = get_instance(stencil_id, refresh_fn, dynamic_lists)
-	
-	list.id = list_id
+	local list, state = get_instance(list_id, stencil_id, refresh_fn, dynamic_lists)
 
 	-- create list items (once!)
 	if not list.items then
@@ -142,6 +170,7 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 				root = nodes[item_id],
 				nodes = nodes,
 				index = i,
+				size = gui.get_size(nodes[item_id]),
 				data = data[i] or ""
 			}
 			local pos = item_pos - vmath.vector3(0, item_size.y * (i - 1), 0)
@@ -178,7 +207,6 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 			local top_y = state.scroll_pos.y % list.item_size.y
 			local first_index = 1 + math.floor(top_i)
 
-			
 			for i=1,#list.items do
 				local item = list.items[i]
 				local item_pos = gui.get_position(item.root)

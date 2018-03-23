@@ -7,9 +7,12 @@ M.TOUCH = hash("touch")
 local checkboxes = {}
 
 local CHECKBOX = {
-	check = function(checkbox)
-		checkbox.checked = true
+	set_checked = function(checkbox, checked)
+		checkbox.checked = checked
 		if checkbox.refresh_fn then checkbox.refresh_fn(checkbox) end
+	end,
+	set_visible = function(checkbox, visible)
+		gui.set_enabled(checkbox.node, visible)
 	end,
 	refresh = function(checkbox)
 		if checkbox.refresh_fn then checkbox.refresh_fn(checkbox) end
