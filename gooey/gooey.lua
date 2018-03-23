@@ -82,9 +82,9 @@ function M.list(...)
 	print("WARN! gooey.list() is deprecated. Use gooey.static_list()")
 	return M.static_list(...)
 end
-function M.dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+function M.dynamic_list(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
 	list.TOUCH = M.TOUCH
-	return list.dynamic(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+	return list.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
 end
 
 

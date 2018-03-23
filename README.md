@@ -311,7 +311,7 @@ The ```items``` table contains list items, each with the following fields:
 	end
 
 	function on_input(self, action_id, action)
-		gooey.dynamic_list("list/root", "list/stencil", "listitem/bg", { "Mr. White", "Mr. Pink", "Mr. Green", "Mr. Blue", "Mr. Yellow" }, action_id, action, on_item_selected, update_list)
+		gooey.dynamic_list("list", "list/stencil", "listitem/bg", { "Mr. White", "Mr. Pink", "Mr. Green", "Mr. Blue", "Mr. Yellow" }, action_id, action, on_item_selected, update_list)
 	end
 
 
