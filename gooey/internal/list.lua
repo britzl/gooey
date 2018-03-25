@@ -27,10 +27,12 @@ local function get_instance(list_id, stencil_id, refresh_fn, lists)
 end
 
 
-local function handle_list_interaction(list, state, action_id, action, click_fn)
+local function handle_input(list, state, action_id, action, click_fn)
 	local over_stencil = gui.pick_node(state.stencil, action.x, action.y)
 
 	local touch = action_id == M.TOUCH
+	local scroll_up = action_id == M.SCROLL_UP
+	local scroll_down = action_id == M.SCROLL_DOWN
 	local pressed = touch and action.pressed and over_stencil
 	local released = touch and action.released
 	local action_pos = vmath.vector3(action.x, action.y, 0)
@@ -41,13 +43,29 @@ local function handle_list_interaction(list, state, action_id, action, click_fn)
 	elseif released then
 		list.pressed = false
 	end
-	
-	state.scrolling = list.pressed and vmath.length(state.pressed_pos - action_pos) > 10
-	if state.scrolling then
-		local delta = action_pos - state.action_pos
-		delta.x = 0
+
+	-- handle mouse-wheel scrolling
+	if over_stencil and (scroll_up or scroll_down) then
+		state.scrolling = true
+		-- reset scroll speed if the time between two scroll events is too large
+		local time = os.time()
+		state.scroll_time = state.scroll_time or time
+		if (time - state.scroll_time) > 1 then
+			state.scroll_speed = 0
+		end
+		state.scroll_speed = state.scroll_speed or 0
+		state.scroll_speed = math.min(state.scroll_speed + 0.25, 10)
+		state.scroll_time = time
+		state.scroll_pos.y = state.scroll_pos.y + ((scroll_up and 1 or -1) * state.scroll_speed)
+	end
+	-- handle touch and drag scrolling
+	if list.pressed and vmath.length(state.pressed_pos - action_pos) > 10 then
+		state.scrolling = true
+		state.scroll_pos.y = state.scroll_pos.y + (action_pos.y - state.action_pos.y)
 		state.action_pos = action_pos
-		state.scroll_pos = state.scroll_pos + delta
+	end
+	-- limit to scroll bounds
+	if state.scrolling then
 		state.scroll_pos.y = math.min(state.scroll_pos.y, state.max_y)
 		state.scroll_pos.y = math.max(state.scroll_pos.y, state.min_y)
 	end
@@ -138,7 +156,7 @@ function M.static(list_id, stencil_id, item_ids, action_id, action, fn, refresh_
 	end
 		
 	if list.enabled then
-		handle_list_interaction(list, state, action_id, action, fn)
+		handle_input(list, state, action_id, action, fn)
 		
 		-- re-position the list items if we're scrolling
 		if state.scrolling then
@@ -176,6 +194,9 @@ end
 
 --- A dynamic list where the nodes are reused to present a large list of items
 function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+	if action_id == hash("scroll_up") then
+		pprint(action)
+	end
 	local list, state = get_instance(list_id, stencil_id, refresh_fn, dynamic_lists)
 
 	-- create list items (once!)
@@ -224,7 +245,7 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 	end
 
 	if list.enabled and (action_id or action) then
-		handle_list_interaction(list, state, action_id, action, fn)
+		handle_input(list, state, action_id, action, fn)
 		-- re-position the list items if we're scrolling
 		-- re-assign list item indices and data
 		if state.scrolling then

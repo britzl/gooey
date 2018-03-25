@@ -8,6 +8,8 @@ local input = require "gooey.internal.input"
 local M = {}
 
 M.TOUCH = hash("touch")
+M.SCROLL_UP = hash("scroll_up")
+M.SCROLL_DOWN = hash("scroll_down")
 M.TEXT = hash("text")
 M.MARKED_TEXT = hash("marked_text")
 M.BACKSPACE = hash("backspace")
@@ -76,6 +78,8 @@ end
 
 function M.static_list(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
 	list.TOUCH = M.TOUCH
+	list.SCROLL_UP = M.SCROLL_UP
+	list.SCROLL_DOWN = M.SCROLL_DOWN
 	return list.static(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
 end
 function M.list(...)
@@ -84,6 +88,8 @@ function M.list(...)
 end
 function M.dynamic_list(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
 	list.TOUCH = M.TOUCH
+	list.SCROLL_UP = M.SCROLL_UP
+	list.SCROLL_DOWN = M.SCROLL_DOWN
 	return list.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
 end
 

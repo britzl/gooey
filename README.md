@@ -19,9 +19,11 @@ The Gooey system is encapsulated in a single Lua module without any visual compo
 For Gooey to work it requires a couple of input bindings:
 
 * Mouse trigger - ```mouse-button-1``` -> ```touch```
-* Key trigger - ```key-backspace``` -> ```backspace```
-* Text trigger - ```text``` -> ```text```
-* Text trigger - ```marked-text``` -> ```marked_text```
+* Mouse trigger - ```mouse-wheel-up``` -> ```scroll_up``` (for scrolling in lists)
+* Mouse trigger - ```mouse-wheel-down``` -> ```scroll_down``` (for scrolling in lists)
+* Key trigger - ```key-backspace``` -> ```backspace``` (for text input)
+* Text trigger - ```text``` -> ```text``` (for text input)
+* Text trigger - ```marked-text``` -> ```marked_text``` (for text input)
 
 ![](docs/key_mouse_bindings.png)
 ![](docs/text_bindings.png)
