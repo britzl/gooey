@@ -48,31 +48,20 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	input.node = node
 	input.refresh_fn = refresh_fn
 
-	local over = gui.pick_node(node, action.x, action.y)
-	input.over_now = over and not input.over
-	input.out_now = not over and input.over
-	input.over = over
-
 	input.text = input.text or ""
 	input.marked_text = input.marked_text or ""
 	input.keyboard_type = keyboard_type
 
+	core.clickable(input, action_id, action)
+	
 	if input.enabled then
-		local touch = action_id == M.TOUCH
-		local pressed = touch and action.pressed and input.over
-		local released = touch and action.released
 		input.deselected_now = false
-		input.pressed_now = pressed and not input.pressed
-		input.released_now = released and input.pressed
-		input.selected_now = released and input.pressed and input.over
-		input.pressed = pressed or (input.pressed and not released)
-		if input.selected_now then
+		if input.released_now then
 			input.selected = true
 			input.marked_text = ""
 			gui.reset_keyboard()
 			gui.show_keyboard(keyboard_type, true)
-		elseif released and input.selected then
-			input.deselected_now = true
+		elseif input.selected and action.pressed and not input.over then
 			input.selected = false
 			gui.hide_keyboard()
 		end
@@ -80,6 +69,7 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 		if input.selected then
 			-- new raw text input
 			if action_id == M.TEXT then
+				input.consumed = true
 				-- ignore return key
 				if action.text == "\n" or action.text == "\r" then
 					if refresh_fn then refresh_fn(input) end
@@ -96,11 +86,13 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 					end
 					input.marked_text = ""
 				end
-				-- new marked text input (uncommitted text)
+			-- new marked text input (uncommitted text)
 			elseif action_id == M.MARKEDTEXT then
+				input.consumed = true
 				input.marked_text = action.text or ""
-				-- input deletion
+			-- input deletion
 			elseif action_id == M.BACKSPACE and (action.pressed or action.repeated) then
+				input.consumed = true
 				local last_s = 0
 				for uchar in M.utf8_gfind(input.text) do
 					last_s = string.len(uchar)

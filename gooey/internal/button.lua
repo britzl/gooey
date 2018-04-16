@@ -2,8 +2,6 @@ local core = require "gooey.internal.core"
 
 local M = {}
 
-M.TOUCH = hash("touch")
-
 local buttons = {}
 
 local BUTTON = {
@@ -30,25 +28,11 @@ function M.button(node_id, action_id, action, fn, refresh_fn)
 		return button
 	end
 	
-	local over = gui.pick_node(node, action.x, action.y)
-	button.over_now = over and not button.over
-	button.out_now = not over and button.over
-	button.over = over
-
-	if not button.enabled then
-		button.pressed_now = false
-		button.released_now = false
-	else
-		local touch = action_id == M.TOUCH
-		local pressed = touch and action.pressed and button.over
-		local released = touch and action.released
-		button.pressed_now = pressed and not button.pressed
-		button.released_now = released and button.pressed
-		button.pressed = pressed or (button.pressed and not released)
-		if button.released_now and button.over then
-			fn(button)
-		end
+	core.clickable(button, action_id, action)
+	if button.clicked then
+		fn(button)
 	end
+
 	button.refresh()
 	return button
 end

@@ -34,26 +34,12 @@ function M.checkbox(node_id, action_id, action, fn, refresh_fn)
 		return checkbox
 	end
 
-	local over = gui.pick_node(node, action.x, action.y)
-	checkbox.over_now = over and not checkbox.over
-	checkbox.out_now = not over and checkbox.over
-	checkbox.over = over
-
-	if not checkbox.enabled then
-		checkbox.pressed_now = false
-		checkbox.released_now = false
-	else
-		local touch = action_id == M.TOUCH
-		local pressed = touch and action.pressed and checkbox.over
-		local released = touch and action.released
-		checkbox.pressed_now = pressed and not checkbox.pressed
-		checkbox.released_now = released and checkbox.pressed
-		checkbox.pressed = pressed or (checkbox.pressed and not released)
-		if checkbox.released_now and checkbox.over then
-			checkbox.checked = not checkbox.checked
-			fn(checkbox)
-		end
+	core.clickable(checkbox, action_id, action)
+	if checkbox.clicked then
+		checkbox.checked = not checkbox.checked
+		fn(checkbox)
 	end
+
 	checkbox.refresh()
 	return checkbox
 end

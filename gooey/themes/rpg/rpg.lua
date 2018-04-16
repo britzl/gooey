@@ -139,4 +139,11 @@ end
 function M.dynamic_list(list_id, data, action_id, action, fn)
 	return gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data, action_id, action, fn, update_dynamic_list)
 end
+
+
+function M.group(id, fn)
+	return gooey.group(id, fn)
+end
+
+
 return M

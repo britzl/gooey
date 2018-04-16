@@ -5,15 +5,18 @@ function init(self)
 end
 
 function on_input(self, action_id, action)
-	gooey.button("dirtybutton", action_id, action, function()
-		msg.post("controller:/go", "show_dirtylarry")
+	local group = gooey.group("group1", function()
+		gooey.button("dirtybutton", action_id, action, function()
+			msg.post("controller:/go", "show_dirtylarry")
+		end)
+		gooey.button("kenneybutton", action_id, action, function()
+			msg.post("controller:/go", "show_kenneyblue")
+		end)
+		gooey.button("rpgbutton", action_id, action, function()
+			msg.post("controller:/go", "show_rpg")
+		end)
 	end)
-	gooey.button("kenneybutton", action_id, action, function()
-		msg.post("controller:/go", "show_kenneyblue")
-	end)
-	gooey.button("rpgbutton", action_id, action, function()
-		msg.post("controller:/go", "show_rpg")
-	end)
+	return group.consumed
 end
 
 function on_reload(self)

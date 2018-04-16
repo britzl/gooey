@@ -58,6 +58,8 @@ The state table contains the following fields:
 
 * ```node``` (node) - The node itself
 * ```enabled``` (boolean) - true if the node is enabled
+* ```consumed``` (boolean) - true if the input was consumed
+* ```clicked``` (boolean) - true if the input is considered a click (ie pressed and released cycle)
 * ```over``` (boolean) - true if user action is inside the node
 * ```over_now``` (boolean) - true if user action moved inside the node this call
 * ```out_now``` (boolean) - true if user action moved outside the node this call
@@ -112,6 +114,8 @@ The state table contains the following fields:
 
 * ```node``` (node) - The node itself
 * ```enabled``` (boolean) - true if the node is enabled
+* ```consumed``` (boolean) - true if the input was consumed
+* ```clicked``` (boolean) - true if the input is considered a click (ie pressed and released cycle)
 * ```over``` (boolean) - true if user action is inside the node
 * ```over_now``` (boolean) - true if user action moved inside the node this call
 * ```out_now``` (boolean) - true if user action moved outside the node this call
@@ -170,11 +174,12 @@ The state table contains the following fields:
 
 * ```node``` (node) - The node itself
 * ```enabled``` (boolean) - true if the node is enabled
+* ```consumed``` (boolean) - true if the input was consumed
+* ```clicked``` (boolean) - true if the input is considered a click (ie pressed and released cycle)
 * ```over``` (boolean) - true if user action is inside the node
 * ```over_now``` (boolean) - true if user action moved inside the node this call
 * ```out_now``` (boolean) - true if user action moved outside the node this call
 * ```selected``` (boolean) - The radio button state
-* ```selected_now``` (boolean) - true if the radio button was selected this call
 * ```pressed``` (boolean) - true if the radio button is pressed (ie mouse/touch down but not yet released)
 * ```pressed_now``` (boolean) - true if the radio button was pressed this call
 * ```released_now``` (boolean) - true if the radio button was released this call
@@ -232,6 +237,7 @@ The state table contains the following fields:
 
 * ```root``` (node) - The root node
 * ```enabled``` (boolean) - true if the node is enabled
+* ```consumed``` (boolean) - true if the input was consumed
 * ```items``` (table) - The list items as nodes. Each item is presented by a table with keys "root" (node) and nodes (table).
 * ```over``` (boolean) - true if user action is over any list item
 * ```over_item``` (number) - Index of the list item the user action is over
@@ -287,6 +293,7 @@ The ```list``` table contains the following fields:
 
 * ```id``` (string) - The ```list_id``` parameter above
 * ```enabled``` (boolean) - true if the node is enabled
+* ```consumed``` (boolean) - true if the input was consumed
 * ```items``` (table) - The list items as nodes. See below for table structure.
 * ```over``` (boolean) - true if user action is over any list item
 * ```over_item``` (number) - Index of the list item the user action is over
@@ -347,12 +354,11 @@ The state table contains the following fields:
 
 * ```node``` (node) - The node itself
 * ```enabled``` (boolean) - true if the node is enabled
+* ```consumed``` (boolean) - true if the input was consumed
 * ```over``` (boolean) - true if user action is inside the node
 * ```over_now``` (boolean) - true if user action moved inside the node this call
 * ```out_now``` (boolean) - true if user action moved outside the node this call
 * ```selected``` (boolean) - true if the text field is selected
-* ```selected_now``` (boolean) - true if the text field was selected this call
-* ```deselected_now``` (boolean) - true if the text field was deselected this call
 * ```pressed``` (boolean) - true if the text field is pressed (ie mouse/touch down but not yet released)
 * ```pressed_now``` (boolean) - true if the text field was pressed this call
 * ```released_now``` (boolean) - true if the text field was released this call
@@ -379,6 +385,23 @@ The state table contains the following fields:
 	function on_input(self, action_id, action)
 		gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, update_input)
 	end
+
+
+## Consuming input
+Each Gooey component has a ```consumed``` variable in its state stable. Consuming input in a gui_script to prevent input propagation can be done by checking the consumed state of each component. If any component has ```consumed``` set to true it is safe to return true from the ```on_input()``` function to prevent input propagation. It is also possible to wrap all component interaction in an input group and check the consumed state for the entire group:
+
+    local gooey = require "gooey.gooey"
+
+    function on_input(self, action_id, action)
+        local group = gooey.group("group1", function()
+            gooey.button("button1/bg", action_id, action, on_pressed, function(button) end)
+            gooey.button("button2/bg", action_id, action, on_pressed, function(button) end)
+            gooey.radio("radio1/bg", "MYGROUP", action_id, action, function(radio) end, update_radio)
+            ...
+            -- and so on
+        end)
+        return group.consumed
+    end
 
 
 ## Gooey Themes

@@ -155,4 +155,9 @@ function M.dynamic_list(list_id, data, action_id, action, fn)
 end
 
 
+function M.group(id, fn)
+	return gooey.group(id, fn)
+end
+
+
 return M

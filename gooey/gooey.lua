@@ -14,6 +14,8 @@ M.TEXT = hash("text")
 M.MARKED_TEXT = hash("marked_text")
 M.BACKSPACE = hash("backspace")
 
+local groups = {}
+local current_group = {}
 
 --- Check if a node is enabled. This is done by not only
 -- looking at the state of the node itself but also it's
@@ -53,14 +55,22 @@ end
 
 
 function M.button(node_id, action_id, action, fn, refresh_fn)
-	button.TOUCH = M.TOUCH
-	return button(node_id, action_id, action, fn, refresh_fn)
+	core.TOUCH = M.TOUCH
+	local b = button(node_id, action_id, action, fn, refresh_fn)
+	if current_group then
+		current_group.components[#current_group.components + 1] = b
+	end
+	return b
 end
 
 
 function M.checkbox(node_id, action_id, action, fn, refresh_fn)
-	checkbox.TOUCH = M.TOUCH
-	return checkbox(node_id, action_id, action, fn, refresh_fn)
+	core.TOUCH = M.TOUCH
+	local c = checkbox(node_id, action_id, action, fn, refresh_fn)
+	if current_group then
+		current_group.components[#current_group.components + 1] = c
+	end
+	return c
 end
 
 
@@ -71,8 +81,12 @@ end
 
 
 function M.radio(node_id, group_id, action_id, action, fn, refresh_fn)
-	radio.TOUCH = M.TOUCH
-	return radio.button(node_id, group_id, action_id, action, fn, refresh_fn)
+	core.TOUCH = M.TOUCH
+	local r = radio.button(node_id, group_id, action_id, action, fn, refresh_fn)
+	if current_group then
+		current_group.components[#current_group.components + 1] = r
+	end
+	return r
 end
 
 
@@ -80,7 +94,11 @@ function M.static_list(list_id, stencil_id, item_ids, action_id, action, fn, ref
 	list.TOUCH = M.TOUCH
 	list.SCROLL_UP = M.SCROLL_UP
 	list.SCROLL_DOWN = M.SCROLL_DOWN
-	return list.static(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
+	local l = list.static(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
+	if current_group then
+		current_group.components[#current_group.components + 1] = l
+	end
+	return l
 end
 function M.list(...)
 	print("WARN! gooey.list() is deprecated. Use gooey.static_list()")
@@ -90,7 +108,11 @@ function M.dynamic_list(list_id, stencil_id, item_id, data, action_id, action, f
 	list.TOUCH = M.TOUCH
 	list.SCROLL_UP = M.SCROLL_UP
 	list.SCROLL_DOWN = M.SCROLL_DOWN
-	return list.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+	local l = list.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+	if current_group then
+		current_group.components[#current_group.components + 1] = l
+	end
+	return l
 end
 
 
@@ -102,13 +124,37 @@ end
 -- @param action
 -- @param config Optional config table. Accepted values
 --	* max_length (number) - Maximum number of characters that can be entered
+-- @return Component state
 function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
-	input.TOUCH = M.TOUCH
+	core.TOUCH = M.TOUCH
 	input.TEXT = M.TEXT
 	input.MARKED_TEXT = M.MARKED_TEXT
 	input.BACKSPACE = M.BACKSPACE
-	return input(node_id, keyboard_type, action_id, action, config, refresh_fn)
+	local i = input(node_id, keyboard_type, action_id, action, config, refresh_fn)
+	if current_group then
+		current_group.components[#current_group.components + 1] = i
+	end
+	return i
 end
 
+
+--- A group of components
+-- Use this to collect input consume state from multiple components in a convenient way
+-- @param id
+-- @param fn Interact with gooey components inside this function
+-- @return Group state
+function M.group(id, fn)
+	groups[id] = groups[id] or { consumed = false, components = {} }
+	current_group = groups[id]
+	fn()
+	local components = current_group.components
+	local consumed = false
+	for i=1,#components do
+		consumed = components[i].consumed or consumed
+		components[i] = nil
+	end
+	current_group.consumed = consumed
+	return current_group
+end
 
 return M

@@ -1,5 +1,33 @@
 local M = {}
 
+M.TOUCH = hash("touch")
+
+--- Basic input handling for anything that is clickable
+-- @param component Component state table
+-- @param action_id
+-- @param action
+function M.clickable(component, action_id, action)
+	if not component.enabled then
+		component.pressed_now = false
+		component.released_now = false
+		return		
+	end
+
+	local over = gui.pick_node(component.node, action.x, action.y)
+	component.over_now = over and not component.over
+	component.out_now = not over and component.over
+	component.over = over
+
+	local touch = action_id == M.TOUCH
+	local pressed = touch and action.pressed and component.over
+	local released = touch and action.released
+
+	component.pressed_now = pressed and not component.pressed
+	component.released_now = released and component.pressed
+	component.pressed = pressed or (component.pressed and not released)
+	component.consumed = component.pressed or (component.released_now and component.over)
+	component.clicked = component.released_now and component.over
+end
 
 --- Check if a node is enabled. This is done by not only
 -- looking at the state of the node itself but also it's

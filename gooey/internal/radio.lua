@@ -39,28 +39,12 @@ function M.button(node_id, group_id, action_id, action, fn, refresh_fn)
 		return radio
 	end
 	
-	local over = gui.pick_node(node, action.x, action.y)
-	radio.over_now = over and not radio.over
-	radio.out_now = not over and radio.over
-	radio.over = over
-
-	if not radio.enabled then
-		radio.pressed_now = false
-		radio.released_now = false
-		radio.selected_now = false
-	else
-		local touch = action_id == M.TOUCH
-		local pressed = touch and action.pressed and radio.over
-		local released = touch and action.released
-		radio.pressed_now = pressed and not radio.pressed
-		radio.released_now = released and radio.pressed
-		radio.pressed = pressed or (radio.pressed and not released)
-		radio.selected_now = radio.released_now and radio.over
-		if radio.selected_now then
-			radio.selected = true
-			fn(radio)
-		end
+	core.clickable(radio, action_id, action)
+	if radio.clicked then
+		radio.selected = true
+		fn(radio)
 	end
+
 	radio.refresh()
 	return radio
 end
@@ -82,7 +66,7 @@ function M.group(group_id, action_id, action, fn)
 	for _,radio in pairs(radiobuttons) do
 		radio = radio.data
 		if radio.group == group_key then
-			if radio.selected_now then
+			if radio.released_now and radio.selected then
 				selected_radio = radio
 			end
 			table.insert(group, radio)
@@ -90,9 +74,11 @@ function M.group(group_id, action_id, action, fn)
 	end
 
 	if selected_radio then
+		-- deselect others
 		for _,radio in ipairs(group) do
 			if radio ~= selected_radio then
 				radio.selected = false
+				radio.refresh()
 			end
 		end
 	end

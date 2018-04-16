@@ -43,9 +43,11 @@ local function handle_input(list, state, action_id, action, click_fn)
 	elseif released then
 		list.pressed = false
 	end
-
+	list.consumed = false
+	
 	-- handle mouse-wheel scrolling
 	if over_stencil and (scroll_up or scroll_down) then
+		list.consumed = true
 		state.scrolling = true
 		-- reset scroll speed if the time between two scroll events is too large
 		local time = os.time()
@@ -60,6 +62,7 @@ local function handle_input(list, state, action_id, action, click_fn)
 	end
 	-- handle touch and drag scrolling
 	if list.pressed and vmath.length(state.pressed_pos - action_pos) > 10 then
+		list.consumed = true
 		state.scrolling = true
 		state.scroll_pos.y = state.scroll_pos.y + (action_pos.y - state.action_pos.y)
 		state.action_pos = action_pos
@@ -75,6 +78,7 @@ local function handle_input(list, state, action_id, action, click_fn)
 	for i=1,#list.items do
 		local item = list.items[i]
 		if gui.pick_node(item.root, action.x, action.y) then
+			list.consumed = true
 			over_item = item.index
 			break
 		end	
