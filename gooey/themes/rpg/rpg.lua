@@ -3,7 +3,7 @@ local utils = require "gooey.themes.utils"
 
 local M = {}
 
-local PANEL_BLUE = hash("panel_blue")
+local LISTITEM = hash("buttonSquare_blue")
 local BUTTON_SQUARE_PRESSED = hash("buttonSquare_blue_pressed")
 local BUTTON_SQUARE = hash("buttonSquare_blue")
 local CHECKBOX_PRESSED = hash("checkbox_blue_pressed")
@@ -103,19 +103,19 @@ local function update_listitem(list, item)
 	local pos = gui.get_position(item.root)
 	if item.index == list.selected_item then
 		pos.x = 4
-		gui.play_flipbook(item.root, PANEL_BLUE)
+		gui.play_flipbook(item.root, LISTITEM)
 	elseif item.index == list.pressed_item then
 		pos.x = 1
-		gui.play_flipbook(item.root, PANEL_BLUE)
+		gui.play_flipbook(item.root, LISTITEM)
 	elseif item.index == list.over_item_now then
 		pos.x = 1
-		gui.play_flipbook(item.root, PANEL_BLUE)
+		gui.play_flipbook(item.root, LISTITEM)
 	elseif item.index == list.out_item_now then
 		pos.x = 0
-		gui.play_flipbook(item.root, PANEL_BLUE)
+		gui.play_flipbook(item.root, LISTITEM)
 	elseif item.index ~= list.over_item then
 		pos.x = 0
-		gui.play_flipbook(item.root, PANEL_BLUE)
+		gui.play_flipbook(item.root, LISTITEM)
 	end
 	gui.set_position(item.root, pos)
 end
