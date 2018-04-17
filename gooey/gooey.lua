@@ -15,7 +15,7 @@ M.MARKED_TEXT = hash("marked_text")
 M.BACKSPACE = hash("backspace")
 
 local groups = {}
-local current_group = {}
+local current_group = nil
 
 --- Check if a node is enabled. This is done by not only
 -- looking at the state of the node itself but also it's
@@ -144,17 +144,27 @@ end
 -- @param fn Interact with gooey components inside this function
 -- @return Group state
 function M.group(id, fn)
+	assert(id, "You must provide a group id")
+	assert(fn, "You must provide a group function")
 	groups[id] = groups[id] or { consumed = false, components = {} }
-	current_group = groups[id]
+	local group = groups[id]
+
+	-- set current group and call the group function
+	-- then reset current group again once we're done
+	current_group = group
 	fn()
-	local components = current_group.components
+	current_group = nil
+
+	-- go through the components in the group and check if
+	-- any of them consumed input
+	local components = group.components
 	local consumed = false
 	for i=1,#components do
 		consumed = components[i].consumed or consumed
 		components[i] = nil
 	end
-	current_group.consumed = consumed
-	return current_group
+	group.consumed = consumed
+	return group
 end
 
 return M
