@@ -10,6 +10,9 @@ function M.clickable(component, action_id, action)
 	if not component.enabled then
 		component.pressed_now = false
 		component.released_now = false
+		component.consumed = false
+		component.clicked = false
+		component.pressed = false
 		return		
 	end
 
