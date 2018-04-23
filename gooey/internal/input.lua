@@ -8,6 +8,7 @@ M.MARKED_TEXT = hash("marked_text")
 M.BACKSPACE = hash("backspace")
 
 local inputfields = {}
+local space_width = {}
 
 -- calculate space width with font
 local function get_space_width(font)
