@@ -1,4 +1,5 @@
 ![](images/heroimage.png)
+[![Build Status](https://travis-ci.org/britzl/gooey.svg?branch=master)](https://travis-ci.org/britzl/gooey)
 # Gooey
 Gooey is a GUI system for the [Defold](https://www.defold.com) game engine. It is inspired by the excellent [Dirty Larry](https://github.com/andsve/dirtylarry) library.
 
