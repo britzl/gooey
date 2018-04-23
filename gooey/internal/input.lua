@@ -38,6 +38,20 @@ function M.utf8_gfind(text)
 	return text:gfind("([%z\1-\127\194-\244][\128-\191]*)")
 end
 
+--- Mask text by replacing every character with a mask
+-- character
+-- @param text
+-- @param mask
+-- @return Masked text
+function M.mask_text(text, mask)
+	mask = mask or "*"
+	local masked_text = ""
+	for uchar in M.utf8_gfind(text) do
+		masked_text = masked_text .. mask
+	end
+	return masked_text
+end
+
 function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	node_id = core.to_hash(node_id)
 	local node = gui.get_node(node_id)

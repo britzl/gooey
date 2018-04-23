@@ -45,12 +45,7 @@ end
 -- @param mask
 -- @return Masked text
 function M.mask_text(text, mask)
-	mask = mask or "*"
-	local masked_text = ""
-	for uchar in input.utf8_gfind(text) do
-		masked_text = masked_text .. mask
-	end
-	return masked_text
+	return input.mask_text(text, mask)
 end
 
 
