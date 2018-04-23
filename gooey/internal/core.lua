@@ -52,7 +52,7 @@ function M.to_hash(str)
 	return type(str) == "string" and hash(str) or str
 end
 
---- Create a unique key for an hash by combining the id with the current url
+--- Create a unique key for a hash by combining the id with the current url
 -- @param hsh Hash to create key for
 -- @return Unique key based on the hash and the current url 
 function M.to_key(hsh)
