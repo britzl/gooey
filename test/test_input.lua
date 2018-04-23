@@ -26,8 +26,9 @@ return function()
 		end)
 
 		test("it should be possible to type text", function()
-			mock_gui.add_text("text", 10, 10, 100, 40)
-
+			local node = gui.new_text_node(vmath.vector3(10, 10, 0), "")
+			gui.set_id(node, "text")
+			
 			local config = nil
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TOUCH, actions.pressed(10, 10))
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TOUCH, actions.released(10, 10))
@@ -40,9 +41,10 @@ return function()
 			assert(input.text == "foobar")
 		end)
 
-		test("it should be possible to delete typed text", function()
-			mock_gui.add_text("text", 10, 10, 100, 40)
-
+		test("it should be possible to erase typed text", function()
+			local node = gui.new_text_node(vmath.vector3(10, 10, 0), "")
+			gui.set_id(node, "text")
+			
 			local config = nil
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TOUCH, actions.pressed(10, 10))
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TOUCH, actions.released(10, 10))
@@ -52,6 +54,19 @@ return function()
 			local input = gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.BACKSPACE, actions.text(""))
 			assert(input.text == "fooba")
 		end)
-		
+
+		test("it should mask entered text if it is a password", function()
+			local node = gui.new_text_node(vmath.vector3(10, 10, 0), "")
+			gui.set_id(node, "text")
+
+			local config = nil
+			gooey.input("text", gui.KEYBOARD_TYPE_PASSWORD, gooey.TOUCH, actions.pressed(10, 10))
+			gooey.input("text", gui.KEYBOARD_TYPE_PASSWORD, gooey.TOUCH, actions.released(10, 10))
+			gooey.input("text", gui.KEYBOARD_TYPE_PASSWORD, gooey.TEXT, actions.text("foobar"))
+			print(gooey.input("text").text)
+			assert(gooey.input("text").masked_text == "******")
+			assert(gui.get_text(node) == "******")
+		end)
+				
 	end)
 end
