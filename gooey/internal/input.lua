@@ -53,22 +53,36 @@ function M.mask_text(text, mask)
 	return masked_text
 end
 
+local INPUT = {
+	refresh = function(input)
+		if input.refresh_fn then input.refresh_fn(input) end
+	end,
+	set_visible = function(input, visible)
+		gui.set_enabled(input.node, visible)
+	end,
+}
+
 function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	node_id = core.to_hash(node_id)
 	local node = gui.get_node(node_id)
 	assert(node)
 
-	local input = core.instance(node_id, inputfields)
+	local input = core.instance(node_id, inputfields, INPUT)
 	input.enabled = core.is_enabled(node)
 	input.node = node
 	input.refresh_fn = refresh_fn
 
+	if not action then
+		input.refresh()
+		return input
+	end
+	
 	input.text = input.text or ""
 	input.marked_text = input.marked_text or ""
 	input.keyboard_type = keyboard_type
 
 	core.clickable(input, action_id, action)
-	
+
 	if input.enabled then
 		input.deselected_now = false
 		if input.released_now then
@@ -76,7 +90,7 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 			input.marked_text = ""
 			gui.reset_keyboard()
 			gui.show_keyboard(keyboard_type, true)
-		elseif input.selected and action.pressed and not input.over then
+		elseif input.selected and action.pressed and action_id == M.TOUCH and not input.over then
 			input.selected = false
 			gui.hide_keyboard()
 		end
