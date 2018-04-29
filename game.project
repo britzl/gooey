@@ -1,6 +1,6 @@
 [project]
 title = Gooey
-dependencies = https://github.com/britzl/deftest/archive/2.1.0.zip
+dependencies = https://github.com/britzl/deftest/archive/2.1.1.zip
 
 [bootstrap]
 main_collection = /example/controller.collectionc
