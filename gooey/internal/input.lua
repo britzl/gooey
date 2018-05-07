@@ -116,7 +116,7 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 					input.marked_text = ""
 				end
 			-- new marked text input (uncommitted text)
-			elseif action_id == M.MARKEDTEXT then
+			elseif action_id == M.MARKED_TEXT then
 				input.consumed = true
 				input.marked_text = action.text or ""
 			-- input deletion
