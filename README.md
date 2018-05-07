@@ -29,6 +29,7 @@ For Gooey to work it requires a couple of input bindings:
 ![](docs/key_mouse_bindings.png)
 ![](docs/text_bindings.png)
 
+**IMPORTANT NOTE ON ANDROID**: Make sure that the Input Method in the Android section of the game.project file is set to HiddenInputField. This will ensure that virtual keyboard input works properly.
 
 ## Supported components
 Gooey supports the following component types:

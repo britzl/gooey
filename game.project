@@ -18,3 +18,13 @@ shared_state = 1
 [library]
 include_dirs = gooey
 
+[ios]
+bundle_identifier = com.britzl.defold.gooey
+
+[android]
+package = com.britzl.defold.gooey
+input_method = HiddenInputField
+
+[osx]
+bundle_identifier = com.britzl.defold.gooey
+
