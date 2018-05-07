@@ -144,7 +144,8 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 
 		input.text_width = get_text_width(input.node, text)		
 		input.marked_text_width = get_text_width(input.node, marked_text)
-
+		input.total_width = input.text_width + input.marked_text_width
+		
 		if input.selected then
 			gui.set_text(input.node, text .. marked_text)
 		end

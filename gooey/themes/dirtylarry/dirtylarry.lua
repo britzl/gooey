@@ -83,7 +83,7 @@ local function refresh_input(input, config, node_id)
 	local cursor = gui.get_node(node_id .. "/cursor")
 	if input.selected then
 		gui.set_enabled(cursor, true)
-		gui.set_position(cursor, vmath.vector3(14 + input.text_width, 0, 0))
+		gui.set_position(cursor, vmath.vector3(14 + input.total_width, 0, 0))
 		gui.cancel_animation(cursor, gui.PROP_COLOR)
 		gui.set_color(cursor, vmath.vector4(1))
 		gui.animate(cursor, gui.PROP_COLOR, vmath.vector4(1,1,1,0), gui.EASING_INSINE, 0.8, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)

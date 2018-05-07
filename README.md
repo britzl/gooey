@@ -371,6 +371,7 @@ The state table contains the following fields:
 * ```masked_marked_text``` (string) - If the keyboard type is gui.KEYBOARD_TYPE_PASSWORD then this string represents a masked version of the marked text
 * ```text_width``` (number) - The width of the text
 * ```marked_text_width``` (number) - The width of the marked text
+* ```total_width``` (number) - The total width of the text including marked text
 
 **EXAMPLE**
 
