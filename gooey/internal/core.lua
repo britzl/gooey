@@ -1,6 +1,33 @@
 local M = {}
 
 M.TOUCH = hash("touch")
+M.MULTITOUCH = hash("multitouch")
+
+local function handle_action(component, action_id, action)
+	action.id = action.id or -1
+	if not component.touch_id or component.touch_id == action.id then
+		local over = gui.pick_node(component.node, action.x, action.y)
+		component.over_now = over and not component.over
+		component.out_now = not over and component.over
+		component.over = over
+
+		local touch = action_id == M.TOUCH or action_id == M.MULTITOUCH
+		local pressed = touch and action.pressed and component.over
+		local released = touch and action.released
+		if pressed then
+			component.touch_id = action.id
+		elseif released then
+			component.touch_id = nil 
+		end
+		
+		component.pressed_now = pressed and not component.pressed
+		component.released_now = released and component.pressed
+		component.pressed = pressed or (component.pressed and not released)
+		component.consumed = component.pressed or (component.released_now and component.over)
+		component.clicked = component.released_now and component.over
+	end
+end
+
 
 --- Basic input handling for anything that is clickable
 -- @param component Component state table
@@ -16,20 +43,13 @@ function M.clickable(component, action_id, action)
 		return		
 	end
 
-	local over = gui.pick_node(component.node, action.x, action.y)
-	component.over_now = over and not component.over
-	component.out_now = not over and component.over
-	component.over = over
-
-	local touch = action_id == M.TOUCH
-	local pressed = touch and action.pressed and component.over
-	local released = touch and action.released
-
-	component.pressed_now = pressed and not component.pressed
-	component.released_now = released and component.pressed
-	component.pressed = pressed or (component.pressed and not released)
-	component.consumed = component.pressed or (component.released_now and component.over)
-	component.clicked = component.released_now and component.over
+	if not action.touch then
+		handle_action(component, action_id, action)
+	else
+		for _,touch_action in pairs(action.touch) do
+			handle_action(component, action_id, touch_action)
+		end
+	end
 end
 
 --- Check if a node is enabled. This is done by not only

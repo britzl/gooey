@@ -8,6 +8,7 @@ local input = require "gooey.internal.input"
 local M = {}
 
 M.TOUCH = hash("touch")
+M.MULTITOUCH = hash("multitouch")
 M.SCROLL_UP = hash("scroll_up")
 M.SCROLL_DOWN = hash("scroll_down")
 M.TEXT = hash("text")
@@ -51,6 +52,7 @@ end
 
 function M.button(node_id, action_id, action, fn, refresh_fn)
 	core.TOUCH = M.TOUCH
+	core.MULTITOUCH = M.MULTITOUCH
 	local b = button(node_id, action_id, action, fn, refresh_fn)
 	if current_group then
 		current_group.components[#current_group.components + 1] = b
@@ -61,6 +63,7 @@ end
 
 function M.checkbox(node_id, action_id, action, fn, refresh_fn)
 	core.TOUCH = M.TOUCH
+	core.MULTITOUCH = M.MULTITOUCH
 	local c = checkbox(node_id, action_id, action, fn, refresh_fn)
 	if current_group then
 		current_group.components[#current_group.components + 1] = c
@@ -70,13 +73,15 @@ end
 
 
 function M.radiogroup(group_id, action_id, action, fn)
-	radio.TOUCH = M.TOUCH
+	core.TOUCH = M.TOUCH
+	core.MULTITOUCH = M.MULTITOUCH
 	return radio.group(group_id, action_id, action, fn, refresh_fn)
 end
 
 
 function M.radio(node_id, group_id, action_id, action, fn, refresh_fn)
 	core.TOUCH = M.TOUCH
+	core.MULTITOUCH = M.MULTITOUCH
 	local r = radio.button(node_id, group_id, action_id, action, fn, refresh_fn)
 	if current_group then
 		current_group.components[#current_group.components + 1] = r
@@ -87,6 +92,7 @@ end
 
 function M.static_list(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
 	list.TOUCH = M.TOUCH
+	list.MULTITOUCH = M.MULTITOUCH
 	list.SCROLL_UP = M.SCROLL_UP
 	list.SCROLL_DOWN = M.SCROLL_DOWN
 	local l = list.static(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
@@ -101,6 +107,7 @@ function M.list(...)
 end
 function M.dynamic_list(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
 	list.TOUCH = M.TOUCH
+	list.MULTITOUCH = M.MULTITOUCH
 	list.SCROLL_UP = M.SCROLL_UP
 	list.SCROLL_DOWN = M.SCROLL_DOWN
 	local l = list.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
@@ -122,6 +129,7 @@ end
 -- @return Component state
 function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	core.TOUCH = M.TOUCH
+	core.MULTITOUCH = M.MULTITOUCH
 	input.TEXT = M.TEXT
 	input.MARKED_TEXT = M.MARKED_TEXT
 	input.BACKSPACE = M.BACKSPACE

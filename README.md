@@ -31,6 +31,12 @@ For Gooey to work it requires a couple of input bindings:
 
 **IMPORTANT NOTE ON ANDROID**: Make sure that the Input Method in the Android section of the game.project file is set to HiddenInputField. This will ensure that virtual keyboard input works properly.
 
+### Multi-touch
+Gooey supports multi-touch for clickable components as long as the following input binding exists:
+
+* Touch trigger - ```multi-touch``` -> ```multitouch```
+
+
 ## Supported components
 Gooey supports the following component types:
 

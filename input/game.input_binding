@@ -14,6 +14,10 @@ mouse_trigger {
   input: MOUSE_WHEEL_DOWN
   action: "scroll_down"
 }
+touch_trigger {
+  input: TOUCH_MULTI
+  action: "multitouch"
+}
 text_trigger {
   input: TEXT
   action: "text"
