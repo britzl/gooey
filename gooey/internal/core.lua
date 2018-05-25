@@ -59,10 +59,11 @@ end
 -- @return true if node and all ancestors are enabled
 function M.is_enabled(node)
 	local parent = gui.get_parent(node)
+	local enabled = gui.is_enabled(node)
 	if parent then
-		return M.is_enabled(parent)
+		return enabled and M.is_enabled(parent)
 	end
-	return gui.is_enabled(node)
+	return enabled
 end
 
 -- Convert string to hash, unless it's already a hash
