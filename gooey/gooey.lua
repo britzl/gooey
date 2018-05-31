@@ -40,6 +40,30 @@ function M.release_input()
 end
 
 
+function M.create_theme()
+	local theme = {}
+	
+	theme.is_enabled = function(component)
+		if component.node then
+			return M.is_enabled(component.node)
+		end
+	end
+
+	theme.set_enabled = function(component, enabled)
+		if component.node then
+			gui.set_enabled(component.node, enabled)
+		end
+	end
+
+	theme.acquire_input = M.acquire_input
+	theme.release_input = M.release_input
+
+	theme.group = M.group
+
+	return theme
+end
+
+
 --- Mask text by replacing every character with a mask
 -- character
 -- @param text

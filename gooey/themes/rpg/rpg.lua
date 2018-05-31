@@ -1,7 +1,7 @@
 local gooey = require "gooey.gooey"
 local utils = require "gooey.themes.utils"
 
-local M = {}
+local M = gooey.create_theme()
 
 local LISTITEM = hash("buttonSquare_blue")
 local BUTTON_SQUARE_PRESSED = hash("buttonSquare_blue_pressed")
@@ -10,11 +10,6 @@ local CHECKBOX_PRESSED = hash("checkbox_blue_pressed")
 local CHECKBOX = hash("checkbox_blue")
 local RADIO_PRESSED = hash("buttonRound_blue_pressed")
 local RADIO = hash("buttonRound_blue")
-
-
-function M.acquire_input()
-	gooey.acquire_input()
-end
 
 
 local function update_button(button)
@@ -138,11 +133,6 @@ local function update_dynamic_list(list)
 end
 function M.dynamic_list(list_id, data, action_id, action, fn)
 	return gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data, action_id, action, fn, update_dynamic_list)
-end
-
-
-function M.group(id, fn)
-	return gooey.group(id, fn)
 end
 
 
