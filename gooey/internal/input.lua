@@ -23,6 +23,7 @@ end
 -- calculate text width with font with respect to trailing space (issue DEF-1761)
 local function get_text_width(node, text)
 	local font = gui.get_font(node)
+	local scale = gui.get_scale(node)
 	local result = gui.get_text_metrics(font, text, 0, false, 0, 0).width
 	for i=#text, 1, -1 do
 		local c = string.sub(text, i, i)
@@ -31,6 +32,7 @@ local function get_text_width(node, text)
 		end
 		result = result + get_space_width(font)
 	end
+	result = result * scale.x
 	return result
 end
 
