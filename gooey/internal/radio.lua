@@ -37,6 +37,7 @@ function M.button(node_id, group_id, action_id, action, fn, refresh_fn)
 	radio.refresh_fn = refresh_fn
 
 	core.clickable(radio, action_id, action)
+	radio.deselected_now = false
 	radio.selected_now = radio.clicked and not radio.selected or false
 	if radio.clicked then
 		radio.selected = true
@@ -64,7 +65,6 @@ function M.group(group_id, action_id, action, fn)
 	for _,radio in pairs(radiobuttons) do
 		radio = radio.data
 		if radio.group == group_key then
-			radio.deselected_now = false
 			if radio.selected_now then
 				selected_radio = radio
 			end

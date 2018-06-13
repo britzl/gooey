@@ -36,11 +36,6 @@ return function()
 			local refresh1 = callback_listener()
 			local refresh2 = callback_listener()
 			local refresh3 = callback_listener()
-			
-			local actionssss = {
-				actions.pressed(10, 60), actions.released(10, 60), -- select second radio button
-				actions.pressed(10, 10), actions.released(10, 10), -- select first radio button
-			}
 			local group1 = "group1"
 
 			
