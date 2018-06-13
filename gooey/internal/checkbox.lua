@@ -29,12 +29,9 @@ function M.checkbox(node_id, action_id, action, fn, refresh_fn)
 	checkbox.node = node
 	checkbox.refresh_fn = refresh_fn
 
-	if not action then
-		checkbox.refresh()
-		return checkbox
-	end
-
 	core.clickable(checkbox, action_id, action)
+	checkbox.checked_now = checkbox.clicked and not checkbox.checked or false
+	checkbox.unchecked_now = checkbox.clicked and checkbox.checked or false
 	if checkbox.clicked then
 		checkbox.checked = not checkbox.checked
 		fn(checkbox)

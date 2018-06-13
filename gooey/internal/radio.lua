@@ -14,7 +14,9 @@ local RADIOBUTTON = {
 		if radio.refresh_fn then radio.refresh_fn(radio) end
 	end,
 	refresh = function(radio)
-		if radio.refresh_fn then radio.refresh_fn(radio) end
+		if radio.refresh_fn then
+			radio.refresh_fn(radio)
+		end
 	end,
 	set_visible = function(radio, visible)
 		gui.set_enabled(radio.node, visible)
@@ -34,12 +36,8 @@ function M.button(node_id, group_id, action_id, action, fn, refresh_fn)
 	radio.group = group_id and core.to_key(group_id)
 	radio.refresh_fn = refresh_fn
 
-	if not action then
-		radio.refresh()
-		return radio
-	end
-	
 	core.clickable(radio, action_id, action)
+	radio.selected_now = radio.clicked and not radio.selected or false
 	if radio.clicked then
 		radio.selected = true
 		fn(radio)
@@ -66,6 +64,7 @@ function M.group(group_id, action_id, action, fn)
 	for _,radio in pairs(radiobuttons) do
 		radio = radio.data
 		if radio.group == group_key then
+			radio.deselected_now = false
 			if radio.released_now and radio.selected then
 				selected_radio = radio
 			end
@@ -77,6 +76,7 @@ function M.group(group_id, action_id, action, fn)
 		-- deselect others
 		for _,radio in ipairs(group) do
 			if radio ~= selected_radio then
+				radio.deselected_now = true
 				radio.selected = false
 				radio.refresh()
 			end

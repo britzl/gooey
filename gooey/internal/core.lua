@@ -34,7 +34,7 @@ end
 -- @param action_id
 -- @param action
 function M.clickable(component, action_id, action)
-	if not component.enabled then
+	if not component.enabled or not action then
 		component.pressed_now = false
 		component.released_now = false
 		component.consumed = false

@@ -2,12 +2,14 @@ local deftest = require "deftest.deftest"
 
 local test_gooey = require "test.test_gooey"
 local test_button = require "test.test_button"
+local test_radio = require "test.test_radio"
 local test_input = require "test.test_input"
 local test_static_list = require "test.test_static_list"
 
 function init(self)
 	deftest.add(test_gooey)
 	deftest.add(test_button)
+	deftest.add(test_radio)
 	deftest.add(test_input)
 	deftest.add(test_static_list)
 	deftest.run()

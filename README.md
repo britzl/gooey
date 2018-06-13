@@ -131,6 +131,8 @@ The state table contains the following fields:
 * ```pressed``` (boolean) - true if the checkbox is pressed (ie mouse/touch down but not yet released)
 * ```pressed_now``` (boolean) - true if the checkbox was pressed this call
 * ```released_now``` (boolean) - true if the checkbox was released this call
+* ```checked_now``` (boolean) - true if the checkbox was checked this call
+* ```unchecked_now``` (boolean) - true if the checkbox was unchecked this call
 
 **EXAMPLE**
 
@@ -191,6 +193,8 @@ The state table contains the following fields:
 * ```pressed``` (boolean) - true if the radio button is pressed (ie mouse/touch down but not yet released)
 * ```pressed_now``` (boolean) - true if the radio button was pressed this call
 * ```released_now``` (boolean) - true if the radio button was released this call
+* ```selected_now``` (boolean) - true if the radio button was selected this call
+* ```deselected_now``` (boolean) - true if the radio button was deselected this call
 
 **EXAMPLE**
 

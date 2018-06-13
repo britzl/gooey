@@ -23,11 +23,6 @@ function M.button(node_id, action_id, action, fn, refresh_fn)
 	button.node = node
 	button.refresh_fn = refresh_fn
 
-	if not action then
-		button.refresh()
-		return button
-	end
-	
 	core.clickable(button, action_id, action)
 	if button.clicked then
 		fn(button)
