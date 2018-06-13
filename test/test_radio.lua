@@ -43,7 +43,10 @@ return function()
 			}
 			local group1 = "group1"
 
+			
+			--
 			-- select second radio button
+			--
 			for _,action in ipairs({ actions.pressed(10, 60), actions.released(10, 60) }) do
 				gooey.radiogroup(group1, gooey.TOUCH, action, function()
 					gooey.radio("radio1", group1, gooey.TOUCH, action, click1, refresh1)
@@ -56,19 +59,20 @@ return function()
 			assert(click2.calls == 1)
 			assert(click2.params[1].node == radio2)
 
-			-- press, release, deselect
-			assert(refresh1.calls == 3)
-			assert(refresh3.calls == 3)
-			-- press, release
-			assert(refresh2.calls == 2)
+			assert(refresh1.calls == 3) -- press, release, deselect
+			assert(refresh3.calls == 3) -- press, release, deselect
+			assert(refresh2.calls == 2) -- press, release
 			
 			-- check that second radio button is selected
 			assert(not refresh1.params[1].selected)
 			assert(not refresh3.params[1].selected)
 			assert(refresh2.params[1].selected)
 			assert(refresh2.params[1].selected_now)
+
 			
+			--
 			-- select first radio button
+			--
 			for _,action in ipairs({ actions.pressed(10, 10), actions.released(10, 10) }) do
 				gooey.radiogroup(group1, gooey.TOUCH, action, function()
 					gooey.radio("radio1", group1, gooey.TOUCH, action, click1, refresh1)
@@ -81,11 +85,9 @@ return function()
 			assert(click2.calls == 1)
 			assert(click1.params[1].node == radio1)
 
-			-- press, release, deselect
-			assert(refresh2.calls == 2 + 3)
-			assert(refresh3.calls == 3 + 3)
-			-- press, release
-			assert(refresh1.calls == 3 + 2)
+			assert(refresh2.calls == 2 + 3) -- press, release, deselect
+			assert(refresh3.calls == 3 + 3) -- press, release, deselect
+			assert(refresh1.calls == 3 + 2) -- press, release
 						
 			-- check that first radio button is selected and the second deselected
 			assert(refresh1.params[1].selected)
@@ -96,7 +98,29 @@ return function()
 			assert(refresh1.params[1].selected_now)
 			assert(refresh2.params[1].deselected_now)
 
+
+			--
+			-- select first radio button again
+			--
+			for _,action in ipairs({ actions.pressed(10, 10), actions.released(10, 10) }) do
+				gooey.radiogroup(group1, gooey.TOUCH, action, function()
+					gooey.radio("radio1", group1, gooey.TOUCH, action, click1, refresh1)
+					gooey.radio("radio2", group1, gooey.TOUCH, action, click2, refresh2)
+					gooey.radio("radio3", group1, gooey.TOUCH, action, click3, refresh3)
+				end)
+			end
+			-- check there is no change in the "now" state
+			assert(not refresh1.params[1].selected_now)
+			assert(not refresh2.params[1].deselected_now)
+						
+			assert(refresh2.calls == (2 + 3) + 2) -- press, release
+			assert(refresh3.calls == (3 + 3) + 2) -- press, release
+			assert(refresh1.calls == (3 + 2) + 2) -- press, release
+			
+			
+			--
 			-- generate a touch outside
+			--
 			local action = actions.move(0, 0)
 			gooey.radiogroup(group1, gooey.TOUCH, action, function()
 				gooey.radio("radio1", group1, gooey.TOUCH, action, click1, refresh1)
@@ -105,9 +129,9 @@ return function()
 			end)
 
 			-- move
-			assert(refresh2.calls == 2 + 3 + 1)
-			assert(refresh3.calls == 3 + 3 + 1)
-			assert(refresh1.calls == 3 + 2 + 1)
+			assert(refresh2.calls == (2 + 3 + 2) + 1)
+			assert(refresh3.calls == (3 + 3 + 2) + 1)
+			assert(refresh1.calls == (3 + 2 + 2) + 1)
 
 			-- check that "now" state is cleared
 			assert(not refresh1.params[1].selected_now)

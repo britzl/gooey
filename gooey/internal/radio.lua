@@ -65,7 +65,7 @@ function M.group(group_id, action_id, action, fn)
 		radio = radio.data
 		if radio.group == group_key then
 			radio.deselected_now = false
-			if radio.released_now and radio.selected then
+			if radio.selected_now then
 				selected_radio = radio
 			end
 			table.insert(group, radio)
@@ -76,7 +76,7 @@ function M.group(group_id, action_id, action, fn)
 		-- deselect others
 		for _,radio in ipairs(group) do
 			if radio ~= selected_radio then
-				radio.deselected_now = true
+				radio.deselected_now = radio.selected
 				radio.selected = false
 				radio.refresh()
 			end
