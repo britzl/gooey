@@ -1,3 +1,7 @@
+## Gooey 6.4.0 [britzl released 2018-06-13]
+NEW: Checkboxes have `checked_now` and `unchecked_now` state  
+NEW: Radio buttons have `selected_now` and `deselected_now` state
+
 ## Gooey 6.3.1 [britzl released 2018-06-04]
 FIX: Text width measurements were wrong when the input text node was scaled. This caused problems with the positioning of the cursor.
 
