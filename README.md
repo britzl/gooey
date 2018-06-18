@@ -396,7 +396,7 @@ The state table contains the following fields:
 	end
 
 	function on_input(self, action_id, action)
-		gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, update_input)
+		gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, nil, update_input)
 	end
 
 
