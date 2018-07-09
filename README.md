@@ -99,8 +99,8 @@ The state table contains the following fields:
 		gooey.button("button/bg", action_id, action, on_pressed, update_button)
 	end
 
-**INITIAL STATE**
-It is possible to set the initial state of a button:
+**STATE**
+It is possible to set the state of a button:
 
     update_button(gooey.button("button/bg").set_visible(false))
 
@@ -160,8 +160,8 @@ The state table contains the following fields:
 		gooey.checkbox("checkbox/bg", action_id, action, on_checked, update_checkbox)
 	end
 
-**INITIAL STATE**
-It is possible to set the initial state of a checkbox:
+**STATE**
+It is possible to set the state of a checkbox. This is good for setting the initial state of the checkbox:
 
 	update_checkbox(gooey.checkbox("checkbox/bg").check())
     update_checkbox(gooey.radio("checkbox/bg").set_visible(false))
@@ -223,8 +223,8 @@ The state table contains the following fields:
 		end), update_radio)
 	end
 
-**INITIAL STATE**
-It is possible to set the initial state of a radiobutton:
+**STATE**
+It is possible to set the state of a radiobutton. This is good for setting the initial state of the radiobutton:
 
     update_radio(gooey.radio("radio1/bg").set_selected(true))
     update_radio(gooey.radio("radio1/bg").set_visible(false))
@@ -398,6 +398,12 @@ The state table contains the following fields:
 	function on_input(self, action_id, action)
 		gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, nil, update_input)
 	end
+
+**STATE**
+It is possible to set the state of an input node:
+
+    update_input(gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT).set_visible(false))
+    update_input(gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT).set_text("foobar"))
 
 
 ## Consuming input

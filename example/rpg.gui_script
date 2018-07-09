@@ -9,6 +9,7 @@ function init(self)
 	self.list_data = {
 		"Legolas", "Bilbo", "Frodo", "Gandalf", "Gimli", "Aragorn"
 	}
+	rpg.input("input", gui.KEYBOARD_TYPE_DEFAULT,  nil, nil, { empty_text = "DEFAULT TEXT" })
 	rpg.static_list("static_list", self.list_ids)
 	rpg.dynamic_list("dynamic_list", self.list_data)
 end
@@ -46,9 +47,10 @@ function on_input(self, action_id, action)
 
 		rpg.dynamic_list("dynamic_list", self.list_data, action_id, action, function(list)
 			print("selected dynamic list item", list.selected_item)
+			rpg.input("input", gui.KEYBOARD_TYPE_DEFAULT).set_text(self.list_data[list.selected_item])
 		end)
 
-		rpg.input("input", gui.KEYBOARD_TYPE_DEFAULT, action_id, action)
+		rpg.input("input", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, { empty_text = "DEFAULT TEXT" })
 	end)
 	return group.consumed
 end

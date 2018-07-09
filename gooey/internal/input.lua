@@ -62,6 +62,36 @@ local INPUT = {
 	set_visible = function(input, visible)
 		gui.set_enabled(input.node, visible)
 	end,
+	set_text = function(input, text)
+		input.text = text
+
+		-- only update the text if it has changed
+		local current_text = input.text .. input.marked_text
+		if current_text ~= input.current_text then
+			input.current_text = current_text
+
+			-- mask text if password field
+			if input.keyboard_type == gui.KEYBOARD_TYPE_PASSWORD then
+				input.masked_text = M.mask_text(input.text, "*")
+				input.masked_marked_text = M.mask_text(input.marked_text, "*")
+			else
+				input.masked_text = nil
+				input.masked_marked_text = nil
+			end
+
+			-- text + marked text
+			local text = input.masked_text or input.text
+			local marked_text = input.masked_marked_text or input.marked_text
+			input.empty = #text == 0 and #marked_text == 0
+
+			-- measure it
+			input.text_width = get_text_width(input.node, text)		
+			input.marked_text_width = get_text_width(input.node, marked_text)
+			input.total_width = input.text_width + input.marked_text_width
+
+			gui.set_text(input.node, text .. marked_text)
+		end
+	end,
 }
 
 function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
@@ -74,14 +104,15 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	input.node = node
 	input.refresh_fn = refresh_fn
 
-	if not action then
-		input.refresh()
-		return input
-	end
-	
 	input.text = input.text or ""
 	input.marked_text = input.marked_text or ""
 	input.keyboard_type = keyboard_type
+	
+	if not action then
+		input.empty = #input.text == 0 and #input.marked_text == 0
+		input.refresh()
+		return input
+	end
 
 	core.clickable(input, action_id, action)
 
@@ -130,27 +161,9 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 				end
 				input.text = string.sub(input.text, 1, string.len(input.text) - last_s)
 			end
-
-			if keyboard_type == gui.KEYBOARD_TYPE_PASSWORD then
-				input.masked_text = M.mask_text(input.text, "*")
-				input.masked_marked_text = M.mask_text(input.marked_text, "*")
-			else
-				input.masked_text = nil
-				input.masked_marked_text = nil
-			end			
 		end
 
-		local text = input.masked_text or input.text
-		local marked_text = input.masked_marked_text or input.marked_text
-		input.empty = #text == 0 and #marked_text == 0
-
-		input.text_width = get_text_width(input.node, text)		
-		input.marked_text_width = get_text_width(input.node, marked_text)
-		input.total_width = input.text_width + input.marked_text_width
-		
-		if input.selected then
-			gui.set_text(input.node, text .. marked_text)
-		end
+		input.set_text(input.text)
 	end
 	if refresh_fn then refresh_fn(input) end
 	return input
