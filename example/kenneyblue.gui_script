@@ -13,7 +13,7 @@ function init(self)
 	self.list_data = { "Luke", "Leia", "Chewie", "Yoda", "Darth", "Boba", "C3PIO", "R2D2", "Han" }
 
 	kenneyblue.checkbox("checkbox").set_checked(true)
-	kenneyblue.input("input", gui.KEYBOARD_TYPE_DEFAULT, nil, { x=0, y=0 }, { empty_text = "EMPTY, MAX 8 CHARS" })
+	kenneyblue.input("input", gui.KEYBOARD_TYPE_DEFAULT, nil, nil, { empty_text = "EMPTY, MAX 8 CHARS" })
 	kenneyblue.static_list("staticlist", self.list_ids)
 	kenneyblue.dynamic_list("dynamiclist", self.list_data)
 end

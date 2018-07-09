@@ -5,7 +5,7 @@ function init(self)
 
 	dirtylarry.checkbox("checkbox").set_checked(true)
 	dirtylarry.radio("radio2").set_selected(true)
-	dirtylarry.input("input", gui.KEYBOARD_TYPE_DEFAULT, nil, { x=0, y=0 }, { empty_text = "EMPTY, MAX 8 CHARS" })
+	dirtylarry.input("input", gui.KEYBOARD_TYPE_DEFAULT, nil, nil, { empty_text = "EMPTY, MAX 8 CHARS" })
 
 	self.list_data = { "Sherlock", "Poirot", "Magnum", "Miss Marple", "Morse", "Columbo" }
 	dirtylarry.dynamic_list("dynamiclist", self.list_data)
