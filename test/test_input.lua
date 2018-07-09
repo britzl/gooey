@@ -29,7 +29,7 @@ return function()
 			local node = gui.new_text_node(vmath.vector3(10, 10, 0), "")
 			gui.set_id(node, "text")
 			
-			local config = nil
+			-- select and enter some text
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TOUCH, actions.pressed(10, 10))
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TOUCH, actions.released(10, 10))
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TEXT, actions.text("f"))
@@ -45,12 +45,13 @@ return function()
 			local node = gui.new_text_node(vmath.vector3(10, 10, 0), "")
 			gui.set_id(node, "text")
 			
-			local config = nil
+			-- select and enter some text
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TOUCH, actions.pressed(10, 10))
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TOUCH, actions.released(10, 10))
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TEXT, actions.text("foobar"))
 			assert(gooey.input("text").text == "foobar")
 
+			-- erase
 			local input = gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.BACKSPACE, actions.text(""))
 			assert(input.text == "fooba")
 		end)
@@ -59,14 +60,28 @@ return function()
 			local node = gui.new_text_node(vmath.vector3(10, 10, 0), "")
 			gui.set_id(node, "text")
 
-			local config = nil
+			-- select and enter some text
 			gooey.input("text", gui.KEYBOARD_TYPE_PASSWORD, gooey.TOUCH, actions.pressed(10, 10))
 			gooey.input("text", gui.KEYBOARD_TYPE_PASSWORD, gooey.TOUCH, actions.released(10, 10))
 			gooey.input("text", gui.KEYBOARD_TYPE_PASSWORD, gooey.TEXT, actions.text("foobar"))
-			print(gooey.input("text").text)
+
+			-- check that the text is masked
 			assert(gooey.input("text").masked_text == "******")
 			assert(gui.get_text(node) == "******")
 		end)
-				
+
+		test("it should be possible to set the text directly", function()
+			local node = gui.new_text_node(vmath.vector3(10, 10, 0), "")
+			gui.set_id(node, "text")
+
+			-- select and enter some text
+			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TOUCH, actions.pressed(10, 10))
+			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TOUCH, actions.released(10, 10))
+			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, gooey.TEXT, actions.text("foo"))
+
+			-- set text directly
+			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT).set_text("foobar")
+			assert(gooey.input("text").text == "foobar")
+		end)
 	end)
 end
