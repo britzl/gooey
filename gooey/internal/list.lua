@@ -232,14 +232,37 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 	end
 
 	-- recalculate size of list if the amount of data has changed
-	if not state.data_size or state.data_size ~= #data then
+	-- deselect and realign items
+	local data_size_changed = state.data_size ~= #data
+	if not state.data_size or data_size_changed then
 		state.data_size = #data		
 		state.min_y = 0
 		state.max_y = (#data * list.item_size.y) - state.stencil_size.y
-		for i=1,#list.items do
-			local item = list.items[i]
-			gui.set_enabled(item.root, i <= #data)
+		list.selected_item = nil
+		-- fewer items in the list than visible
+		-- assign indices and disable list items
+		if #data < #list.items then
+			for i=1,#list.items do
+				local item = list.items[i]
+				item.index = i
+				gui.set_enabled(item.root, (i <= #data))
+			end
+			state.scroll_pos.y = 0
+			update_dynamic_listitem_positions(list, state)
+		-- more items in list than visible
+		-- assign indices and enable list items
+		else
+			local first_index = list.items[1].index
+			if (first_index + #list.items) > #data then
+				first_index = #data - #list.items + 1
+			end
+			for i=1,#list.items do
+				local item = list.items[i]
+				item.index = first_index + i -1
+				gui.set_enabled(item.root, true)
+			end
 		end
+		
 	end
 	
 	-- bail early if the list is empty
@@ -256,7 +279,7 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 			update_dynamic_listitem_positions(list, state)
 		end
 	end
-
+	
 	update_dynamic_listitem_data(list, data)
 
 	if refresh_fn then refresh_fn(list) end
