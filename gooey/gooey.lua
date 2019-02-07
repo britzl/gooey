@@ -149,7 +149,9 @@ end
 -- @param action_id
 -- @param action
 -- @param config Optional config table. Accepted values
+--  * empty_text (string) - Text to show when the field is empty
 --	* max_length (number) - Maximum number of characters that can be entered
+--  * allowed_characters (string) - Lua pattern to filter which characters to accept
 -- @return Component state
 function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	core.TOUCH = M.TOUCH

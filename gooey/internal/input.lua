@@ -142,9 +142,11 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 				end)
 				-- ignore arrow keys
 				if not string.match(hex, "EF9C8[0-3]") then
-					input.text = input.text .. action.text
-					if config and config.max_length then
-						input.text = input.text:sub(1, config.max_length)
+					if not config.allowed_characters or action.text:match(config.allowed_characters) then
+						input.text = input.text .. action.text
+						if config and config.max_length then
+							input.text = input.text:sub(1, config.max_length)
+						end
 					end
 					input.marked_text = ""
 				end
