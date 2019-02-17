@@ -59,6 +59,9 @@ local function handle_input(list, state, action_id, action, click_fn)
 		state.scroll_speed = math.min(state.scroll_speed + 0.25, 10)
 		state.scroll_time = time
 		state.scroll_pos.y = state.scroll_pos.y + ((scroll_up and 1 or -1) * state.scroll_speed)
+		if action.released then
+			state.scrolling = false
+		end
 	end
 	-- handle touch and drag scrolling
 	if list.pressed and vmath.length(state.pressed_pos - action_pos) > 10 then
@@ -198,9 +201,6 @@ end
 
 --- A dynamic list where the nodes are reused to present a large list of items
 function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
-	if action_id == hash("scroll_up") then
-		pprint(action)
-	end
 	local list, state = get_instance(list_id, stencil_id, refresh_fn, dynamic_lists)
 
 	-- create list items (once!)
