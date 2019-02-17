@@ -198,9 +198,6 @@ end
 
 --- A dynamic list where the nodes are reused to present a large list of items
 function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
-	if action_id == hash("scroll_up") then
-		pprint(action)
-	end
 	local list, state = get_instance(list_id, stencil_id, refresh_fn, dynamic_lists)
 
 	-- create list items (once!)
