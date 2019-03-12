@@ -1,11 +1,7 @@
 local core = require "gooey.internal.core"
+local actions = require "gooey.actions"
 
 local M = {}
-
-M.TOUCH = hash("touch")
-M.TEXT = hash("text")
-M.MARKED_TEXT = hash("marked_text")
-M.BACKSPACE = hash("backspace")
 
 local inputfields = {}
 local space_width = {}
@@ -123,14 +119,14 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 			input.marked_text = ""
 			gui.reset_keyboard()
 			gui.show_keyboard(keyboard_type, true)
-		elseif input.selected and action.pressed and action_id == M.TOUCH and not input.over then
+		elseif input.selected and action.pressed and action_id == actions.TOUCH and not input.over then
 			input.selected = false
 			gui.hide_keyboard()
 		end
 
 		if input.selected then
 			-- new raw text input
-			if action_id == M.TEXT then
+			if action_id == actions.TEXT then
 				input.consumed = true
 				-- ignore return key
 				if action.text == "\n" or action.text == "\r" then
@@ -151,11 +147,11 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 					input.marked_text = ""
 				end
 			-- new marked text input (uncommitted text)
-			elseif action_id == M.MARKED_TEXT then
+			elseif action_id == actions.MARKED_TEXT then
 				input.consumed = true
 				input.marked_text = action.text or ""
 			-- input deletion
-			elseif action_id == M.BACKSPACE and (action.pressed or action.repeated) then
+			elseif action_id == actions.BACKSPACE and (action.pressed or action.repeated) then
 				input.consumed = true
 				local last_s = 0
 				for uchar in M.utf8_gfind(input.text) do

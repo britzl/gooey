@@ -1,7 +1,7 @@
+local actions = require "gooey.actions"
+
 local M = {}
 
-M.TOUCH = hash("touch")
-M.MULTITOUCH = hash("multitouch")
 
 local function handle_action(component, action_id, action)
 	action.id = action.id or -1
@@ -11,7 +11,7 @@ local function handle_action(component, action_id, action)
 		component.out_now = not over and component.over
 		component.over = over
 
-		local touch = action_id == M.TOUCH or action_id == M.MULTITOUCH
+		local touch = action_id == actions.TOUCH or action_id == actions.MULTITOUCH
 		local pressed = touch and action.pressed and component.over
 		local released = touch and action.released
 		if pressed then

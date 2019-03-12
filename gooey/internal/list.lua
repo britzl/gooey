@@ -1,4 +1,5 @@
 local core = require "gooey.internal.core"
+local actions = require "gooey.actions"
 
 local M = {}
 
@@ -30,9 +31,9 @@ end
 local function handle_input(list, state, action_id, action, click_fn)
 	local over_stencil = gui.pick_node(state.stencil, action.x, action.y)
 
-	local touch = action_id == M.TOUCH
-	local scroll_up = action_id == M.SCROLL_UP
-	local scroll_down = action_id == M.SCROLL_DOWN
+	local touch = action_id == actions.TOUCH
+	local scroll_up = action_id == actions.SCROLL_UP
+	local scroll_down = action_id == actions.SCROLL_DOWN
 	local pressed = touch and action.pressed and over_stencil
 	local released = touch and action.released
 	local action_pos = vmath.vector3(action.x, action.y, 0)
