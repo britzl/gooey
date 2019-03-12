@@ -4,6 +4,7 @@ local button = require "gooey.internal.button"
 local radio = require "gooey.internal.radio"
 local list = require "gooey.internal.list"
 local input = require "gooey.internal.input"
+local scrollbar = require "gooey.internal.scrollbar"
 
 local M = {}
 
@@ -115,6 +116,15 @@ function M.dynamic_list(list_id, stencil_id, item_id, data, action_id, action, f
 		current_group.components[#current_group.components + 1] = l
 	end
 	return l
+end
+
+
+function M.vertical_scrollbar(handle_id, bounds_id, action_id, action, fn, refresh_fn)
+	local sb = scrollbar.vertical(handle_id, bounds_id, action_id, action, fn, refresh_fn)
+	if current_group then
+		current_group.components[#current_group.components + 1] = sb
+	end
+	return sb
 end
 
 
