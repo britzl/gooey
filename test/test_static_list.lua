@@ -3,7 +3,7 @@ local mock = require "deftest.mock.mock"
 
 local gooey = require "gooey.gooey"
 local actions = require "test.actions"
-
+local action_ids = require "gooey.actions"
 
 local function callback_listener()
 	local listener = {}
@@ -42,9 +42,9 @@ return function()
 
 			local click_fn = callback_listener()
 			
-			gooey.static_list(list_id, stencil_id, item_ids, gooey.TOUCH, actions.pressed(50, 50), click_fn)
-			gooey.static_list(list_id, stencil_id, item_ids, gooey.TOUCH, actions.released(50, 50), click_fn)
-			
+			gooey.static_list(list_id, stencil_id, item_ids, action_ids.TOUCH, actions.pressed(50, 50), click_fn)
+			gooey.static_list(list_id, stencil_id, item_ids, action_ids.TOUCH, actions.released(50, 50), click_fn)
+
 			assert(click_fn.calls == 1)
 		end)
 		

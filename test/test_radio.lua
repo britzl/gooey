@@ -3,6 +3,7 @@ local mock = require "deftest.mock.mock"
 
 local gooey = require "gooey.gooey"
 local actions = require "test.actions"
+local action_ids = require "gooey.actions"
 
 
 local function callback_listener()
@@ -43,10 +44,10 @@ return function()
 			-- select second radio button
 			--
 			for _,action in ipairs({ actions.pressed(10, 60), actions.released(10, 60) }) do
-				gooey.radiogroup(group1, gooey.TOUCH, action, function()
-					gooey.radio("radio1", group1, gooey.TOUCH, action, click1, refresh1)
-					gooey.radio("radio2", group1, gooey.TOUCH, action, click2, refresh2)
-					gooey.radio("radio3", group1, gooey.TOUCH, action, click3, refresh3)
+				gooey.radiogroup(group1, action_ids.TOUCH, action, function()
+					gooey.radio("radio1", group1, action_ids.TOUCH, action, click1, refresh1)
+					gooey.radio("radio2", group1, action_ids.TOUCH, action, click2, refresh2)
+					gooey.radio("radio3", group1, action_ids.TOUCH, action, click3, refresh3)
 				end)
 			end
 			assert(click1.calls == 0)
@@ -69,10 +70,10 @@ return function()
 			-- select first radio button
 			--
 			for _,action in ipairs({ actions.pressed(10, 10), actions.released(10, 10) }) do
-				gooey.radiogroup(group1, gooey.TOUCH, action, function()
-					gooey.radio("radio1", group1, gooey.TOUCH, action, click1, refresh1)
-					gooey.radio("radio2", group1, gooey.TOUCH, action, click2, refresh2)
-					gooey.radio("radio3", group1, gooey.TOUCH, action, click3, refresh3)
+				gooey.radiogroup(group1, action_ids.TOUCH, action, function()
+					gooey.radio("radio1", group1, action_ids.TOUCH, action, click1, refresh1)
+					gooey.radio("radio2", group1, action_ids.TOUCH, action, click2, refresh2)
+					gooey.radio("radio3", group1, action_ids.TOUCH, action, click3, refresh3)
 				end)
 			end
 			assert(click1.calls == 1)
@@ -98,10 +99,10 @@ return function()
 			-- select first radio button again
 			--
 			for _,action in ipairs({ actions.pressed(10, 10), actions.released(10, 10) }) do
-				gooey.radiogroup(group1, gooey.TOUCH, action, function()
-					gooey.radio("radio1", group1, gooey.TOUCH, action, click1, refresh1)
-					gooey.radio("radio2", group1, gooey.TOUCH, action, click2, refresh2)
-					gooey.radio("radio3", group1, gooey.TOUCH, action, click3, refresh3)
+				gooey.radiogroup(group1, action_ids.TOUCH, action, function()
+					gooey.radio("radio1", group1, action_ids.TOUCH, action, click1, refresh1)
+					gooey.radio("radio2", group1, action_ids.TOUCH, action, click2, refresh2)
+					gooey.radio("radio3", group1, action_ids.TOUCH, action, click3, refresh3)
 				end)
 			end
 			-- check there is no change in the "now" state
@@ -117,10 +118,10 @@ return function()
 			-- generate a touch outside
 			--
 			local action = actions.move(0, 0)
-			gooey.radiogroup(group1, gooey.TOUCH, action, function()
-				gooey.radio("radio1", group1, gooey.TOUCH, action, click1, refresh1)
-				gooey.radio("radio2", group1, gooey.TOUCH, action, click2, refresh2)
-				gooey.radio("radio3", group1, gooey.TOUCH, action, click3, refresh3)
+			gooey.radiogroup(group1, action_ids.TOUCH, action, function()
+				gooey.radio("radio1", group1, action_ids.TOUCH, action, click1, refresh1)
+				gooey.radio("radio2", group1, action_ids.TOUCH, action, click2, refresh2)
+				gooey.radio("radio3", group1, action_ids.TOUCH, action, click3, refresh3)
 			end)
 
 			-- move
