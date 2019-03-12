@@ -2,6 +2,7 @@ local actions = require "gooey.actions"
 
 local M = {}
 
+local EMPTY = hash("")
 
 local function handle_action(component, action_id, action)
 	action.id = action.id or -1
