@@ -106,6 +106,9 @@ images {
 images {
   image: "/gooey/themes/kenneyblue/images/grey_button02.png"
 }
+images {
+  image: "/gooey/themes/kenneyblue/images/grey_sliderVertical.png"
+}
 margin: 0
-extrude_borders: 1
-inner_padding: 1
+extrude_borders: 2
+inner_padding: 0

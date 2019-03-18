@@ -29,6 +29,8 @@ For Gooey to work it requires a couple of input bindings:
 ![](docs/key_mouse_bindings.png)
 ![](docs/text_bindings.png)
 
+The input binding constants listed above are defined in `gooey/actions.lua` and can be changed.
+
 **IMPORTANT NOTE ON ANDROID**: Make sure that the Input Method in the Android section of the game.project file is set to HiddenInputField. This will ensure that virtual keyboard input works properly.
 
 ### Multi-touch
@@ -44,9 +46,10 @@ Gooey supports the following component types:
 * Checkbox - ```gooey.checkbox()```
 * Radio button - ```gooey.radio()```
 * Input text - ```gooey.input()```
-* Lists
- * ```gooey.static_list()``` All list item nodes are already added to the list. Good for showing a small data set or when the list item nodes should vary in composition and looks.
- * ```gooey.dynamic_list()``` All list item nodes are created from the same template. The nodes are reused when scrolling. Good for showing a large data set.
+* Lists (static and dynamic):
+  * ```gooey.static_list()``` All list item nodes are already added to the list. Good for showing a small data set or when the list item nodes should vary in composition and looks.
+  * ```gooey.dynamic_list()``` All list item nodes are created from the same template. The nodes are reused when scrolling. Good for showing a large data set.
+* Scrollbar - ```gooey.scrollbar```
 
 
 ### gooey.button(node_id, action_id, action, fn, refresh_fn)
@@ -247,10 +250,10 @@ Perform input and state handling for a list of items where the list of nodes has
 
 The state table contains the following fields:
 
-* ```root``` (node) - The root node
+* ```id``` (string) - The ```list_id``` parameter above
 * ```enabled``` (boolean) - true if the node is enabled
 * ```consumed``` (boolean) - true if the input was consumed
-* ```items``` (table) - The list items as nodes. Each item is presented by a table with keys "root" (node) and nodes (table).
+* ```items``` (table) - The list items as nodes. Each item is presented by a table with keys "root" (node) and "nodes" (table).
 * ```over``` (boolean) - true if user action is over any list item
 * ```over_item``` (number) - Index of the list item the user action is over
 * ```over_item_now``` (number) - Index of the list item the user action moved inside this call
@@ -259,6 +262,7 @@ The state table contains the following fields:
 * ```pressed_item``` (number) - Index of the pressed list item (ie mouse/touch down but not yet released)
 * ```pressed_item_now``` (number) - Index of the list item the user action pressed this call
 * ```released_item_now``` (number) - Index of the list item the user action released this call
+* ```scroll``` (vector3) - Scrolled amount from the top (only scroll.y is used). The scroll amount is in the range 0.0 (top) to 1.0 (bottom).
 
 **EXAMPLE**
 
@@ -315,6 +319,7 @@ The ```list``` table contains the following fields:
 * ```pressed_item``` (number) - Index of the pressed list item (ie mouse/touch down but not yet released)
 * ```pressed_item_now``` (number) - Index of the list item the user action pressed this call
 * ```released_item_now``` (number) - Index of the list item the user action released this call
+* ```scroll``` (vector3) - Scrolled amount from the top (only scroll.y is used). The scroll amount is in the range 0.0 (top) to 1.0 (bottom).
 
 The ```items``` table contains list items, each with the following fields:
 

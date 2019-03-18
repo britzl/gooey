@@ -41,7 +41,7 @@ function M.clickable(component, action_id, action)
 		component.consumed = false
 		component.clicked = false
 		component.pressed = false
-		return		
+		return
 	end
 
 	if not action.touch then
@@ -116,6 +116,23 @@ function M.instance(id, instances, functions)
 		instances[key].state = {}
 	end
 	return instances[key].data, instances[key].state
-end	
+end
 
+function M.state(id, instances)
+	local key = M.to_key(id)
+	if not instances[key].state then
+		instances[key].state = {}
+	end
+	return instances[key].state
+end
+
+function M.clamp(v, min, max)
+	if v < min then
+		return min
+	elseif v > max then
+		return max
+	else
+		return v
+	end
+end
 return M

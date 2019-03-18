@@ -5,29 +5,28 @@ local M = {}
 
 local scrollbars = {}
 
-local SCROLLBAR = {
-	refresh = function(scrollbar)
-		if scrollbar.refresh_fn then scrollbar.refresh_fn(button) end
-	end,
-	set_visible = function(button, visible)
-		gui.set_enabled(scrollbar.node, visible)
-	end,
-}
-
-
-local function scroll_to(scrollbar, ratio)
+-- instance functions
+local SCROLLBAR = {}
+function SCROLLBAR.refresh(scrollbar)
+	if scrollbar.refresh_fn then scrollbar.refresh_fn(button) end
+end
+function SCROLLBAR.scroll_to(scrollbar, x, y)
+	assert(scrollbar)
+	assert(x)
+	assert(y)
 	local handle_pos = gui.get_position(scrollbar.node)
 
-	if ratio < 0 then ratio = 0 elseif ratio > 1 then ratio = 1 end
-	handle_pos.y = ratio * scrollbar.bounds_size.y
-	if handle_pos.y < 0 then
-		handle_pos.y = 0
-	elseif handle_pos.y > scrollbar.bounds_size.y then
-		handle_pos.y = scrollbar.bounds_size.y
-	end
+	x = core.clamp(x, 0, 1)
+	y = core.clamp(y, 0, 1)
+	handle_pos.x = x * scrollbar.bounds_size.x
+	handle_pos.y = y * scrollbar.bounds_size.y
 	gui.set_position(scrollbar.node, handle_pos)
-	scrollbar.scroll_y = 1 - ratio
+	scrollbar.scroll.y = 1 - y
 end
+function SCROLLBAR.set_visible(button, visible)
+	gui.set_enabled(scrollbar.node, visible)
+end
+
 
 function M.vertical(handle_id, bounds_id, action_id, action, fn, refresh_fn)
 	handle_id = core.to_hash(handle_id)
@@ -37,6 +36,7 @@ function M.vertical(handle_id, bounds_id, action_id, action, fn, refresh_fn)
 	assert(handle)
 	assert(bounds)
 	local scrollbar = core.instance(handle_id, scrollbars, SCROLLBAR)
+	scrollbar.scroll = scrollbar.scroll or vmath.vector3()
 	if action then
 		local bounds_size = gui.get_size(bounds)
 
@@ -49,7 +49,7 @@ function M.vertical(handle_id, bounds_id, action_id, action, fn, refresh_fn)
 		local action_pos = vmath.vector3(action.x, action.y, 0)
 
 		if action_id == actions.SCROLL_TO then
-			scroll_to(scrollbar, action.scroll_y)
+			SCROLLBAR.scroll_to(scrollbar, 0, action.scroll_y)
 		else
 			core.clickable(scrollbar, action_id, action)
 			if scrollbar.pressed_now then
@@ -57,8 +57,8 @@ function M.vertical(handle_id, bounds_id, action_id, action, fn, refresh_fn)
 			elseif scrollbar.pressed then
 				local diff = scrollbar.pressed_position.y - action_pos.y
 				local ratio = (scrollbar.pressed_position.y / bounds_size.y) - (diff / bounds_size.y)
-				scroll_to(scrollbar, ratio)
-				action.scroll_y = scrollbar.scroll_y
+				SCROLLBAR.scroll_to(scrollbar, 0, ratio)
+				action.scroll_y = scrollbar.scroll.y
 				fn(scrollbar, actions.SCROLL_TO, action)
 			end
 		end

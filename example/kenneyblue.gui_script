@@ -110,7 +110,7 @@ function init(self)
 	kenneyblue.checkbox("checkbox").set_checked(true)
 	kenneyblue.input("input", gui.KEYBOARD_TYPE_DEFAULT, nil, nil, { empty_text = "EMPTY, MAX 8 CHARS" })
 	kenneyblue.static_list("staticlist", self.list_ids)
-	kenneyblue.dynamic_list("dynamiclist", self.list_data)
+	kenneyblue.dynamic_list("dynamiclist", "dynamicscrollbar", self.list_data)
 end
 
 function on_input(self, action_id, action)
@@ -147,11 +147,11 @@ function on_input(self, action_id, action)
 			table.remove(self.list_data)
 		end)
 		
-		kenneyblue.static_list("staticlist", self.list_ids, action_id, action, function(list)
+		local l = kenneyblue.static_list("staticlist", self.list_ids, action_id, action, function(list)
 			print("selected list item", list.selected_item)
 		end)
 
-		kenneyblue.dynamic_list("dynamiclist", self.list_data, action_id, action, function(list)
+		kenneyblue.dynamic_list("dynamiclist", "dynamicscrollbar", self.list_data, action_id, action, function(list)
 			print("selected dynamic list item", list.selected_item, self.list_data[list.selected_item])
 		end)
 

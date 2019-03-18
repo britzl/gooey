@@ -14,6 +14,8 @@ end
 function LIST.set_visible(list, visible)
 	gui.set_enabled(list.node, visible)
 end
+function LIST.scroll_to(list, x, y)
+end
 
 
 -- get a list instance and set up some basics of a list on the instance
@@ -21,6 +23,7 @@ local function get_instance(list_id, stencil_id, refresh_fn, lists)
 	stencil_id = core.to_hash(stencil_id)
 	local list, state = core.instance(stencil_id, lists, LIST)
 	list.id = list_id
+	list.scroll = list.scroll or vmath.vector3()
 	state.stencil = state.stencil or gui.get_node(stencil_id)	
 	state.stencil_size = state.stencil_size or gui.get_size(state.stencil)
 	state.refresh_fn = refresh_fn
@@ -30,11 +33,13 @@ end
 
 
 local function handle_input(list, state, action_id, action, click_fn)
+	print("list.scrolling", state.scrolling)
 	local over_stencil = gui.pick_node(state.stencil, action.x, action.y)
 
 	local touch = action_id == actions.TOUCH
 	local scroll_up = action_id == actions.SCROLL_UP
 	local scroll_down = action_id == actions.SCROLL_DOWN
+	local scroll_to = action_id == actions.SCROLL_TO
 	local pressed = touch and action.pressed and over_stencil
 	local released = touch and action.released
 	local action_pos = vmath.vector3(action.x, action.y, 0)
@@ -50,6 +55,7 @@ local function handle_input(list, state, action_id, action, click_fn)
 	-- handle mouse-wheel scrolling
 	if over_stencil and (scroll_up or scroll_down) then
 		list.consumed = true
+		list.scrolling = true
 		state.scrolling = true
 		-- reset scroll speed if the time between two scroll events is too large
 		local time = os.time()
@@ -63,19 +69,30 @@ local function handle_input(list, state, action_id, action, click_fn)
 		state.scroll_pos.y = state.scroll_pos.y + ((scroll_up and 1 or -1) * state.scroll_speed)
 		if action.released then
 			state.scrolling = false
+			list.scrolling = false
 		end
-	end
-	-- handle touch and drag scrolling
-	if list.pressed and vmath.length(state.pressed_pos - action_pos) > 10 then
+	-- handle scroll_to actions (from a scrollbar for instance)
+	elseif scroll_to then
 		list.consumed = true
+		list.scrolling = true
+		state.scroll_pos.y = state.min_y + (state.max_y - state.min_y) * action.scroll_y
+		state.scrolling = true
+	-- handle touch and drag scrolling
+	elseif list.pressed and vmath.length(state.pressed_pos - action_pos) > 10 then
+		list.consumed = true
+		list.scrolling = true
 		state.scrolling = true
 		state.scroll_pos.y = state.scroll_pos.y + (action_pos.y - state.action_pos.y)
 		state.action_pos = action_pos
+	else
+		list.scrolling = false
+		state.scrolling = false
 	end
 	-- limit to scroll bounds
 	if state.scrolling then
 		state.scroll_pos.y = math.min(state.scroll_pos.y, state.max_y)
 		state.scroll_pos.y = math.max(state.scroll_pos.y, state.min_y)
+		list.scroll.y = 1 - (state.scroll_pos.y / state.max_y)
 	end
 
 	-- find which item (if any) that the touch event is over
@@ -171,7 +188,6 @@ function M.static(list_id, stencil_id, item_ids, action_id, action, fn, refresh_
 		if state.scrolling then
 			arrange_items(list.items, vmath.vector3(state.scroll_pos))
 		end
-				
 	end
 	if refresh_fn then refresh_fn(list) end
 	return list

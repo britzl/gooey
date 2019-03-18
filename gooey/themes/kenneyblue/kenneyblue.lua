@@ -1,4 +1,5 @@
 local gooey = require "gooey.gooey"
+local actions = require "gooey.actions"
 local utils = require "gooey.themes.utils"
 
 local M = gooey.create_theme()
@@ -145,8 +146,21 @@ local function update_dynamic_list(list)
 		gui.set_text(item.nodes[hash(list.id .. "/listitem_text")], tostring(item.data or "-"))
 	end
 end
-function M.dynamic_list(list_id, data, action_id, action, fn)
-	return gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data, action_id, action, fn, update_dynamic_list)
+function M.dynamic_list(list_id, scrollbar_id, data, action_id, action, fn)
+	local list = gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data, action_id, action, fn, update_dynamic_list)
+	if scrollbar_id then
+		-- scrolled in list -> update scrollbar
+		if list.scrolling then
+			gooey.vertical_scrollbar(scrollbar_id .. "/handle", scrollbar_id .. "/bounds").scroll_to(0, list.scroll.y)
+		else
+			-- scroll using scrollbar -> scroll list
+			gooey.vertical_scrollbar(scrollbar_id .. "/handle", scrollbar_id .. "/bounds", action_id, action, function(scrollbar, action_id, action)
+				gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data, action_id, action)
+			end)
+		end
+	end
+	
+	return list
 end
 
 
