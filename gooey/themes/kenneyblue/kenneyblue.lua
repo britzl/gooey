@@ -68,7 +68,7 @@ local function update_radiobutton(radio)
 		gui.play_flipbook(radio.node, RADIO_SELECTED)
 	else
 		gui.play_flipbook(radio.node, RADIO)
-	end		
+	end
 end
 function M.radiogroup(group_id, action_id, action, fn)
 	return gooey.radiogroup(group_id, action_id, action, fn)
@@ -168,12 +168,11 @@ function M.dynamic_list(list_id, scrollbar_id, data, action_id, action, fn)
 		else
 			-- scroll using scrollbar -> scroll list
 			gooey.vertical_scrollbar(scrollbar_id .. "/handle", scrollbar_id .. "/bounds", action_id, action, function(scrollbar)
-				pprint(scrollbar)
 				gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data).scroll_to(0, scrollbar.scroll.y)
 			end)
 		end
 	end
-	
+
 	return list
 end
 
