@@ -8,20 +8,21 @@ local groups = {}
 
 
 
-local RADIOBUTTON = {
-	set_selected = function(radio, selected)
-		radio.selected = selected
-		if radio.refresh_fn then radio.refresh_fn(radio) end
-	end,
-	refresh = function(radio)
-		if radio.refresh_fn then
-			radio.refresh_fn(radio)
-		end
-	end,
-	set_visible = function(radio, visible)
-		gui.set_enabled(radio.node, visible)
-	end,
-}
+-- instance functions
+local RADIOBUTTON = {}
+function RADIOBUTTON.set_selected(radio, selected)
+	radio.selected = selected
+	if radio.refresh_fn then radio.refresh_fn(radio) end
+end
+function RADIOBUTTON.refresh(radio)
+	if radio.refresh_fn then
+		radio.refresh_fn(radio)
+	end
+end
+function RADIOBUTTON.set_visible(radio, visible)
+	gui.set_enabled(radio.node, visible)
+end
+
 
 
 function M.button(node_id, group_id, action_id, action, fn, refresh_fn)

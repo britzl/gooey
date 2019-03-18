@@ -6,18 +6,19 @@ M.TOUCH = hash("touch")
 
 local checkboxes = {}
 
-local CHECKBOX = {
-	set_checked = function(checkbox, checked)
-		checkbox.checked = checked
-		if checkbox.refresh_fn then checkbox.refresh_fn(checkbox) end
-	end,
-	set_visible = function(checkbox, visible)
-		gui.set_enabled(checkbox.node, visible)
-	end,
-	refresh = function(checkbox)
-		if checkbox.refresh_fn then checkbox.refresh_fn(checkbox) end
-	end,
-}
+-- instance functions
+local CHECKBOX = {}
+function CHECKBOX.set_checked(checkbox, checked)
+	checkbox.checked = checked
+	if checkbox.refresh_fn then checkbox.refresh_fn(checkbox) end
+end
+function CHECKBOX.set_visible(checkbox, visible)
+	gui.set_enabled(checkbox.node, visible)
+end
+function CHECKBOX.refresh(checkbox)
+	if checkbox.refresh_fn then checkbox.refresh_fn(checkbox) end
+end
+
 
 function M.checkbox(node_id, action_id, action, fn, refresh_fn)
 	node_id = core.to_hash(node_id)

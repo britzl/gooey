@@ -6,14 +6,15 @@ local M = {}
 local static_lists = {}
 local dynamic_lists = {}
 
-local LIST = {
-	refresh = function(list)
-		if list.refresh_fn then list.refresh_fn(list) end
-	end,
-	set_visible = function(list, visible)
-		gui.set_enabled(list.node, visible)
-	end,
-}
+-- instance functions
+local LIST = {}
+function LIST.refresh(list)
+	if list.refresh_fn then list.refresh_fn(list) end
+end
+function LIST.set_visible(list, visible)
+	gui.set_enabled(list.node, visible)
+end
+
 
 -- get a list instance and set up some basics of a list on the instance
 local function get_instance(list_id, stencil_id, refresh_fn, lists)

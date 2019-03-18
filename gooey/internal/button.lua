@@ -4,14 +4,15 @@ local M = {}
 
 local buttons = {}
 
-local BUTTON = {
-	refresh = function(button)
-		if button.refresh_fn then button.refresh_fn(button) end
-	end,
-	set_visible = function(button, visible)
-		gui.set_enabled(button.node, visible)
-	end,
-}
+-- instance functions
+local BUTTON = {}
+function BUTTON.refresh(button)
+	if button.refresh_fn then button.refresh_fn(button) end
+end
+function BUTTON.set_visible(button, visible)
+	gui.set_enabled(button.node, visible)
+end
+
 
 function M.button(node_id, action_id, action, fn, refresh_fn)
 	node_id = core.to_hash(node_id)
