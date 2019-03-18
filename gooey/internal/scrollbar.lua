@@ -48,19 +48,13 @@ function M.vertical(handle_id, bounds_id, action_id, action, fn, refresh_fn)
 
 		local action_pos = vmath.vector3(action.x, action.y, 0)
 
-		if action_id == actions.SCROLL_TO then
-			SCROLLBAR.scroll_to(scrollbar, 0, action.scroll_y)
-		else
-			core.clickable(scrollbar, action_id, action)
-			if scrollbar.pressed_now then
-				scrollbar.pressed_position = action_pos
-			elseif scrollbar.pressed then
-				local diff = scrollbar.pressed_position.y - action_pos.y
-				local ratio = (scrollbar.pressed_position.y / bounds_size.y) - (diff / bounds_size.y)
-				SCROLLBAR.scroll_to(scrollbar, 0, ratio)
-				action.scroll_y = scrollbar.scroll.y
-				fn(scrollbar, actions.SCROLL_TO, action)
-			end
+		core.clickable(scrollbar, action_id, action)
+		if scrollbar.pressed_now or scrollbar.pressed then
+			local bounds_pos = core.get_root_position(bounds)
+			local ratio = (action_pos.y - bounds_pos.y) / bounds_size.y
+			SCROLLBAR.scroll_to(scrollbar, 0, ratio)
+			action.scroll_y = scrollbar.scroll.y
+			fn(scrollbar, actions.SCROLL_TO, action)
 		end
 	end
 

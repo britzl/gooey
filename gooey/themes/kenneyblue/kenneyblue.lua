@@ -135,8 +135,21 @@ local function update_static_list(list)
 		update_listitem(list, item)
 	end
 end
-function M.static_list(list_id, item_ids, action_id, action, fn)
-	return gooey.static_list(list_id, list_id .. "/stencil", item_ids, action_id, action, fn, update_static_list)
+function M.static_list(list_id, scrollbar_id, item_ids, action_id, action, fn)
+	local list = gooey.static_list(list_id, list_id .. "/stencil", item_ids, action_id, action, fn, update_static_list)
+	if scrollbar_id then
+		-- scrolled in list -> update scrollbar
+		if list.scrolling then
+			gooey.vertical_scrollbar(scrollbar_id .. "/handle", scrollbar_id .. "/bounds").scroll_to(0, list.scroll.y)
+		else
+			-- scroll using scrollbar -> scroll list
+			gooey.vertical_scrollbar(scrollbar_id .. "/handle", scrollbar_id .. "/bounds", action_id, action, function(scrollbar, action_id, action)
+				gooey.static_list(list_id, list_id .. "/stencil", item_ids, action_id, action)
+			end)
+		end
+	end
+
+	return list
 end
 
 

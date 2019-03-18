@@ -29,6 +29,19 @@ local function handle_action(component, action_id, action)
 	end
 end
 
+function M.get_root_position(node)
+	local get_pos
+	get_pos = function(node)
+		local parent = gui.get_parent(node)
+		local pos = gui.get_position(node)
+		if parent then
+			return pos + get_pos(parent)
+		else
+			return pos
+		end
+	end
+	return get_pos(node)
+end
 
 --- Basic input handling for anything that is clickable
 -- @param component Component state table

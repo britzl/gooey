@@ -33,7 +33,6 @@ end
 
 
 local function handle_input(list, state, action_id, action, click_fn)
-	print("list.scrolling", state.scrolling)
 	local over_stencil = gui.pick_node(state.stencil, action.x, action.y)
 
 	local touch = action_id == actions.TOUCH
