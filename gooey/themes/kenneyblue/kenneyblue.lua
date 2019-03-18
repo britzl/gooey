@@ -143,8 +143,8 @@ function M.static_list(list_id, scrollbar_id, item_ids, action_id, action, fn)
 			gooey.vertical_scrollbar(scrollbar_id .. "/handle", scrollbar_id .. "/bounds").scroll_to(0, list.scroll.y)
 		else
 			-- scroll using scrollbar -> scroll list
-			gooey.vertical_scrollbar(scrollbar_id .. "/handle", scrollbar_id .. "/bounds", action_id, action, function(scrollbar, action_id, action)
-				gooey.static_list(list_id, list_id .. "/stencil", item_ids, action_id, action)
+			gooey.vertical_scrollbar(scrollbar_id .. "/handle", scrollbar_id .. "/bounds", action_id, action, function(scrollbar)
+				gooey.static_list(list_id, list_id .. "/stencil", item_ids).scroll_to(0, scrollbar.scroll.y)
 			end)
 		end
 	end
@@ -167,8 +167,9 @@ function M.dynamic_list(list_id, scrollbar_id, data, action_id, action, fn)
 			gooey.vertical_scrollbar(scrollbar_id .. "/handle", scrollbar_id .. "/bounds").scroll_to(0, list.scroll.y)
 		else
 			-- scroll using scrollbar -> scroll list
-			gooey.vertical_scrollbar(scrollbar_id .. "/handle", scrollbar_id .. "/bounds", action_id, action, function(scrollbar, action_id, action)
-				gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data, action_id, action)
+			gooey.vertical_scrollbar(scrollbar_id .. "/handle", scrollbar_id .. "/bounds", action_id, action, function(scrollbar)
+				pprint(scrollbar)
+				gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data).scroll_to(0, scrollbar.scroll.y)
 			end)
 		end
 	end

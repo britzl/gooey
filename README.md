@@ -285,8 +285,14 @@ The state table contains the following fields:
 	end
 
 	function on_input(self, action_id, action)
-		gooey.list("list", "list/stencil", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, on_item_selected, update_list)
+		gooey.static_list("list", "list/stencil", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, on_item_selected, update_list)
 	end
+
+**STATE**
+It is possible to set the scroll amount of a list. This is useful when updating a list based on the movement of a scrollbar:
+
+    -- scroll 75% of the way
+    gooey.static_list("list", "list/stencil", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }).scroll_to(0, 0.75)
 
 
 ### gooey.dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
@@ -345,6 +351,58 @@ The ```items``` table contains list items, each with the following fields:
 	function on_input(self, action_id, action)
 		gooey.dynamic_list("list", "list/stencil", "listitem/bg", { "Mr. White", "Mr. Pink", "Mr. Green", "Mr. Blue", "Mr. Yellow" }, action_id, action, on_item_selected, update_list)
 	end
+
+**STATE**
+It is possible to set the scroll amount of a list. This is useful when updating a list based on the movement of a scrollbar:
+
+    -- scroll 75% of the way
+    gooey.dynamic_list("list", "list/stencil", "listitem/bg", { "Mr. White", "Mr. Pink", "Mr. Green", "Mr. Blue", "Mr. Yellow" }).scroll_to(0, 0.75)
+
+
+
+### gooey.vertical_scrollbar(handle_id, bounds_id, action_id, action, fn, refresh_fn)
+Perform input and state handling for a scrollbar (a handle that can be dragged/scrolled along a bar)
+
+**PARAMETERS**
+* ```handle_id``` (string|hash) - Id of the node containing the handle that can be dragged to scroll.
+* ```bounds_id``` (string|hash) - Id of the node containing the actual bar that the handle should be dragged along. The size of this area will decide the vertical bounds of the handle.
+* ```action_id``` (hash) - Action id as received from on_input()
+* ```action``` (table) - Action as received from on_input()
+* ```fn``` (function) - Function to call when the scrollbar has been scrolled. The function will get the same state table as described below passed as its first argument
+* ```refresh_fn``` (function) - Optional function to call when the state of the list has been updated. Use this to update the visual representation.
+
+**RETURN**
+* ```scrollbar``` (table) - State data for the scrollbar
+
+The ```scrollbar``` table contains the following fields:
+
+* ```enabled``` (boolean) - true if the node is enabled
+* ```pressed``` (boolean) - true if the handle is pressed (ie mouse/touch down but not yet released)
+* ```pressed_now``` (boolean) - true if the handle was pressed this call
+* ```released_now``` (boolean) - true if the handle was released this call
+* ```over``` (boolean) - true if user action is inside the handle
+* ```over_now``` (boolean) - true if user action moved inside the handle this call
+* ```out_now``` (boolean) - true if user action moved outside the handle this call
+* ```clicked``` (boolean) - true if the input is considered a click (ie pressed and released cycle)
+* ```scroll``` (vector3) - Current scroll amount in each direction (0.0 to 1.0)
+
+**EXAMPLE**
+
+	local gooey = require "gooey.gooey"
+
+	local function on_scrolled(scrollbar)
+		print("scrolled", scrollbar.scroll.y)
+	end
+
+	function on_input(self, action_id, action)
+		gooey.vertical_scrollbar("handle", "bounds", action_id, action, on_scrolled)
+	end
+
+**STATE**
+It is possible to set the scroll amount of a scrollbar. This is useful when updating a scrollbar that belongs to a list when the list was scrolled:
+
+    -- scroll 75% of the way
+    gooey.scrollbar("handle", "bounds").scroll_to(0, 0.75)
 
 
 ### gooey.input(node_id, keyboard_type, action_id, action, config, refresh_fn)

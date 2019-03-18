@@ -54,7 +54,7 @@ function M.vertical(handle_id, bounds_id, action_id, action, fn, refresh_fn)
 			local ratio = (action_pos.y - bounds_pos.y) / bounds_size.y
 			SCROLLBAR.scroll_to(scrollbar, 0, ratio)
 			action.scroll_y = scrollbar.scroll.y
-			fn(scrollbar, actions.SCROLL_TO, action)
+			fn(scrollbar)
 		end
 	end
 
