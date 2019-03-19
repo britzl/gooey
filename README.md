@@ -49,7 +49,7 @@ Gooey supports the following component types:
 * Lists (static and dynamic):
   * ```gooey.static_list()``` All list item nodes are already added to the list. Good for showing a small data set or when the list item nodes should vary in composition and looks.
   * ```gooey.dynamic_list()``` All list item nodes are created from the same template. The nodes are reused when scrolling. Good for showing a large data set.
-* Scrollbar - ```gooey.scrollbar```
+* Scrollbar - ```gooey.scrollbar()```
 
 
 ### gooey.button(node_id, action_id, action, fn, refresh_fn)
@@ -103,6 +103,7 @@ The state table contains the following fields:
 	end
 
 **STATE**
+
 It is possible to set the state of a button:
 
     update_button(gooey.button("button/bg").set_visible(false))
@@ -164,6 +165,7 @@ The state table contains the following fields:
 	end
 
 **STATE**
+
 It is possible to set the state of a checkbox. This is good for setting the initial state of the checkbox:
 
 	update_checkbox(gooey.checkbox("checkbox/bg").check())
@@ -227,6 +229,7 @@ The state table contains the following fields:
 	end
 
 **STATE**
+
 It is possible to set the state of a radiobutton. This is good for setting the initial state of the radiobutton:
 
     update_radio(gooey.radio("radio1/bg").set_selected(true))
@@ -289,6 +292,7 @@ The state table contains the following fields:
 	end
 
 **STATE**
+
 It is possible to set the scroll amount of a list. This is useful when updating a list based on the movement of a scrollbar:
 
     -- scroll 75% of the way
@@ -353,6 +357,7 @@ The ```items``` table contains list items, each with the following fields:
 	end
 
 **STATE**
+
 It is possible to set the scroll amount of a list. This is useful when updating a list based on the movement of a scrollbar:
 
     -- scroll 75% of the way
@@ -399,6 +404,7 @@ The ```scrollbar``` table contains the following fields:
 	end
 
 **STATE**
+
 It is possible to set the scroll amount of a scrollbar. This is useful when updating a scrollbar that belongs to a list when the list was scrolled:
 
     -- scroll 75% of the way
@@ -465,6 +471,7 @@ The state table contains the following fields:
 	end
 
 **STATE**
+
 It is possible to set the state of an input node:
 
     update_input(gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT).set_visible(false))
