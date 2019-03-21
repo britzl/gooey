@@ -37,13 +37,15 @@ function M.vertical(handle_id, bounds_id, action_id, action, fn, refresh_fn)
 	assert(bounds)
 	local scrollbar = core.instance(handle_id, scrollbars, SCROLLBAR)
 	scrollbar.scroll = scrollbar.scroll or vmath.vector3()
-	if action then
-		local bounds_size = gui.get_size(bounds)
 
-		scrollbar.enabled = core.is_enabled(handle)
-		scrollbar.node = handle
-		scrollbar.bounds = bounds
-		scrollbar.bounds_size = bounds_size
+	local bounds_size = gui.get_size(bounds)
+	
+	scrollbar.enabled = core.is_enabled(handle)
+	scrollbar.node = handle
+	scrollbar.bounds = bounds
+	scrollbar.bounds_size = bounds_size
+	
+	if action then
 		scrollbar.refresh_fn = refresh_fn
 
 		local action_pos = vmath.vector3(action.x, action.y, 0)
