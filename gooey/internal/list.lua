@@ -67,7 +67,7 @@ local function get_instance(list_id, stencil_id, refresh_fn, lists)
 	stencil_id = core.to_hash(stencil_id)
 	local list = core.instance(stencil_id, lists, LIST)
 	list.id = list_id
-	list.scroll = list.scroll or vmath.vector3()
+	list.scroll = list.scroll or vmath.vector3(1)
 	list.stencil = list.stencil or gui.get_node(stencil_id)	
 	list.stencil_size = list.stencil_size or gui.get_size(list.stencil)
 	list.refresh_fn = refresh_fn
