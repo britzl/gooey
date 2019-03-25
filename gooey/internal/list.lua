@@ -53,6 +53,7 @@ function LIST.scroll_to(list, x, y)
 	list.consumed = true
 	list.scrolling = true
 	list.scroll_pos.y = list.min_y + (list.max_y - list.min_y) * y
+	list.scroll.y = 1 - y
 	if list.static then
 		update_static_listitems(list.items, vmath.vector3(list.scroll_pos))
 	elseif list.dynamic then
