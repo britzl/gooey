@@ -42,14 +42,14 @@ Gooey supports multi-touch for clickable components as long as the following inp
 ## Supported components
 Gooey supports the following component types:
 
-* Button - ```gooey.button()```
-* Checkbox - ```gooey.checkbox()```
-* Radio button - ```gooey.radio()```
-* Input text - ```gooey.input()```
-* Lists (static and dynamic):
+* [Button](#gooeybuttonnode_id-action_id-action-fn-refresh_fn) - ```gooey.button()```
+* [Checkbox](#gooeycheckboxnode_id-action_id-action-fn-refresh_fn) - ```gooey.checkbox()```
+* [Radio button](#gooeyradionode_id-group-action_id-action-fn-refresh_fn) - ```gooey.radio()```
+* [Input text](#gooeyinputnode_id-keyboard_type-action_id-action-config-refresh_fn) - ```gooey.input()```
+* Lists ([static](#gooeystatic_listlist_id-stencil_id-item_ids-action_id-action-fn-refresh_fn) and [dynamic](#gooeydynamic_listlist_id-root_id-stencil_id-item_id-data-action_id-action-fn-refresh_fn)):
   * ```gooey.static_list()``` All list item nodes are already added to the list. Good for showing a small data set or when the list item nodes should vary in composition and looks.
   * ```gooey.dynamic_list()``` All list item nodes are created from the same template. The nodes are reused when scrolling. Good for showing a large data set.
-* Scrollbar - ```gooey.scrollbar()```
+* [Vertical scrollbar](#gooeyvertical_scrollbarhandle_id-bounds_id-action_id-action-fn-refresh_fn) - ```gooey.scrollbar()```
 
 
 ### gooey.button(node_id, action_id, action, fn, refresh_fn)
@@ -168,8 +168,8 @@ The state table contains the following fields:
 
 It is possible to set the state of a checkbox. This is good for setting the initial state of the checkbox:
 
-	update_checkbox(gooey.checkbox("checkbox/bg").check())
-    update_checkbox(gooey.radio("checkbox/bg").set_visible(false))
+	update_checkbox(gooey.checkbox("checkbox/bg").set_checked(true))
+    update_checkbox(gooey.checkbox("checkbox/bg").set_visible(false))
 
 
 ### gooey.radio(node_id, group, action_id, action, fn, refresh_fn)
@@ -408,7 +408,7 @@ The ```scrollbar``` table contains the following fields:
 It is possible to set the scroll amount of a scrollbar. This is useful when updating a scrollbar that belongs to a list when the list was scrolled:
 
     -- scroll 75% of the way
-    gooey.scrollbar("handle", "bounds").scroll_to(0, 0.75)
+    gooey.vertical_scrollbar("handle", "bounds").scroll_to(0, 0.75)
 
 
 ### gooey.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
