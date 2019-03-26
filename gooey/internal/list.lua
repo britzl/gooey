@@ -53,7 +53,7 @@ function LIST.scroll_to(list, x, y)
 	list.consumed = true
 	list.scrolling = true
 	list.scroll_pos.y = list.min_y + (list.max_y - list.min_y) * y
-	list.scroll.y = 1 - y
+	list.scroll.y = y
 	if list.static then
 		update_static_listitems(list.items, vmath.vector3(list.scroll_pos))
 	elseif list.dynamic then
@@ -69,7 +69,7 @@ local function get_instance(list_id, stencil_id, refresh_fn, lists)
 	local list = core.instance(stencil_id, lists, LIST)
 	list.id = list_id
 	list.scroll = list.scroll or vmath.vector3(1)
-	list.stencil = list.stencil or gui.get_node(stencil_id)	
+	list.stencil = list.stencil or gui.get_node(stencil_id)
 	list.stencil_size = list.stencil_size or gui.get_size(list.stencil)
 	list.refresh_fn = refresh_fn
 	list.enabled = core.is_enabled(list.stencil)
@@ -94,7 +94,7 @@ local function handle_input(list, action_id, action, click_fn)
 		list.pressed = false
 	end
 	list.consumed = false
-	
+
 	-- handle mouse-wheel scrolling
 	if over_stencil and (scroll_up or scroll_down) then
 		list.consumed = true
@@ -125,7 +125,7 @@ local function handle_input(list, action_id, action, click_fn)
 	if list.scrolling then
 		list.scroll_pos.y = math.min(list.scroll_pos.y, list.max_y)
 		list.scroll_pos.y = math.max(list.scroll_pos.y, list.min_y)
-		list.scroll.y = 1 - (list.scroll_pos.y / list.max_y)
+		list.scroll.y = (list.scroll_pos.y / list.max_y)
 	end
 
 	-- find which item (if any) that the touch event is over
@@ -136,7 +136,7 @@ local function handle_input(list, action_id, action, click_fn)
 			list.consumed = true
 			over_item = item.index
 			break
-		end	
+		end
 	end
 
 	-- handle list item over state
@@ -185,11 +185,11 @@ function M.static(list_id, stencil_id, item_ids, action_id, action, fn, refresh_
 			gui.set_parent(node, list.stencil)
 		end
 		update_static_listitems(list.items, vmath.vector3(0))
-		
+
 		local last_item = list.items[#list.items].root
 		local total_height = last_item and (math.abs(gui.get_position(last_item).y) + gui.get_size(last_item).y / 2) or 0
 		local list_height = gui.get_size(list.stencil).y
-		
+
 		list.scroll_pos = vmath.vector3(0)
 		list.min_y = 0
 		list.max_y = total_height - list_height
@@ -204,10 +204,10 @@ function M.static(list_id, stencil_id, item_ids, action_id, action, fn, refresh_
 		if refresh_fn then refresh_fn(list) end
 		return list
 	end
-		
+
 	if list.enabled then
 		handle_input(list, action_id, action, fn)
-		
+
 		-- re-position the list items if we're scrolling
 		if list.scrolling then
 			update_static_listitems(list.items, vmath.vector3(list.scroll_pos))
@@ -235,7 +235,7 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 		list.scroll_pos = vmath.vector3(0)
 		list.first_item_pos = vmath.vector3(item_pos)
 		list.data_size = nil
-		
+
 		local item_count = math.ceil(list.stencil_size.y / item_size.y) + 1
 		for i=1,item_count do
 			local nodes = gui.clone_tree(item_node)
@@ -256,7 +256,7 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 	-- deselect and realign items
 	local data_size_changed = list.data_size ~= #data
 	if not list.data_size or data_size_changed then
-		list.data_size = #data		
+		list.data_size = #data
 		list.min_y = 0
 		list.max_y = (#data * list.item_size.y) - list.stencil_size.y
 		list.selected_item = nil
@@ -284,7 +284,7 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 			end
 		end
 	end
-	
+
 	-- bail early if the list is empty
 	if list.data_size == 0 then
 		if refresh_fn then refresh_fn(list) end
@@ -299,7 +299,7 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 			update_dynamic_listitem_positions(list)
 		end
 	end
-	
+
 	update_dynamic_listitem_data(list, data)
 
 	if refresh_fn then refresh_fn(list) end

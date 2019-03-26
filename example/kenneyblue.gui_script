@@ -111,6 +111,8 @@ function init(self)
 	kenneyblue.input("input", gui.KEYBOARD_TYPE_DEFAULT, nil, nil, { empty_text = "EMPTY, MAX 8 CHARS" })
 	kenneyblue.static_list("staticlist", "staticscrollbar", self.list_ids)
 	kenneyblue.dynamic_list("dynamiclist", "dynamicscrollbar", self.list_data)
+	kenneyblue.scrollbar("staticscrollbar")
+	kenneyblue.scrollbar("dynamicscrollbar")
 end
 
 function on_input(self, action_id, action)
@@ -146,7 +148,7 @@ function on_input(self, action_id, action)
 		kenneyblue.button("remove", action_id, action, function(button)
 			table.remove(self.list_data)
 		end)
-		
+
 		kenneyblue.static_list("staticlist", "staticscrollbar", self.list_ids, action_id, action, function(list)
 			print("selected list item", list.selected_item)
 		end)

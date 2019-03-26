@@ -176,5 +176,8 @@ function M.dynamic_list(list_id, scrollbar_id, data, action_id, action, fn)
 	return list
 end
 
+function M.scrollbar(scrollbar_id, action_id, action, fn)
+	return gooey.vertical_scrollbar(scrollbar_id .. "/handle", scrollbar_id .. "/bounds")
+end
 
 return M
