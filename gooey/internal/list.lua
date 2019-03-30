@@ -90,6 +90,7 @@ local function handle_input(list, action_id, action, click_fn)
 		list.pressed_pos = action_pos
 		list.action_pos = action_pos
 		list.pressed = true
+		list.have_scrolled = false
 	elseif released then
 		list.pressed = false
 	end
@@ -109,11 +110,13 @@ local function handle_input(list, action_id, action, click_fn)
 		list.scroll_speed = math.min(list.scroll_speed + 0.25, 10)
 		list.scroll_time = time
 		list.scroll_pos.y = list.scroll_pos.y + ((scroll_up and 1 or -1) * list.scroll_speed)
+		list.have_scrolled = true
 		if action.released then
 			list.scrolling = false
 		end
 	-- handle touch and drag scrolling
 	elseif list.pressed and vmath.length(list.pressed_pos - action_pos) > 10 then
+		list.have_scrolled = true
 		list.consumed = true
 		list.scrolling = true
 		list.scroll_pos.y = list.scroll_pos.y + (action_pos.y - list.action_pos.y)
@@ -158,11 +161,10 @@ local function handle_input(list, action_id, action, click_fn)
 		list.pressed_item_now = nil
 	end
 	if list.released_item_now then
-		if not list.scrolling and list.released_item_now == over_item then
+		if not list.have_scrolled and list.released_item_now == over_item then
 			list.selected_item = list.released_item_now
 			click_fn(list)
 		end
-		list.scrolling = false
 	end
 end
 
