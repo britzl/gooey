@@ -15,6 +15,9 @@ function on_input(self, action_id, action)
 		gooey.button("rpgbutton", action_id, action, function()
 			msg.post("controller:/go", "show_rpg")
 		end)
+		gooey.button("dynamiclistbutton", action_id, action, function()
+			msg.post("controller:/go", "show_dynamiclist")
+		end)
 	end)
 	return group.consumed
 end
