@@ -111,7 +111,9 @@ function M.instance(id, instances, functions)
 	-- empty instance
 	-- if the script instance has changed then we're certain that
 	-- it's reloaded
-	local script_instance = _G.__dm_script_instance__
+	-- NOTE: In Defold 1.2.151 __dm_script_instance__ has been
+	-- replaced by a numeric key
+	local script_instance = _G[3700146495]
 	if instance and instance.__script ~= script_instance then
 		instances[key] = nil
 	end
