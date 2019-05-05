@@ -34,7 +34,7 @@ end
 
 
 function M.utf8_gfind(text)
-	return text:gfind("([%z\1-\127\194-\244][\128-\191]*)")
+	return text:gmatch("([%z\1-\127\194-\244][\128-\191]*)")
 end
 
 --- Mask text by replacing every character with a mask
