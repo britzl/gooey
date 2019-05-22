@@ -76,6 +76,7 @@ The state table contains the following fields:
 * ```out_now``` (boolean) - true if user action moved outside the node this call
 * ```pressed``` (boolean) - true if the button is pressed
 * ```pressed_now``` (boolean) - true if the button was pressed this call
+* ```long_pressed``` (boolean) - true if the registered press was a long press or not
 * ```released_now``` (boolean) - true if the button was released this call
 
 **EXAMPLE**
@@ -108,6 +109,12 @@ It is possible to set the state of a button:
 
     update_button(gooey.button("button/bg").set_visible(false))
 
+**CONFIG**
+
+It is possible to configure the minimum time required to detect a long-press:
+
+    gooey.button("button/bg").set_long_pressed_time(time)
+
 
 ### gooey.checkbox(node_id, action_id, action, fn, refresh_fn)
 Perform input and state handling for a checkbox
@@ -134,6 +141,7 @@ The state table contains the following fields:
 * ```checked``` (boolean) - The checkbox state (checked/unchecked)
 * ```pressed``` (boolean) - true if the checkbox is pressed (ie mouse/touch down but not yet released)
 * ```pressed_now``` (boolean) - true if the checkbox was pressed this call
+* ```long_pressed``` (boolean) - true if the registered press was a long press or not
 * ```released_now``` (boolean) - true if the checkbox was released this call
 * ```checked_now``` (boolean) - true if the checkbox was checked this call
 * ```unchecked_now``` (boolean) - true if the checkbox was unchecked this call
@@ -171,6 +179,12 @@ It is possible to set the state of a checkbox. This is good for setting the init
 	update_checkbox(gooey.checkbox("checkbox/bg").set_checked(true))
     update_checkbox(gooey.checkbox("checkbox/bg").set_visible(false))
 
+**CONFIG**
+
+It is possible to configure the minimum time required to detect a long-press:
+
+    gooey.checkbox("checkbox/bg").set_long_pressed_time(time)
+
 
 ### gooey.radio(node_id, group, action_id, action, fn, refresh_fn)
 Perform input and state handling for a radio button
@@ -197,6 +211,7 @@ The state table contains the following fields:
 * ```selected``` (boolean) - The radio button state
 * ```pressed``` (boolean) - true if the radio button is pressed (ie mouse/touch down but not yet released)
 * ```pressed_now``` (boolean) - true if the radio button was pressed this call
+* ```long_pressed``` (boolean) - true if the registered press was a long press or not
 * ```released_now``` (boolean) - true if the radio button was released this call
 * ```selected_now``` (boolean) - true if the radio button was selected this call
 * ```deselected_now``` (boolean) - true if the radio button was deselected this call
@@ -235,6 +250,12 @@ It is possible to set the state of a radiobutton. This is good for setting the i
     update_radio(gooey.radio("radio1/bg").set_selected(true))
     update_radio(gooey.radio("radio1/bg").set_visible(false))
 
+**CONFIG**
+
+It is possible to configure the minimum time required to detect a long-press:
+
+    gooey.radio("radio1/bg").set_long_pressed_time(time)
+
 
 ### gooey.static_list(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
 Perform input and state handling for a list of items where the list of nodes has already been created.
@@ -264,6 +285,7 @@ The state table contains the following fields:
 * ```selected_item``` (number) - Index of the selected list item
 * ```pressed_item``` (number) - Index of the pressed list item (ie mouse/touch down but not yet released)
 * ```pressed_item_now``` (number) - Index of the list item the user action pressed this call
+* ```long_pressed``` (boolean) - true if the registered press was a long press or not
 * ```released_item_now``` (number) - Index of the list item the user action released this call
 * ```scroll``` (vector3) - Scrolled amount from the top (only scroll.y is used). The scroll amount is in the range 0.0 (top) to 1.0 (bottom).
 
@@ -298,6 +320,12 @@ It is possible to set the scroll amount of a list. This is useful when updating 
     -- scroll 75% of the way
     gooey.static_list("list", "list/stencil", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }).scroll_to(0, 0.75)
 
+**CONFIG**
+
+It is possible to configure the minimum time required to detect a long-press:
+
+    gooey.static_list("list").set_long_pressed_time(time)
+
 
 ### gooey.dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
 Perform input and state handling for a list of items where list item nodes are created dynamically and reused. This is preferred for large data sets.
@@ -328,6 +356,7 @@ The ```list``` table contains the following fields:
 * ```selected_item``` (number) - Index of the selected list item
 * ```pressed_item``` (number) - Index of the pressed list item (ie mouse/touch down but not yet released)
 * ```pressed_item_now``` (number) - Index of the list item the user action pressed this call
+* ```long_pressed``` (boolean) - true if the registered press was a long press or not
 * ```released_item_now``` (number) - Index of the list item the user action released this call
 * ```scroll``` (vector3) - Scrolled amount from the top (only scroll.y is used). The scroll amount is in the range 0.0 (top) to 1.0 (bottom).
 
@@ -363,6 +392,11 @@ It is possible to set the scroll amount of a list. This is useful when updating 
     -- scroll 75% of the way
     gooey.dynamic_list("list", "list/stencil", "listitem/bg", { "Mr. White", "Mr. Pink", "Mr. Green", "Mr. Blue", "Mr. Yellow" }).scroll_to(0, 0.75)
 
+**CONFIG**
+
+It is possible to configure the minimum time required to detect a long-press:
+
+    gooey.dynamic_list("list").set_long_pressed_time(time)
 
 
 ### gooey.vertical_scrollbar(handle_id, bounds_id, action_id, action, fn, refresh_fn)
@@ -444,6 +478,7 @@ The state table contains the following fields:
 * ```selected``` (boolean) - true if the text field is selected
 * ```pressed``` (boolean) - true if the text field is pressed (ie mouse/touch down but not yet released)
 * ```pressed_now``` (boolean) - true if the text field was pressed this call
+* ```long_pressed``` (boolean) - true if the registered press was a long press or not
 * ```released_now``` (boolean) - true if the text field was released this call
 * ```text``` (string) - The text in the field
 * ```marked_text``` (string) - The marked (non-committed) text
@@ -476,6 +511,12 @@ It is possible to set the state of an input node:
 
     update_input(gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT).set_visible(false))
     update_input(gooey.input("input/text", gui.KEYBOARD_TYPE_DEFAULT).set_text("foobar"))
+
+**CONFIG**
+
+It is possible to configure the minimum time required to detect a long-press:
+
+    gooey.input("input/text").set_long_pressed_time(time)
 
 
 ## Consuming input
