@@ -30,7 +30,7 @@ function SCROLLBAR.scroll_to(scrollbar, x, y)
 	gui.set_position(scrollbar.node, handle_pos)
 	scrollbar.scroll.y = y
 end
-function SCROLLBAR.set_visible(button, visible)
+function SCROLLBAR.set_visible(scrollbar, visible)
 	gui.set_enabled(scrollbar.node, visible)
 end
 
