@@ -83,14 +83,16 @@ function INPUT.set_text(input, text)
 		input.empty = #text == 0 and #marked_text == 0
 
 		-- measure it
-		input.text_width = get_text_width(input.node, text)		
+		input.text_width = get_text_width(input.node, text)
 		input.marked_text_width = get_text_width(input.node, marked_text)
 		input.total_width = input.text_width + input.marked_text_width
 
 		gui.set_text(input.node, text .. marked_text)
 	end
 end
-
+function INPUT.set_long_pressed_time(input, time)
+	input.long_pressed_time = time
+end
 
 function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	node_id = core.to_hash(node_id)
