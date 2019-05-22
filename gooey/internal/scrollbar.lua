@@ -33,6 +33,9 @@ end
 function SCROLLBAR.set_visible(button, visible)
 	gui.set_enabled(scrollbar.node, visible)
 end
+function SCROLLBAR.set_long_pressed_time(scrollbar, time)
+	scrollbar.long_pressed_time = time
+end
 
 
 function M.vertical(handle_id, bounds_id, action_id, action, fn, refresh_fn)

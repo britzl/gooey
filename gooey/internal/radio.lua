@@ -22,6 +22,9 @@ end
 function RADIOBUTTON.set_visible(radio, visible)
 	gui.set_enabled(radio.node, visible)
 end
+function RADIOBUTTON.set_long_pressed_time(radio, time)
+	radio.long_pressed_time = time
+end
 
 
 

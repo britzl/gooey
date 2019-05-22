@@ -12,7 +12,9 @@ end
 function BUTTON.set_visible(button, visible)
 	gui.set_enabled(button.node, visible)
 end
-
+function BUTTON.set_long_pressed_time(button, time)
+	button.long_pressed_time = time
+end
 
 function M.button(node_id, action_id, action, fn, refresh_fn)
 	node_id = core.to_hash(node_id)
