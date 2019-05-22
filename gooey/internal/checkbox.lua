@@ -18,7 +18,9 @@ end
 function CHECKBOX.refresh(checkbox)
 	if checkbox.refresh_fn then checkbox.refresh_fn(checkbox) end
 end
-
+function CHECKBOX.set_long_pressed_time(checkbox, time)
+	checkbox.long_pressed_time = time
+end
 
 function M.checkbox(node_id, action_id, action, fn, refresh_fn)
 	node_id = core.to_hash(node_id)

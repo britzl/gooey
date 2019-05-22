@@ -15,9 +15,13 @@ end
 function on_input(self, action_id, action)
 	local group = dirtylarry.group("group1", function()
 		dirtylarry.button("button", action_id,action, function(button)
-			print("button1 pressed")
+			if button.long_pressed then
+				print("Button was long pressed")
+			else
+				print("Button was pressed")
+			end
 		end)
-
+		
 		dirtylarry.button("back", action_id,action, function(button)
 			msg.post("controller:/go", "show_menu")
 		end)

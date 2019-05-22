@@ -61,7 +61,9 @@ function LIST.scroll_to(list, x, y)
 		update_dynamic_listitem_data(list, data)
 	end
 end
-
+function LIST.set_long_pressed_time(list, time)
+	list.long_pressed_time = time
+end
 
 -- get a list instance and set up some basics of a list on the instance
 local function get_instance(list_id, stencil_id, refresh_fn, lists)

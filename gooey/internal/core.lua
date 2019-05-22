@@ -4,8 +4,11 @@ local M = {}
 
 local EMPTY = hash("")
 
+local long_press_start = 0
+
 local function handle_action(component, action_id, action)
 	action.id = action.id or -1
+	component.long_pressed_time = component.long_pressed_time or 1.5
 	if not component.touch_id or component.touch_id == action.id then
 		local over = gui.pick_node(component.node, action.x, action.y)
 		component.over_now = over and not component.over
@@ -17,8 +20,10 @@ local function handle_action(component, action_id, action)
 		local released = touch and action.released
 		if pressed then
 			component.touch_id = action.id
+			long_press_start = socket.gettime()
 		elseif released then
-			component.touch_id = nil 
+			component.touch_id = nil
+			component.long_pressed = socket.gettime() - long_press_start > component.long_pressed_time
 		end
 		
 		component.pressed_now = pressed and not component.pressed
@@ -26,6 +31,7 @@ local function handle_action(component, action_id, action)
 		component.pressed = pressed or (component.pressed and not released)
 		component.consumed = component.pressed or (component.released_now and component.over)
 		component.clicked = component.released_now and component.over
+		component.long_pressed = component.long_pressed or false
 	end
 end
 
