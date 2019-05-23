@@ -154,6 +154,9 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 			elseif action_id == actions.MARKED_TEXT then
 				input.consumed = true
 				input.marked_text = action.text or ""
+				if config and config.max_length then
+					input.marked_text = utf8.sub(input.marked_text, 1, config.max_length)
+				end
 			-- input deletion
 			elseif action_id == actions.BACKSPACE and (action.pressed or action.repeated) then
 				input.consumed = true
