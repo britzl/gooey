@@ -125,6 +125,7 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 			gui.show_keyboard(keyboard_type, true)
 		elseif input.selected and action.pressed and action_id == actions.TOUCH and not input.over then
 			input.selected = false
+			input.marked_text = ""
 			gui.hide_keyboard()
 		end
 
