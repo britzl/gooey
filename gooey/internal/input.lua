@@ -34,8 +34,8 @@ local function get_text_width(node, text)
 end
 
 
-function M.utf8_gfind(text)
-	return utf8.gmatch(text)
+function M.utf8_gfind(text, regex)
+	return utf8.gmatch(text, regex)
 end
 
 
@@ -47,7 +47,7 @@ end
 function M.mask_text(text, mask)
 	mask = mask or "*"
 	local masked_text = ""
-	for uchar in M.utf8_gfind(text) do
+	for uchar in M.utf8_gfind(text, ".") do
 		masked_text = masked_text .. mask
 	end
 	return masked_text
