@@ -33,7 +33,7 @@ if [ -n "${DEFOLD_AUTH}" ] && [ -n "${DEFOLD_USER}" ]; then
 fi
 
 echo "Running bob.jar - building"
-java -jar bob.jar --debug build --keep-unused
+java -jar bob.jar --debug --keep-unused build
 
 echo "Starting dmengine_headless"
 if [ -n "${DEFOLD_BOOSTRAP_COLLECTION}" ]; then
