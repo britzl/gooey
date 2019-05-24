@@ -1,5 +1,6 @@
 local core = require "gooey.internal.core"
 local actions = require "gooey.actions"
+local utf8 = require "gooey.internal.utf8"
 
 local M = {}
 
@@ -34,8 +35,9 @@ end
 
 
 function M.utf8_gfind(text)
-	return text:gmatch("([%z\1-\127\194-\244][\128-\191]*)")
+	return utf8.gmatch(text)
 end
+
 
 --- Mask text by replacing every character with a mask
 -- character
@@ -145,7 +147,7 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 					if not config or not config.allowed_characters or action.text:match(config.allowed_characters) then
 						input.text = input.text .. action.text
 						if config and config.max_length then
-							input.text = input.text:sub(1, config.max_length)
+							input.text = utf8.sub(input.text, 1, config.max_length)
 						end
 					end
 					input.marked_text = ""
@@ -157,11 +159,7 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 			-- input deletion
 			elseif action_id == actions.BACKSPACE and (action.pressed or action.repeated) then
 				input.consumed = true
-				local last_s = 0
-				for uchar in M.utf8_gfind(input.text) do
-					last_s = string.len(uchar)
-				end
-				input.text = string.sub(input.text, 1, string.len(input.text) - last_s)
+				input.text = utf8.sub(input.text, 1, -2)
 			end
 		end
 
