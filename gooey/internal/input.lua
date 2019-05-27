@@ -110,7 +110,8 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	input.refresh_fn = refresh_fn
 	
 	input.mark_text = input.mark_text or true
-	input.text = input.text or ""
+	local marked = input.mark_text and input.marked_text or ""
+	input.text = input.text .. marked
 	input.marked_text = input.marked_text or ""
 	input.keyboard_type = keyboard_type
 	
