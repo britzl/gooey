@@ -18,6 +18,9 @@ function on_input(self, action_id, action)
 		gooey.button("dynamiclistbutton", action_id, action, function()
 			msg.post("controller:/go", "show_dynamiclist")
 		end)
+		gooey.button("horizontallistbutton", action_id, action, function()
+			msg.post("controller:/go", "show_horizontallist")
+		end)
 	end)
 	return group.consumed
 end

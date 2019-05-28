@@ -25,6 +25,8 @@ function on_message(self, message_id, message, sender)
 		show(self, "#rpgproxy")
 	elseif message_id == hash("show_dynamiclist") then
 		show(self, "#dynamiclistproxy")
+	elseif message_id == hash("show_horizontallist") then
+		show(self, "#horizontallistproxy")
 	else
 		print(message_id)
 	end

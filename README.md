@@ -257,7 +257,7 @@ It is possible to configure the minimum time required to detect a long-press:
     gooey.radio("radio1/bg").set_long_pressed_time(time)
 
 
-### gooey.static_list(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn)
+### gooey.static_list(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn, is_horizontal)
 Perform input and state handling for a list of items where the list of nodes has already been created.
 
 **PARAMETERS**
@@ -268,11 +268,12 @@ Perform input and state handling for a list of items where the list of nodes has
 * ```action``` (table) - Action as received from on_input()
 * ```fn``` (function) - Function to call when a list item is selected. A list item is considered selected if both a pressed and released action has been detected inside the bounds of the item. The function will get the same state table as described below passed as its first argument
 * ```refresh_fn``` (function) - Optional function to call when the state of the list has been updated. Use this to update the visual representation.
+* ```is_horizontal``` (bool) - Optional flag - if true, the list will be handled as horizontal, otherwise - as vertical.
 
 **RETURN**
 * ```list``` (table) - State data for the list based on current and previous input actions
 
-The state table contains the following fields:
+The ```list``` table contains the following fields:
 
 * ```id``` (string) - The ```list_id``` parameter above
 * ```enabled``` (boolean) - true if the node is enabled
@@ -288,6 +289,7 @@ The state table contains the following fields:
 * ```long_pressed``` (boolean) - true if the registered press was a long press or not
 * ```released_item_now``` (number) - Index of the list item the user action released this call
 * ```scroll``` (vector3) - Scrolled amount from the top (only scroll.y is used). The scroll amount is in the range 0.0 (top) to 1.0 (bottom).
+* ```is_horizontal``` (bool) - Optional flag - if true, the list will be handled as horizontal, otherwise - as vertical.
 
 **EXAMPLE**
 
@@ -327,7 +329,7 @@ It is possible to configure the minimum time required to detect a long-press:
     gooey.static_list("list").set_long_pressed_time(time)
 
 
-### gooey.dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+### gooey.dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn, is_horizontal)
 Perform input and state handling for a list of items where list item nodes are created dynamically and reused. This is preferred for large data sets.
 
 **PARAMETERS**
@@ -339,6 +341,7 @@ Perform input and state handling for a list of items where list item nodes are c
 * ```action``` (table) - Action as received from on_input()
 * ```fn``` (function) - Function to call when a list item is selected. A list item is considered selected if both a pressed and released action has been detected inside the bounds of the item. The function will get the same state table as described below passed as its first argument
 * ```refresh_fn``` (function) - Optional function to call when the state of the list has been updated. Use this to update the visual representation.
+* ```is_horizontal``` (bool) - Optional flag - if true, the list will be handled as horizontal, otherwise - as vertical.
 
 **RETURN**
 * ```list``` (table) - State data for the list based on current and previous input actions
@@ -359,6 +362,7 @@ The ```list``` table contains the following fields:
 * ```long_pressed``` (boolean) - true if the registered press was a long press or not
 * ```released_item_now``` (number) - Index of the list item the user action released this call
 * ```scroll``` (vector3) - Scrolled amount from the top (only scroll.y is used). The scroll amount is in the range 0.0 (top) to 1.0 (bottom).
+* ```is_horizontal``` (bool) - Optional flag - if true, the list will be handled as horizontal, otherwise - as vertical.
 
 The ```items``` table contains list items, each with the following fields:
 
@@ -397,6 +401,18 @@ It is possible to set the scroll amount of a list. This is useful when updating 
 It is possible to configure the minimum time required to detect a long-press:
 
     gooey.dynamic_list("list").set_long_pressed_time(time)
+
+**HORIZONTAL AND VERTICAL LISTS**
+
+It is possible to configure the list to be handled as either horizontal or vertical list by modifying is_horizontal flag in list.
+You can do this either by adding a flag in a dynamic_list() or static_list() call, modyfing the list.is_horizontal flag by yourself or use those convenience functions:
+
+
+##### gooey.horizontal_dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+##### gooey.vertical_dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+
+##### gooey.horizontal_static_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+##### gooey.vertical_static_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
 
 
 ### gooey.vertical_scrollbar(handle_id, bounds_id, action_id, action, fn, refresh_fn)
