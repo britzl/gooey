@@ -1,4 +1,4 @@
-script: "/example/dynamiclist.gui_script"
+script: "/example/horizontallist.gui_script"
 fonts {
   name: "example"
   font: "/assets/fonts/example.font"
@@ -30,7 +30,7 @@ nodes {
   }
   size {
     x: 420.0
-    y: 320.0
+    y: 240.0
     z: 0.0
     w: 1.0
   }
@@ -65,8 +65,8 @@ nodes {
 }
 nodes {
   position {
-    x: 0.0
-    y: -10.0
+    x: 200.0
+    y: -120.0
     z: 0.0
     w: 1.0
   }
@@ -83,8 +83,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 420.0
-    y: 300.0
+    x: 410.0
+    y: 220.0
     z: 0.0
     w: 1.0
   }
@@ -100,7 +100,7 @@ nodes {
   id: "dynamiclist_stencil"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_N
+  pivot: PIVOT_E
   adjust_mode: ADJUST_MODE_FIT
   parent: "dynamiclist_bg"
   layer: "below"
@@ -121,7 +121,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: -29.0
+    y: 0.0
     z: 0.0
     w: 1.0
   }
@@ -138,8 +138,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 60.0
+    x: 120.0
+    y: 200.0
     z: 0.0
     w: 1.0
   }
@@ -155,7 +155,7 @@ nodes {
   id: "listitem_bg"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_E
   adjust_mode: ADJUST_MODE_FIT
   parent: "dynamiclist_stencil"
   layer: "below"
@@ -193,8 +193,8 @@ nodes {
     w: 1.0
   }
   size {
-    x: 400.0
-    y: 50.0
+    x: 110.0
+    y: 200.0
     z: 0.0
     w: 1.0
   }
@@ -210,7 +210,7 @@ nodes {
   id: "listitem_btn"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_E
   adjust_mode: ADJUST_MODE_FIT
   parent: "listitem_bg"
   layer: ""
@@ -230,7 +230,7 @@ nodes {
 }
 nodes {
   position {
-    x: -185.0
+    x: -60.0
     y: 0.0
     z: 0.0
     w: 1.0
@@ -266,7 +266,7 @@ nodes {
   id: "listitem_text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_W
+  pivot: PIVOT_N
   outline {
     x: 1.0
     y: 1.0
@@ -293,8 +293,8 @@ nodes {
 }
 nodes {
   position {
-    x: 190.0
-    y: 0.0
+    x: -60.0
+    y: 20.0
     z: 0.0
     w: 1.0
   }
@@ -328,7 +328,7 @@ nodes {
   id: "listitem_image"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_E
+  pivot: PIVOT_S
   adjust_mode: ADJUST_MODE_FIT
   parent: "listitem_btn"
   layer: ""
