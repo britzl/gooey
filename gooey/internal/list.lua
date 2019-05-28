@@ -23,7 +23,7 @@ local function update_dynamic_listitem_positions(list)
 		local item_pos = gui.get_position(item.root)
 		local index = first_index + i - 1
 		item.index = index
-		if list.is_horizontal then 
+		if list.is_horizontal then
 			item_pos.x = list.first_item_pos.x - (list.item_size.x * (i - 1)) + top_x
 		else
 			item_pos.y = list.first_item_pos.y - (list.item_size.y * (i - 1)) + top_y
@@ -229,14 +229,16 @@ function M.static(list_id, stencil_id, item_ids, action_id, action, fn, refresh_
 		if is_horizontal then
 			total_dimension = last_item and (math.abs(gui.get_position(last_item).x) + gui.get_size(last_item).x / 2) or 0
 			list_dimension = gui.get_size(list.stencil).x
+			list.min_x = 0
+			list.max_x = total_dimension - list_dimension
 		else
 			total_dimension = last_item and (math.abs(gui.get_position(last_item).y) + gui.get_size(last_item).y / 2) or 0
 			list_dimension = gui.get_size(list.stencil).y
+			list.min_y = 0
+			list.max_y = total_dimension - list_dimension
 		end
 
 		list.scroll_pos = vmath.vector3(0)
-		list.min_y = 0
-		list.max_y = total_dimension - list_dimension
 	end
 
 	if #list.items == 0 then
@@ -269,7 +271,6 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 	list.dynamic = true
 	list.data = data
 	list.is_horizontal = is_horizontal
-	--print("H:", list.is_horizontal)
 
 	-- create list items (once!)
 	if not list.items then
