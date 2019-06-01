@@ -46,10 +46,13 @@ local function update_static_listitems(items, start, is_horizontal)
 		local item = items[i]
 		if is_horizontal then
 			item_pos.x = item_pos.x - item.size.x / 2
+			gui.set_position(item.root, item_pos)
+			item_pos.x = item_pos.x - item.size.x / 2
 		else
 			item_pos.y = item_pos.y - item.size.y / 2
+			gui.set_position(item.root, item_pos)
+			item_pos.y = item_pos.y - item.size.y / 2
 		end
-		gui.set_position(item.root, item_pos)
 	end
 end
 
