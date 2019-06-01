@@ -123,7 +123,6 @@ function M.dynamic_list(list_id, stencil_id, item_id, data, action_id, action, f
 	if is_horizontal ~= nil then
 		assert(type(is_horizontal) == "boolean", "Provide true for horizontal list or false for vertical list")
 	end
-	print("Hd:", is_horizontal)
 	local l = list.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn, is_horizontal)
 	if current_group then
 		current_group.components[#current_group.components + 1] = l
