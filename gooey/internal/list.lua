@@ -280,7 +280,6 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 		item_id = core.to_hash(item_id)
 		local item_node = gui.get_node(item_id)
 		local item_pos = gui.get_position(item_node)
-		--item_pos.x = item_pos.x + 250
 		local item_size = gui.get_size(item_node)
 		list.items = {}
 		list.item_size = item_size
