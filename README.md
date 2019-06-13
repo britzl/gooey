@@ -477,6 +477,7 @@ The configuration table accepts the following values:
 * ```max_length``` (number) - Maximum length of entered text
 * ```empty_text``` (string) - Text to show if the text field is empty
 * ```allowed_characters``` (string) - Lua pattern to filter allowed characters (eg "[%a%d]" for alpha numeric)
+* ```use_marked_text``` (bool) - Flag to diable the usage of marked (non-committed) text, defaults to true
 
 NOTE: ```max_length``` currently measures string length in bytes so the value will be misleading for any characters longer than a single byte.
 

@@ -95,9 +95,6 @@ end
 function INPUT.set_long_pressed_time(input, time)
 	input.long_pressed_time = time
 end
-function INPUT.set_use_mark_text(input, mark)
-	input.use_mark_text = mark
-end
 
 function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	node_id = core.to_hash(node_id)
@@ -109,8 +106,8 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	input.node = node
 	input.refresh_fn = refresh_fn
 	
-	input.use_mark_text = input.use_mark_text == nil and true or input.use_mark_text
-	input.text = input.text or "" .. (not input.use_mark_text and input.marked_text or "")
+	local use_marked_text = config and config.use_marked_text == nil and true or config.use_marked_text
+	input.text = input.text or "" .. (not use_marked_text and input.marked_text or "")
 	input.marked_text = input.marked_text or ""
 	input.keyboard_type = keyboard_type
 	
@@ -131,7 +128,7 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 			gui.show_keyboard(keyboard_type, true)
 		elseif input.selected and action.pressed and action_id == actions.TOUCH and not input.over then
 			input.selected = false
-			input.text = input.text .. (not input.use_mark_text and input.marked_text or "")
+			input.text = input.text .. (not use_marked_text and input.marked_text or "")
 			input.marked_text = ""
 			gui.hide_keyboard()
 		end
