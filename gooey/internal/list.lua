@@ -80,7 +80,7 @@ function LIST.scroll_to(list, x, y)
 		update_static_listitems(list.items, vmath.vector3(list.scroll_pos), list.is_horizontal)
 	elseif list.dynamic then
 		update_dynamic_listitem_positions(list)
-		update_dynamic_listitem_data(list, data)
+		update_dynamic_listitem_data(list)
 	end
 end
 function LIST.set_long_pressed_time(list, time)
@@ -364,7 +364,7 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, fn, re
 		end
 	end
 
-	update_dynamic_listitem_data(list, data)
+	update_dynamic_listitem_data(list)
 
 	if refresh_fn then refresh_fn(list) end
 
