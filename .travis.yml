@@ -17,11 +17,10 @@ language: java
 jdk:
   - oraclejdk8
 
-#DEFOLD_AUTH=auth token
 env:
   global:
-    - secure: "nQabZYMlGvUu+FVvZBD6NZ8IFUayFVL+lMHzDCG4yFSZljwQGoAXFjMzbYT8rfN5+7CZ1aAnl2qWCdBWHA8cJk38Si0kD26AknAmIR6fc3IKOmsPOhW9aYr3lN3Dn0BxDCWANLVuzL/TJAXqTbiPSlDXjHTPhzLNT7ez3uD7ElTfpsGAUotgiY8OHHhg2CRJ43tiGnPHSnk42Y/IBP3/j15AUGG2N0uRN0CR8UtrRhV2YltCFtwJ6OuIYYd5CGgM1xoJvfZUywkGJQ07gq395KDmRO1hiOw16MlOgxk28LbtOkrirqx0LrMz7y+CiXA2dKuH0GhfPly4ym72s/qjIPS2J3Bq4pK85kcZ4l9z91DWk0EyhQ1S1EbVxVJs6Wq2M7SN1Mrcm3OCnbq0rpKjB5OEOlED19eBhcZoLN00OW4un0bRPreauI3Gh8ng8u0Db8vDl+tiKpnCsprdOaFSVEgh5D4v5f45gMTn7K3eg5e91LP7VA+9s4QGCez/kxCZ4Uaml16MLZKKiNST1oo6URZxFa8qyB6Mm32miwUUvJLFriBepMsj9y0YjSriGhnjv4LKKb/zNsz4+xm5ZBkzexv0Jk8o6DJeHJJxXE5+vdcPNnL8cCzgoO/ccDd7Nu2dyNyZTXEB0n/BlyAcRpW0unNL+QN/dxvxcrQAWrlhA6I="
-    - DEFOLD_USER=bjorn.ritzl@king.com
+    - DEFOLD_AUTH=foobar
+    - DEFOLD_USER=bjorn.ritzl@gmail.com
     - DEFOLD_BOOSTRAP_COLLECTION=/test/test.collectionc
 
 script:
