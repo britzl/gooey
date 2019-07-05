@@ -12,5 +12,6 @@ function init(self)
 	deftest.add(test_radio)
 	deftest.add(test_input)
 	deftest.add(test_static_list)
+	deftest.add(test_utf8)
 	deftest.run()
 end
