@@ -45,7 +45,7 @@ function init(self)
 		{ text = "Black", color = "000" },
 	}
 
-	gooey.horizontal_dynamic_list("dynamiclist_bg", "dynamiclist_stencil", "listitem_bg", self.list_data, nil, nil, nil, refresh_dynamiclist)
+	gooey.horizontal_dynamic_list("dynamiclist_bg", "dynamiclist_stencil", "listitem_bg", self.list_data, nil, nil, nil, nil, refresh_dynamiclist)
 end
 
 function final(self)
@@ -57,7 +57,7 @@ function on_input(self, action_id, action)
 		msg.post("controller:/go", "show_menu")
 	end)
 
-	gooey.horizontal_dynamic_list("dynamiclist_bg", "dynamiclist_stencil", "listitem_bg", self.list_data, action_id, action, function(list)
-		print("selected dynamic list item", list.selected_item, self.list_data[list.selected_item].text)
-	end, refresh_dynamiclist, is_horizontal)
+	gooey.horizontal_dynamic_list("dynamiclist_bg", "dynamiclist_stencil", "listitem_bg", self.list_data, action_id, action, { carousel = true }, function(list)
+		print("selected dynamic list item", list.selected_item, list.data[list.selected_item].text)
+	end, refresh_dynamiclist)
 end

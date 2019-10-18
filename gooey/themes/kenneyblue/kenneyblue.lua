@@ -135,8 +135,8 @@ local function update_static_list(list)
 		update_listitem(list, item)
 	end
 end
-function M.static_list(list_id, scrollbar_id, item_ids, action_id, action, fn)
-	local list = gooey.static_list(list_id, list_id .. "/stencil", item_ids, action_id, action, fn, update_static_list)
+function M.static_list(list_id, scrollbar_id, item_ids, action_id, action, config, fn)
+	local list = gooey.static_list(list_id, list_id .. "/stencil", item_ids, action_id, action, config, fn, update_static_list)
 	if scrollbar_id then
 		-- scrolled in list -> update scrollbar
 		if list.scrolling then
@@ -159,8 +159,8 @@ local function update_dynamic_list(list)
 		gui.set_text(item.nodes[hash(list.id .. "/listitem_text")], tostring(item.data or "-"))
 	end
 end
-function M.dynamic_list(list_id, scrollbar_id, data, action_id, action, fn)
-	local list = gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data, action_id, action, fn, update_dynamic_list)
+function M.dynamic_list(list_id, scrollbar_id, data, action_id, action, config, fn)
+	local list = gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data, action_id, action, config, fn, update_dynamic_list)
 	if scrollbar_id then
 		-- scrolled in list -> update scrollbar
 		if list.scrolling then

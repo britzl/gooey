@@ -257,7 +257,7 @@ It is possible to configure the minimum time required to detect a long-press:
     gooey.radio("radio1/bg").set_long_pressed_time(time)
 
 
-### gooey.static_list(list_id, stencil_id, item_ids, action_id, action, fn, refresh_fn, is_horizontal)
+### gooey.static_list(list_id, stencil_id, item_ids, action_id, action, config, fn, refresh_fn, is_horizontal)
 Perform input and state handling for a list of items where the list of nodes has already been created.
 
 **PARAMETERS**
@@ -266,9 +266,14 @@ Perform input and state handling for a list of items where the list of nodes has
 * ```item_ids``` (table) - Table with a list of list item ids (hash|string)
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
+* ```config``` (table) - Optional table with list configuration
 * ```fn``` (function) - Function to call when a list item is selected. A list item is considered selected if both a pressed and released action has been detected inside the bounds of the item. The function will get the same state table as described below passed as its first argument
 * ```refresh_fn``` (function) - Optional function to call when the state of the list has been updated. Use this to update the visual representation.
 * ```is_horizontal``` (bool) - Optional flag - if true, the list will be handled as horizontal, otherwise - as vertical.
+
+The `config` table can contain the following values:
+
+* `horizontal` (boolean) - The table is in horizontal mode
 
 **RETURN**
 * ```list``` (table) - State data for the list based on current and previous input actions
@@ -312,7 +317,7 @@ The ```list``` table contains the following fields:
 	end
 
 	function on_input(self, action_id, action)
-		gooey.static_list("list", "list/stencil", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, on_item_selected, update_list)
+		gooey.static_list("list", "list/stencil", { "item1/bg", "item2/bg", "item3/bg", "item4/bg", "item5/bg" }, action_id, action, nil, on_item_selected, update_list)
 	end
 
 **STATE**
@@ -329,7 +334,7 @@ It is possible to configure the minimum time required to detect a long-press:
     gooey.static_list("list").set_long_pressed_time(time)
 
 
-### gooey.dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn, is_horizontal)
+### gooey.dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, config, fn, refresh_fn, is_horizontal)
 Perform input and state handling for a list of items where list item nodes are created dynamically and reused. This is preferred for large data sets.
 
 **PARAMETERS**
@@ -339,9 +344,15 @@ Perform input and state handling for a list of items where list item nodes are c
 * ```data``` (table) - Data to associate with the list. This decides how far the list of possible to scroll.
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
+* ```config``` (table) - Optional table with list configuration
 * ```fn``` (function) - Function to call when a list item is selected. A list item is considered selected if both a pressed and released action has been detected inside the bounds of the item. The function will get the same state table as described below passed as its first argument
 * ```refresh_fn``` (function) - Optional function to call when the state of the list has been updated. Use this to update the visual representation.
 * ```is_horizontal``` (bool) - Optional flag - if true, the list will be handled as horizontal, otherwise - as vertical.
+
+The `config` table can contain the following values:
+
+* `horizontal` (boolean) - The table is in horizontal mode
+* `carousel` (boolean) - The table is in carousel mode, wrapping around content at the ends
 
 **RETURN**
 * ```list``` (table) - State data for the list based on current and previous input actions
@@ -386,7 +397,7 @@ The ```items``` table contains list items, each with the following fields:
 	end
 
 	function on_input(self, action_id, action)
-		gooey.dynamic_list("list", "list/stencil", "listitem/bg", { "Mr. White", "Mr. Pink", "Mr. Green", "Mr. Blue", "Mr. Yellow" }, action_id, action, on_item_selected, update_list)
+		gooey.dynamic_list("list", "list/stencil", "listitem/bg", { "Mr. White", "Mr. Pink", "Mr. Green", "Mr. Blue", "Mr. Yellow" }, action_id, action, nil, on_item_selected, update_list)
 	end
 
 **STATE**
@@ -408,11 +419,11 @@ It is possible to configure the list to be handled as either horizontal or verti
 You can do this either by adding a flag in a dynamic_list() or static_list() call, modyfing the list.is_horizontal flag by yourself or use those convenience functions:
 
 
-##### gooey.horizontal_dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
-##### gooey.vertical_dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+##### gooey.horizontal_dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, config, fn, refresh_fn)
+##### gooey.vertical_dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, config, fn, refresh_fn)
 
-##### gooey.horizontal_static_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
-##### gooey.vertical_static_list(list_id, root_id, stencil_id, item_id, data, action_id, action, fn, refresh_fn)
+##### gooey.horizontal_static_list(list_id, root_id, stencil_id, item_id, data, action_id, action, config, fn, refresh_fn)
+##### gooey.vertical_static_list(list_id, root_id, stencil_id, item_id, data, action_id, action, config, fn, refresh_fn)
 
 
 ### gooey.vertical_scrollbar(handle_id, bounds_id, action_id, action, fn, refresh_fn)

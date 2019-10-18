@@ -26,9 +26,11 @@ local function load_image(url, cb)
 		local image_data = response.response
 		if response.status == 200 then
 			local f = io.open(path, "wb")
-			f:write(image_data)
-			f:flush()
-			f:close()
+			if f then
+				f:write(image_data)
+				f:flush()
+				f:close()
+			end
 		elseif response.status == 304 then
 			if not image_data then
 				local f = io.open(path, "rb")
