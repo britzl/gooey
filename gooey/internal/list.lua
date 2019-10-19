@@ -22,7 +22,7 @@ local function update_dynamic_listitem_positions(list)
 		local item = list.items[i]
 		local item_pos = gui.get_position(item.root)
 		local index = first_index + i - 1
-		item.index = 1 + (index % #list.items)
+		item.index = 1 + (index % #list.data)
 		if list.horizontal then
 			item_pos.x = list.first_item_pos.x - (list.item_size.x * (i - 1)) + top_x
 		else
@@ -179,7 +179,6 @@ local function handle_input(list, action_id, action, click_fn)
 		if gui.pick_node(item.root, action.x, action.y) then
 			list.consumed = true
 			over_item = item.index
-			print("over", item.index)
 			break
 		end
 	end
