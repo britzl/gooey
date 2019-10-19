@@ -22,7 +22,7 @@ local function update_dynamic_listitem_positions(list)
 		local item = list.items[i]
 		local item_pos = gui.get_position(item.root)
 		local index = first_index + i - 1
-		item.index = 1 + (index % #list.data)
+		item.index = ((index - 1) % #list.data) + 1
 		if list.horizontal then
 			item_pos.x = list.first_item_pos.x - (list.item_size.x * (i - 1)) + top_x
 		else
