@@ -120,8 +120,8 @@ local function update_static_list(list)
 		update_listitem(list, item)
 	end
 end
-function M.static_list(list_id, item_ids, action_id, action, fn)
-	return gooey.static_list(list_id, list_id .. "/stencil", item_ids, action_id, action, fn, update_static_list)
+function M.static_list(list_id, item_ids, action_id, action, config, fn)
+	return gooey.static_list(list_id, list_id .. "/stencil", item_ids, action_id, action, config, fn, update_static_list)
 end
 
 
@@ -131,8 +131,8 @@ local function update_dynamic_list(list)
 		gui.set_text(item.nodes[hash(list.id .. "/listitem_text")], tostring(item.data or "-"))
 	end
 end
-function M.dynamic_list(list_id, data, action_id, action, fn)
-	return gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data, action_id, action, fn, update_dynamic_list)
+function M.dynamic_list(list_id, data, action_id, action, config, fn)
+	return gooey.dynamic_list(list_id, list_id .. "/stencil", list_id .. "/listitem_bg", data, action_id, action, config, fn, update_dynamic_list)
 end
 
 

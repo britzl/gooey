@@ -42,8 +42,8 @@ return function()
 
 			local click_fn = callback_listener()
 			
-			gooey.static_list(list_id, stencil_id, item_ids, action_ids.TOUCH, actions.pressed(50, 50), click_fn)
-			gooey.static_list(list_id, stencil_id, item_ids, action_ids.TOUCH, actions.released(50, 50), click_fn)
+			gooey.static_list(list_id, stencil_id, item_ids, action_ids.TOUCH, actions.pressed(50, 50), nil, click_fn)
+			gooey.static_list(list_id, stencil_id, item_ids, action_ids.TOUCH, actions.released(50, 50), nil, click_fn)
 
 			assert(click_fn.calls == 1)
 		end)
