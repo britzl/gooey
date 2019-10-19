@@ -31,6 +31,13 @@ local function refresh_dynamiclist(list)
 	end
 end
 
+local function refresh_carousel(list)
+	for _,item in ipairs(list.items) do
+		if item.data then
+			gui.play_flipbook(item.nodes[hash("carousel_listitem")], item.data)
+		end
+	end
+end
 
 function init(self)
 	gooey.acquire_input()
@@ -44,8 +51,16 @@ function init(self)
 		{ text = "White", color = "fff" },
 		{ text = "Black", color = "000" },
 	}
-
 	gooey.horizontal_dynamic_list("dynamiclist_bg", "dynamiclist_stencil", "listitem_bg", self.list_data, nil, nil, nil, nil, refresh_dynamiclist)
+
+	self.carousel_data = {
+		"flyMan",
+		"spikeBall",
+		"spikeMan",
+		"sun",
+		"wingMan",
+	}
+	gooey.horizontal_dynamic_list("carousel_bg", "carousel_stencil", "carousel_listitem", self.carousel_data, nil, nil, { carousel = true }, nil, refresh_carousel)
 end
 
 function final(self)
@@ -57,7 +72,11 @@ function on_input(self, action_id, action)
 		msg.post("controller:/go", "show_menu")
 	end)
 
-	gooey.horizontal_dynamic_list("dynamiclist_bg", "dynamiclist_stencil", "listitem_bg", self.list_data, action_id, action, { carousel = true }, function(list)
+	gooey.horizontal_dynamic_list("dynamiclist_bg", "dynamiclist_stencil", "listitem_bg", self.list_data, action_id, action, nil, function(list)
 		print("selected dynamic list item", list.selected_item, list.data[list.selected_item].text)
 	end, refresh_dynamiclist)
+
+	gooey.horizontal_dynamic_list("carusel_bg", "carousel_stencil", "carousel_listitem", self.carousel_data, action_id, action, { carousel = true }, function(list)
+		print("selected carousel list item", list.selected_item, list.data[list.selected_item])
+	end, refresh_carousel)
 end

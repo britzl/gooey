@@ -1,0 +1,18 @@
+images {
+  image: "/assets/images/flyMan.png"
+}
+images {
+  image: "/assets/images/spikeBall.png"
+}
+images {
+  image: "/assets/images/spikeMan.png"
+}
+images {
+  image: "/assets/images/sun.png"
+}
+images {
+  image: "/assets/images/wingMan.png"
+}
+margin: 0
+extrude_borders: 2
+inner_padding: 0
