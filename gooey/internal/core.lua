@@ -99,8 +99,8 @@ end
 function M.to_key(hsh)
 	local url = msg.url()
 	return hash_to_hex(url.socket or EMPTY)
-	.. hash_to_hex(url.path or empty)
-	.. hash_to_hex(url.fragment or empty)
+	.. hash_to_hex(url.path or EMPTY)
+	.. hash_to_hex(url.fragment or EMPTY)
 	.. hash_to_hex(hsh)
 end
 
