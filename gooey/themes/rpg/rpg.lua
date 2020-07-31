@@ -71,10 +71,6 @@ local function update_input(input, config, node_id)
 		gui.play_flipbook(gui.get_node(node_id .. "/bg"), BUTTON_SQUARE_PRESSED)
 	end
 
-	if input.empty and not input.selected then
-		gui.set_text(input.node, config and config.empty_text or "")
-	end
-
 	local cursor = gui.get_node(node_id .. "/cursor")
 	if input.selected then
 		gui.set_enabled(cursor, true)

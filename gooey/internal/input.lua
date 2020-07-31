@@ -171,6 +171,10 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 
 		input.set_text(input.text)
 	end
+	if input.empty then
+		local text = input.selected and "" or (config and config.empty_text or "")
+		gui.set_text(input.node, text)
+	end
 	if refresh_fn then refresh_fn(input) end
 	return input
 end
