@@ -490,8 +490,6 @@ The configuration table accepts the following values:
 * ```allowed_characters``` (string) - Lua pattern to filter allowed characters (eg "[%a%d]" for alpha numeric)
 * ```use_marked_text``` (bool) - Flag to disable the usage of marked (non-committed) text, defaults to true
 
-NOTE: ```max_length``` currently measures string length in bytes so the value will be misleading for any characters longer than a single byte.
-
 **RETURN**
 * ```input``` (table) - State data for the input field based on current and previous input actions
 
@@ -548,7 +546,7 @@ It is possible to configure the minimum time required to detect a long-press:
 
 
 ## Consuming input
-Each Gooey component has a ```consumed``` variable in its state stable. Consuming input in a gui_script to prevent input propagation can be done by checking the consumed state of each component. If any component has ```consumed``` set to true it is safe to return true from the ```on_input()``` function to prevent input propagation. It is also possible to wrap all component interaction in an input group and check the consumed state for the entire group:
+Each Gooey component has a ```consumed``` variable in its state table. Consuming input in a gui_script to prevent input propagation can be done by checking the consumed state of each component. If any component has ```consumed``` set to true it is safe to return true from the ```on_input()``` function to prevent input propagation. It is also possible to wrap all component interaction in an input group and check the consumed state for the entire group:
 
     local gooey = require "gooey.gooey"
 
