@@ -70,11 +70,23 @@ function LIST.scroll_to(list, x, y)
 	list.scrolling = true
 
 	if list.horizontal then
-		list.scroll_pos.x = list.min_x + (list.max_x - list.min_x) * x
-		list.scroll.x = x
+		-- don't scroll if all items are visible
+		if list.max_x <= 0 then
+			list.scroll_pos.x = 0
+			list.scroll.x = 0
+		else
+			list.scroll_pos.x = list.min_x + (list.max_x - list.min_x) * x
+			list.scroll.x = x
+		end
 	else
-		list.scroll_pos.y = list.min_y + (list.max_y - list.min_y) * y
-		list.scroll.y = y
+		-- don't scroll if all items are visible
+		if list.max_y <= 0 then
+			list.scroll_pos.y = 0
+			list.scroll.y = 0
+		else
+			list.scroll_pos.y = list.min_y + (list.max_y - list.min_y) * y
+			list.scroll.y = y
+		end
 	end
 	if list.static then
 		update_static_listitems(list.items, vmath.vector3(list.scroll_pos), list.horizontal)
