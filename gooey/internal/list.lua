@@ -36,7 +36,11 @@ end
 local function update_dynamic_listitem_data(list)
 	for i=1,#list.items do
 		local item = list.items[i]
-		item.data = list.data[item.index] or nil
+		if i <= #list.data then
+			item.data = list.data[item.index] or nil
+		else
+			item.data = nil
+		end
 	end
 end
 
