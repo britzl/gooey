@@ -132,6 +132,7 @@ function M.instance(id, instances, functions)
 		for name,fn in pairs(functions or {}) do
 			data[name] = function(...)
 				fn(data, ...)
+				return instances[key].data, instances[key].state
 			end
 		end
 	end
