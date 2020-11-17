@@ -9,6 +9,9 @@ local checkboxes = {}
 -- instance functions
 local CHECKBOX = {}
 function CHECKBOX.set_checked(checkbox, checked)
+	if checked then
+		checkbox.checked_now = true
+	end
 	checkbox.checked = checked
 	if checkbox.refresh_fn then checkbox.refresh_fn(checkbox) end
 end
