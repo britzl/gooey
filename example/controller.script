@@ -17,12 +17,8 @@ function on_message(self, message_id, message, sender)
 		msg.post(sender, "enable")
 	elseif message_id == hash("show_menu") then
 		show(self, "#menuproxy")
-	elseif message_id == hash("show_dirtylarry") then
-		show(self, "#dirtylarryproxy")
-	elseif message_id == hash("show_kenneyblue") then
-		show(self, "#kenneyblueproxy")
-	elseif message_id == hash("show_rpg") then
-		show(self, "#rpgproxy")
+	elseif message_id == hash("show_components") then
+		show(self, "#componentsproxy")
 	elseif message_id == hash("show_dynamiclist") then
 		show(self, "#dynamiclistproxy")
 	elseif message_id == hash("show_horizontallist") then

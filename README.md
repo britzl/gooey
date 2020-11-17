@@ -11,6 +11,13 @@ https://github.com/britzl/gooey/archive/master.zip
 
 Or point to the ZIP file of a [specific release](https://github.com/britzl/gooey/releases).
 
+# Themes
+A few UI themes have been created for Gooey:
+
+* [Dirty Larry](https://github.com/britzl/gooey-dirtylarry)
+* [Kenney](https://github.com/britzl/gooey-kenney)
+* [RPG](https://github.com/britzl/gooey-rpg)
+
 
 # Usage
 The Gooey system is encapsulated in a single Lua module without any visual components. It makes very little assumptions of the look and feel of the UI components it supports. Instead Gooey focuses on providing stable input and state handling and lets the user decide which states matter and how they should be presented visually.
@@ -562,32 +569,7 @@ Each Gooey component has a ```consumed``` variable in its state table. Consuming
     end
 
 
-## Gooey Themes
-Gooey comes shipped with two themes: Dirty Larry and Kenneyblue. You can use these as they are or make a copy and modify. Each theme consists of a Lua module wrapping Gooey, a couple of GUI templates, a font and an atlas containing the visual representation of the components. Use the themes like this:
-
-	local kenneyblue = require "gooey.themes.kenneyblue.kenneyblue"
-
-	function on_input(self, action_id, action)
-		kenneyblue.button("button", action_id, action, function(button)
-			print("pressed button")
-		end)
-	end
-
-![](images/dirtylarry.png)
-*Dirty Larry theme*
-
-![](images/kenneyblue.png)
-*Kenneyblue theme*
-
-
 ## Example app
 See the [example app](example/) for examples of how to use Gooey on its own and how to use the themes.
 
 [Try the HTML5 version of the example app](http://britzl.github.io/Gooey).
-
-
-# Credits
-* Assets for the Dirty Larry theme from [Dirty Larry](https://github.com/andsve/dirtylarry)
-* Assets for the Kenneyblue theme from [Kenney](http://www.kenney.nl)
-* Assets for the RPG theme from [Kenney](http://www.kenney.nl)
-* Font Alagard used in RPG theme by [Hewett Tsoi](https://www.dafont.com/hewett-tsoi.d4888)

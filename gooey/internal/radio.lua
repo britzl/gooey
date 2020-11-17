@@ -11,6 +11,9 @@ local groups = {}
 -- instance functions
 local RADIOBUTTON = {}
 function RADIOBUTTON.set_selected(radio, selected)
+	if selected then
+		radio.selected_now = true
+	end
 	radio.selected = selected
 	if radio.refresh_fn then radio.refresh_fn(radio) end
 end
