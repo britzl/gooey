@@ -148,6 +148,12 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 				-- ignore arrow keys
 				if not string.match(hex, "EF9C8[0-3]") then
 					if not config or not config.allowed_characters or action.text:match(config.allowed_characters) then
+						if not (config and config.keep_in_bounds == false) then
+							if get_text_width(node, input.text .. action.text) > gui.get_size(node).x * gui.get_scale(node).x then
+								if refresh_fn then refresh_fn(input) end
+								return input
+							end
+						end
 						input.text = input.text .. action.text
 						if config and config.max_length then
 							input.text = utf8.sub(input.text, 1, config.max_length)
