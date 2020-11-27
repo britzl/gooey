@@ -496,6 +496,7 @@ The configuration table accepts the following values:
 * ```empty_text``` (string) - Text to show if the text field is empty
 * ```allowed_characters``` (string) - Lua pattern to filter allowed characters (eg "[%a%d]" for alpha numeric)
 * ```use_marked_text``` (bool) - Flag to disable the usage of marked (non-committed) text, defaults to true
+* ```keep_in_bounds``` (bool) - Flag to disable text being automatically kept inside the node's bounds, defaults to true
 
 **RETURN**
 * ```input``` (table) - State data for the input field based on current and previous input actions
