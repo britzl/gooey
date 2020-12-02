@@ -85,20 +85,24 @@ function INPUT.set_text(input, text)
 		input.empty = #text == 0 and #marked_text == 0
 
 		-- measure it
-		input.text_width = get_text_width(input.node, text)
-		input.marked_text_width = get_text_width(input.node, marked_text)
-		input.total_width = input.text_width + input.marked_text_width
+		local text_width = get_text_width(input.node, text)
+		local marked_text_width = get_text_width(input.node, marked_text)
 
 		-- prevent text from overflowing the input field
-		local visible_text_width = input.total_width
-		local visible_text = text .. marked_text
+		-- this will get increasingly expensive the longer the text
+		-- future improvement is to make a best guess and then either add or
+		-- remove characters depending on if the text is too short or long
 		local field_width = gui.get_size(input.node).x * gui.get_scale(input.node).x
-		while visible_text_width > field_width do
-			visible_text = visible_text:sub(2)
-			visible_text_width = get_text_width(input.node, visible_text)
+		while (text_width + marked_text_width) > field_width do
+			text = text:sub(2)
+			text_width = get_text_width(input.node, text)
 		end
-
-		gui.set_text(input.node, visible_text)
+		
+		input.text_width = text_width
+		input.marked_text_width = marked_text_width
+		input.total_width = text_width + marked_text_width
+		
+		gui.set_text(input.node, text .. marked_text)
 	end
 end
 function INPUT.set_long_pressed_time(input, time)
