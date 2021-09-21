@@ -8,7 +8,7 @@ local scrollbars = {}
 -- instance functions
 local SCROLLBAR = {}
 function SCROLLBAR.refresh(scrollbar)
-	if scrollbar.refresh_fn then scrollbar.refresh_fn(button) end
+	if scrollbar.refresh_fn then scrollbar.refresh_fn(scrollbar) end
 end
 function SCROLLBAR.scroll_to(scrollbar, x, y)
 	assert(scrollbar)
