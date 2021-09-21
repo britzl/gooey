@@ -7,7 +7,7 @@ local COLOR_BLACK = vmath.vector4(0,0,0,1)
 local COLOR_RED = vmath.vector4(1,0,0,1)
 
 
-local function update_radiobutton(radiobutton, state)
+local function update_radiobutton(radiobutton)
 	if radiobutton.selected_now then
 		gui.set_color(radiobutton.node, COLOR_RED)
 		utils.shake(radiobutton.node, vmath.vector3(1))
@@ -17,7 +17,7 @@ local function update_radiobutton(radiobutton, state)
 	end
 end
 
-local function update_checkbox(checkbox, state)
+local function update_checkbox(checkbox)
 	if checkbox.checked_now then
 		gui.set_color(checkbox.node, COLOR_RED)
 		utils.shake(checkbox.node, vmath.vector3(1))
@@ -27,7 +27,7 @@ local function update_checkbox(checkbox, state)
 	end
 end
 
-local function update_button(button, state)
+local function update_button(button)
 	if button.over_now then
 		gui.set_color(button.node, COLOR_LIGHTGREY)
 	elseif button.out_now then
@@ -37,7 +37,7 @@ local function update_button(button, state)
 	end
 end
 
-local function update_input(input, state)
+local function update_input(input)
 	if input.pressed_now then
 		gui.set_color(input.node, COLOR_RED)
 	elseif input.released_now then
