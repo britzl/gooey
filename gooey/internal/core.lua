@@ -159,4 +159,53 @@ function M.clamp(v, min, max)
 		return v
 	end
 end
+
+local DISPLAY_WIDTH = tonumber(sys.get_config("display.width")) or 960
+local DISPLAY_HEIGHT = tonumber(sys.get_config("display.height")) or 640
+local WINDOW_WIDTH = nil
+local WINDOW_HEIGHT = nil
+
+local GUI_ADJUST = {
+	[gui.ADJUST_FIT] = {sx=1, sy=1, ox=0, oy=0}, -- Fit
+	[gui.ADJUST_ZOOM] = {sx=1, sy=1, ox=0, oy=0}, -- Zoom
+	[gui.ADJUST_STRETCH] = {sx=1, sy=1, ox=0, oy=0}, -- Stretch
+}
+
+function M.adjust(adjust_mode, x, y)
+	local ww, wh = window.get_size()
+	if ww ~= WINDOW_WIDTH or wh ~= WINDOW_HEIGHT then
+		WINDOW_WIDTH = ww
+		WINDOW_HEIGHT = wh
+
+		local sx = WINDOW_WIDTH / DISPLAY_WIDTH
+		local sy = WINDOW_HEIGHT / DISPLAY_HEIGHT
+
+		-- Fit
+		local adjust = GUI_ADJUST[gui.ADJUST_FIT]
+		local scale = math.min(sx, sy)
+		adjust.sx = scale * 1 / sx
+		adjust.sy = scale * 1 / sy
+		adjust.ox = (WINDOW_WIDTH - DISPLAY_WIDTH * scale) * 0.5 / scale
+		adjust.oy = (WINDOW_HEIGHT - DISPLAY_HEIGHT * scale) * 0.5 / scale
+
+		-- Zoom
+		adjust = GUI_ADJUST[gui.ADJUST_ZOOM]
+		scale = math.max(sx, sy)
+		adjust.sx = scale * 1 / sx
+		adjust.sy = scale * 1 / sy
+		adjust.ox = (WINDOW_WIDTH - DISPLAY_WIDTH * scale) * 0.5 / scale
+		adjust.oy = (WINDOW_HEIGHT - DISPLAY_HEIGHT * scale) * 0.5 / scale
+
+		-- Stretch
+		adjust = GUI_ADJUST[gui.ADJUST_STRETCH]
+		adjust.sx = 1
+		adjust.sy = 1
+		-- distorts to fit window, offsets always zero
+	end
+
+	x = (x / GUI_ADJUST[adjust_mode].sx) - GUI_ADJUST[adjust_mode].ox
+	y = (y / GUI_ADJUST[adjust_mode].sy) - GUI_ADJUST[adjust_mode].oy
+	return x, y
+end
+
 return M
