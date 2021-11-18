@@ -9,7 +9,7 @@ return function()
 			assert(utf8.len("abc") == 3)
 			assert(utf8.len("åäö") == 3)
 			assert(utf8.len("foo åäö bar") == 11)
-			assert(utf8.len("😄") == 1)	-- emoji smiley
+			assert(utf8.len("\xf0\x9f\x98\x84") == 1)	-- emoji smiley
 		end)
 
 		test("sub", function()
@@ -27,10 +27,10 @@ return function()
 			assert(utf8.sub("åäö", 1, 1) == "å")
 			assert(utf8.sub("åäö", 2, 2) == "ä")
 			assert(utf8.sub("åäö", 3, 3) == "ö")
-			assert(utf8.sub("a😄b", 1, 1) == "a")
-			assert(utf8.sub("a😄b", 2, 2) == "😄")
-			assert(utf8.sub("a😄b", 1, -2) == "a😄")
-			assert(utf8.sub("a😄", 1, -2) == "a")
+			assert(utf8.sub("a\xf0\x9f\x98\x84b", 1, 1) == "a")
+			assert(utf8.sub("a\xf0\x9f\x98\x84b", 2, 2) == "\xf0\x9f\x98\x84")
+			assert(utf8.sub("a\xf0\x9f\x98\x84b", 1, -2) == "a\xf0\x9f\x98\x84")
+			assert(utf8.sub("a\xf0\x9f\x98\x84", 1, -2) == "a")
 		end)
 	end)
 end
