@@ -290,18 +290,25 @@ The ```list``` table contains the following fields:
 * ```id``` (string) - The ```list_id``` parameter above
 * ```enabled``` (boolean) - true if the node is enabled
 * ```consumed``` (boolean) - true if the input was consumed
-* ```items``` (table) - The list items as nodes. Each item is presented by a table with keys "root" (node) and "nodes" (table).
+* ```items``` (table) - The list items as nodes. See below for table structure.
 * ```over``` (boolean) - true if user action is over any list item
-* ```over_item``` (number) - Index of the list item the user action is over
-* ```over_item_now``` (number) - Index of the list item the user action moved inside this call
-* ```out_item_now``` (number) - Index of the list item the user action moved outside this call
-* ```selected_item``` (number) - Index of the selected list item
-* ```pressed_item``` (number) - Index of the pressed list item (ie mouse/touch down but not yet released)
-* ```pressed_item_now``` (number) - Index of the list item the user action pressed this call
+* ```over_item``` (table) - The list item the user action is over
+* ```over_item_now``` (table) - The list item the user action moved inside this call
+* ```out_item_now``` (table) - The list item the user action moved outside this call
+* ```selected_item``` (table) - Index of the selected list item
+* ```pressed_item``` (table) - Index of the pressed list item (ie mouse/touch down but not yet released)
+* ```pressed_item_now``` (table) - The list item the user action pressed this call
 * ```long_pressed``` (boolean) - true if the registered press was a long press or not
-* ```released_item_now``` (number) - Index of the list item the user action released this call
+* ```released_item_now``` (table) - The list item the user action released this call
 * ```scroll``` (vector3) - Scrolled amount from the top (only scroll.y is used). The scroll amount is in the range 0.0 (top) to 1.0 (bottom).
 * ```is_horizontal``` (bool) - Optional flag - if true, the list will be handled as horizontal, otherwise - as vertical.
+
+The ```items``` table contains list items, each with the following fields:
+
+* ```root``` (node) - The root GUI node of the list item
+* ```nodes``` (table) - Node id to GUI node mappings (as returned from gui.clone_tree)
+* ```data``` (any) - The data associated with this list item
+* ```index``` (number) - Index of the list item
 
 **EXAMPLE**
 
@@ -309,9 +316,9 @@ The ```list``` table contains the following fields:
 
 	local function update_list(list)
 		for i,item in ipairs(list.items) do
-			if item.index == list.pressed_item then
+			if item == list.pressed_item then
 				gui.play_flipbook(item.root, hash("item_pressed"))
-			elseif item.index == list.selected_item then
+			elseif item == list.selected_item then
 				gui.play_flipbook(item.root, hash("item_selected"))
 			else
 				gui.play_flipbook(item.root, hash("item_normal"))
@@ -320,7 +327,7 @@ The ```list``` table contains the following fields:
 	end
 
 	local function on_item_selected(list)
-		print("selected", list.selected_item)
+		print("selected", list.selected_item.index)
 	end
 
 	function on_input(self, action_id, action)
@@ -371,14 +378,14 @@ The ```list``` table contains the following fields:
 * ```consumed``` (boolean) - true if the input was consumed
 * ```items``` (table) - The list items as nodes. See below for table structure.
 * ```over``` (boolean) - true if user action is over any list item
-* ```over_item``` (number) - Index of the list item the user action is over
-* ```over_item_now``` (number) - Index of the list item the user action moved inside this call
-* ```out_item_now``` (number) - Index of the list item the user action moved outside this call
-* ```selected_item``` (number) - Index of the selected list item
-* ```pressed_item``` (number) - Index of the pressed list item (ie mouse/touch down but not yet released)
-* ```pressed_item_now``` (number) - Index of the list item the user action pressed this call
+* ```over_item``` (table) - The list item the user action is over
+* ```over_item_now``` (table) - The list item the user action moved inside this call
+* ```out_item_now``` (table) - The list item the user action moved outside this call
+* ```selected_item``` (table) - Index of the selected list item
+* ```pressed_item``` (table) - Index of the pressed list item (ie mouse/touch down but not yet released)
+* ```pressed_item_now``` (table) - The list item the user action pressed this call
 * ```long_pressed``` (boolean) - true if the registered press was a long press or not
-* ```released_item_now``` (number) - Index of the list item the user action released this call
+* ```released_item_now``` (table) - The list item the user action released this call
 * ```scroll``` (vector3) - Scrolled amount from the top (only scroll.y is used). The scroll amount is in the range 0.0 (top) to 1.0 (bottom).
 * ```is_horizontal``` (bool) - Optional flag - if true, the list will be handled as horizontal, otherwise - as vertical.
 
@@ -400,7 +407,7 @@ The ```items``` table contains list items, each with the following fields:
 	end
 
 	local function on_item_selected(list)
-		print("selected", list.selected_item)
+		print("selected", list.selected_item.index)
 	end
 
 	function on_input(self, action_id, action)

@@ -195,7 +195,7 @@ local function handle_input(list, action_id, action, click_fn)
 		local item = list.items[i]
 		if gui.pick_node(item.root, action.x, action.y) then
 			list.consumed = true
-			over_item = item.index
+			over_item = item
 			break
 		end
 	end
