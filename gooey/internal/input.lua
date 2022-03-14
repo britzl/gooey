@@ -119,7 +119,9 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	input.node = node
 	input.node_id = node_id
 	input.refresh_fn = refresh_fn
-	
+	input.deselected_now = false
+	input.selected_now = false
+
 	local use_marked_text = (config and config.use_marked_text == nil) and true or (config and config.use_marked_text)
 	input.text = input.text or "" .. (not use_marked_text and input.marked_text or "")
 	input.marked_text = input.marked_text or ""
@@ -136,12 +138,16 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	if input.enabled then
 		input.deselected_now = false
 		if input.released_now then
+			if not input.selected then
+				input.selected_now = true
+			end
 			input.selected = true
 			input.marked_text = ""
 			gui.reset_keyboard()
 			gui.show_keyboard(keyboard_type, true)
 		elseif input.selected and action.pressed and action_id == actions.TOUCH and not input.over then
 			input.selected = false
+			input.deselected_now = true
 			input.text = input.text .. (not use_marked_text and input.marked_text or "")
 			input.marked_text = ""
 			gui.hide_keyboard()

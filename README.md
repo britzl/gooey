@@ -524,6 +524,8 @@ The state table contains the following fields:
 * ```pressed_now``` (boolean) - true if the text field was pressed this call
 * ```long_pressed``` (boolean) - true if the registered press was a long press or not
 * ```released_now``` (boolean) - true if the text field was released this call
+* ```selected_now``` (boolean) - true if the text field was selected this call
+* ```deselected_now``` (boolean) - true if the text field was deselected this call
 * ```text``` (string) - The text in the field
 * ```marked_text``` (string) - The marked (non-committed) text
 * ```keyboard_type``` (number)
