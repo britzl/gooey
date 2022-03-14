@@ -33,6 +33,7 @@ function M.checkbox(node_id, action_id, action, fn, refresh_fn)
 	local checkbox = core.instance(node_id, checkboxes, CHECKBOX)
 	checkbox.enabled = core.is_enabled(node)
 	checkbox.node = node
+	checkbox.node_id = node_id
 	checkbox.refresh_fn = refresh_fn
 
 	core.clickable(checkbox, action_id, action)

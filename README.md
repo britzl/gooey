@@ -75,6 +75,7 @@ Perform input and state handling for a button
 The state table contains the following fields:
 
 * ```node``` (node) - The node itself
+* ```node_id``` (node_id) - Hashed id of the node
 * ```enabled``` (boolean) - true if the node is enabled
 * ```consumed``` (boolean) - true if the input was consumed
 * ```clicked``` (boolean) - true if the input is considered a click (ie pressed and released cycle)
@@ -139,6 +140,7 @@ Perform input and state handling for a checkbox
 The state table contains the following fields:
 
 * ```node``` (node) - The node itself
+* ```node_id``` (node_id) - Hashed id of the node
 * ```enabled``` (boolean) - true if the node is enabled
 * ```consumed``` (boolean) - true if the input was consumed
 * ```clicked``` (boolean) - true if the input is considered a click (ie pressed and released cycle)
@@ -209,6 +211,7 @@ Perform input and state handling for a radio button
 The state table contains the following fields:
 
 * ```node``` (node) - The node itself
+* ```node_id``` (node_id) - Hashed id of the node
 * ```enabled``` (boolean) - true if the node is enabled
 * ```consumed``` (boolean) - true if the input was consumed
 * ```clicked``` (boolean) - true if the input is considered a click (ie pressed and released cycle)
@@ -510,6 +513,7 @@ The configuration table accepts the following values:
 The state table contains the following fields:
 
 * ```node``` (node) - The node itself
+* ```node_id``` (node_id) - Hashed id of the node
 * ```enabled``` (boolean) - true if the node is enabled
 * ```consumed``` (boolean) - true if the input was consumed
 * ```over``` (boolean) - true if user action is inside the node

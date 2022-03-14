@@ -54,6 +54,7 @@ function M.vertical(handle_id, bounds_id, action_id, action, fn, refresh_fn)
 
 	scrollbar.enabled = core.is_enabled(handle)
 	scrollbar.node = handle
+	scrollbar.node_id = node_id
 	scrollbar.bounds = bounds
 	scrollbar.bounds_size = bounds_size
 	scrollbar.handle_size = handle_size

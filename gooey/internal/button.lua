@@ -24,6 +24,7 @@ function M.button(node_id, action_id, action, fn, refresh_fn)
 	local button = core.instance(node_id, buttons, BUTTON)
 	button.enabled = core.is_enabled(node)
 	button.node = node
+	button.node_id = node_id
 	button.refresh_fn = refresh_fn
 
 	core.clickable(button, action_id, action)

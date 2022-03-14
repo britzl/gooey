@@ -40,6 +40,7 @@ function M.button(node_id, group_id, action_id, action, fn, refresh_fn)
 	local radio = core.instance(node_id, radiobuttons, RADIOBUTTON)
 	radio.enabled = core.is_enabled(node)
 	radio.node = node
+	radio.node_id = node_id
 	radio.group = group_id and core.to_key(group_id)
 	radio.refresh_fn = refresh_fn
 

@@ -117,6 +117,7 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	local input = core.instance(node_id, inputfields, INPUT)
 	input.enabled = core.is_enabled(node)
 	input.node = node
+	input.node_id = node_id
 	input.refresh_fn = refresh_fn
 	
 	local use_marked_text = (config and config.use_marked_text == nil) and true or (config and config.use_marked_text)
