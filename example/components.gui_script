@@ -47,7 +47,7 @@ end
 
 local function update_list(list)
 	for i,item in ipairs(list.items) do
-		gui.set_text(item.nodes[hash("listitem_text")], item.data)
+		gui.set_text(item.nodes[hash("listitem_text")], item.data or "")
 	end
 end
 
