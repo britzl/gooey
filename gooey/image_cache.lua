@@ -114,7 +114,10 @@ function M.load(cache, url, node, cb)
 			end)
 		else
 			for n,_ in pairs(img.nodes) do
-				gui.set_texture(n, url)
+				local ok, err = pcall(gui.set_texture, n, url)
+				if not ok then
+					img.nodes[n] = nil
+				end
 			end
 			if cb then cb() end
 		end
