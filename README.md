@@ -354,6 +354,8 @@ It is possible to configure the minimum time required to detect a long-press:
 ### gooey.dynamic_list(list_id, root_id, stencil_id, item_id, data, action_id, action, config, fn, refresh_fn, is_horizontal)
 Perform input and state handling for a list of items where list item nodes are created dynamically and reused. This is preferred for large data sets.
 
+NOTE: The list does not support a stencil node with adjust mode set to `gui.ADJUST_STRETCH`. If the list size needs to change it has to be done using `gui.set_size()` on the stencil node. 
+
 **PARAMETERS**
 * ```list_id``` (string) - Id of the template containing the list nodes.
 * ```stencil_id``` (string|hash) - Id of the stencil node that is used to clip the list. Touch events outside this area will be ignored when it comes to picking of list items. The size of this area will decide how many list item nodes to create. The system will create enough to fill the area plus one more to support scrolling.
