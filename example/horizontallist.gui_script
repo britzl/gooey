@@ -6,15 +6,15 @@ local cache = image_cache.create()
 local function refresh_dynamiclist(list)
 	for _,item in ipairs(list.items) do
 		local pos = gui.get_position(item.root)
-		if item.index == list.selected_item then
+		if item == list.selected_item then
 			pos.y = 4
-		elseif item.index == list.pressed_item then
+		elseif item == list.pressed_item then
 			pos.y = 4
-		elseif item.index == list.over_item_now then
+		elseif item == list.over_item_now then
 			pos.y = -4
-		elseif item.index == list.out_item_now then
+		elseif item == list.out_item_now then
 			pos.y = 0
-		elseif item.index ~= list.over_item then
+		elseif item ~= list.over_item then
 			pos.y = 0
 		end
 		gui.set_position(item.root, pos)
