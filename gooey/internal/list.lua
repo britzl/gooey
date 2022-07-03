@@ -299,7 +299,22 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, config
 	list.carousel = config and config.carousel
 	list.data = data
 
-	-- create list items (once!)
+	-- detect a change in size of the stencil
+	-- if it has changed we delete the nodes and then recreate
+	local stencil_size = gui.get_size(list.stencil)
+	if stencil_size.x ~= list.stencil_size.x
+	or stencil_size.y ~= list.stencil_size.y then
+		list.stencil_size = stencil_size
+		if list.items then
+			for i=1,#list.items do
+				local item = list.items[i]
+				gui.delete_node(item.root)
+			end
+			list.items = nil
+		end
+	end
+
+	-- create list items
 	if not list.items then
 		item_id = core.to_hash(item_id)
 		local item_node = gui.get_node(item_id)
@@ -317,6 +332,7 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, config
 		else
 			item_count = (math.ceil(list.stencil_size.y / item_size.y) + 1)
 		end
+		gui.set_enabled(item_node, true)
 		for i=1,item_count do
 			local nodes = gui.clone_tree(item_node)
 			list.items[i] = {
@@ -334,7 +350,7 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, config
 			end
 			gui.set_position(list.items[i].root, pos)
 		end
-		gui.delete_node(item_node)
+		gui.set_enabled(item_node, false)
 	end
 
 	-- recalculate size of list if the amount of data has changed
