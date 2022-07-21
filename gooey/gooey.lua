@@ -147,6 +147,14 @@ function M.vertical_scrollbar(handle_id, bounds_id, action_id, action, config, f
 	return sb
 end
 
+function M.horizontal_scrollbar(handle_id, bounds_id, action_id, action, config, fn, refresh_fn)
+	local sb = scrollbar.horizontal(handle_id, bounds_id, action_id, action, config, fn or nop, refresh_fn)
+	if current_group then
+		current_group.components[#current_group.components + 1] = sb
+	end
+	return sb
+end
+
 
 --- Input text
 -- (from dirty larry with modifications)
