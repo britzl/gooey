@@ -89,13 +89,24 @@ function INPUT.set_text(input, text)
 		local marked_text_width = get_text_width(input.node, marked_text)
 
 		-- prevent text from overflowing the input field
-		-- this will get increasingly expensive the longer the text
-		-- future improvement is to make a best guess and then either add or
-		-- remove characters depending on if the text is too short or long
 		local field_width = gui.get_size(input.node).x * gui.get_scale(input.node).x
-		while (text_width + marked_text_width) > field_width do
-			text = text:sub(2)
-			text_width = get_text_width(input.node, text)
+		if (text_width + marked_text_width) > field_width then
+			local field_text = gui.get_text(input.node)
+			local length = #field_text
+			
+			local truncated = string.sub(text, -length, -1)
+			local truncated_width = get_text_width(input.node, truncated)
+			while (truncated_width + marked_text_width) < field_width do
+				length = length + 1
+				truncated = string.sub(text, -length, -1)
+				truncated_width = get_text_width(input.node, truncated)
+			end
+			while (truncated_width + marked_text_width) > field_width do
+				length = length - 1
+				truncated = string.sub(text, -length, -1)
+				truncated_width = get_text_width(input.node, truncated)
+			end
+			text = string.sub(text, -length, -1)
 		end
 		
 		input.text_width = text_width
