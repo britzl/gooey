@@ -5,30 +5,13 @@ local utf8 = require "gooey.internal.utf8"
 local M = {}
 
 local inputfields = {}
-local space_width = {}
 
--- calculate space width with font
-local function get_space_width(font)
-	if not space_width[font] then
-		local no_space = gui.get_text_metrics(font, "1", 0, false, 0, 0).width
-		local with_space = gui.get_text_metrics(font, " 1", 0, false, 0, 0).width
-		space_width[font] = with_space - no_space
-	end 
-	return space_width[font]
-end
 
--- calculate text width with font with respect to trailing space (issue DEF-1761)
+-- calculate text width with font
 local function get_text_width(node, text)
 	local font = gui.get_font(node)
 	local scale = gui.get_scale(node)
 	local result = gui.get_text_metrics(font, text, 0, false, 0, 0).width
-	for i=#text, 1, -1 do
-		local c = string.sub(text, i, i)
-		if c ~= ' ' then
-			break
-		end
-		result = result + get_space_width(font)
-	end
 	result = result * scale.x
 	return result
 end
