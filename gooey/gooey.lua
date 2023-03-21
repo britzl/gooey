@@ -122,7 +122,13 @@ function M.vertical_static_list(list_id, stencil_id, item_ids, action_id, action
 end
 
 function M.dynamic_list(list_id, stencil_id, item_id, data, action_id, action, config, fn, refresh_fn)
-	local l = list.dynamic(list_id, stencil_id, item_id, data, action_id, action, config, fn or nop, refresh_fn)
+	fn = fn or nop
+	local l = list.dynamic(list_id, stencil_id, item_id, data, action_id, action, config, function(...)
+		local data_changed = fn(...)
+		if data_changed then
+			list.dynamic(list_id, stencil_id, item_id, data, nil, nil, config, nop, refresh_fn)
+		end
+	end, refresh_fn)
 	if current_group then
 		current_group.components[#current_group.components + 1] = l
 	end

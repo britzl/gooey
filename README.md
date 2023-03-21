@@ -364,7 +364,7 @@ NOTE: The list does not support a stencil node with adjust mode set to `gui.ADJU
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
 * ```config``` (table) - Optional table with list configuration
-* ```fn``` (function) - Function to call when a list item is selected. A list item is considered selected if both a pressed and released action has been detected inside the bounds of the item. The function will get the same state table as described below passed as its first argument
+* ```fn``` (function) - Function to call when a list item is selected. A list item is considered selected if both a pressed and released action has been detected inside the bounds of the item. The function will get the same state table as described below passed as its first argument. Return true in this function if the data has changed and the list perform an additional update of the visible nodes.
 * ```refresh_fn``` (function) - Optional function to call when the state of the list has been updated. Use this to update the visual representation.
 * ```is_horizontal``` (bool) - Optional flag - if true, the list will be handled as horizontal, otherwise - as vertical.
 
