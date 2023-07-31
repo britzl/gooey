@@ -15,7 +15,7 @@ end
 -- @param filename
 -- @return Save file path
 local function get_save_file_path(filename)
-	local path = sys.get_save_file(fix(sys.get_config("project.title"):gsub(" ", "_")), filename)
+	local path = sys.get_save_file(fix(sys.get_config("project.title"):gsub(" ", "_")), fix(filename))
 	return path
 end
 
