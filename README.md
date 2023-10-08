@@ -200,6 +200,7 @@ Perform input and state handling for a radio button
 
 **PARAMETERS**
 * ```node_id``` (string|hash) - Id of the node representing the clickable area
+* ```group``` (string) - Id of the radio group this radio button belongs to (see example)
 * ```action_id``` (hash) - Action id as received from on_input()
 * ```action``` (table) - Action as received from on_input()
 * ```fn``` (function) - Function to call when the radio button is selected. A radio button is considered selected if both a pressed and released action has been detected inside the bounds of the node. The function will get the same state table as described below passed as its first argument
@@ -245,12 +246,14 @@ The state table contains the following fields:
 	end
 
 	function on_input(self, action_id, action)
-		gooey.radio("radio1/bg", "MYGROUP", action_id, action, function(radio)
-			print("selected 1", radio.selected)
-		end, update_radio)
-		gooey.radio("radio2/bg", "MYGROUP", action_id, action, function(radio)
-			print("selected 2", radio.selected)
-		end), update_radio)
+		gooey.radiogroup("MYGROUP", action_id, action, function(group_id, action_id, action)
+			gooey.radio("radio1/bg", group_id, action_id, action, function(radio)
+				print("selected 1", radio.selected)
+			end, update_radio)
+			gooey.radio("radio2/bg", group_id, action_id, action, function(radio)
+				print("selected 2", radio.selected)
+			end), update_radio)
+		end)
 	end
 
 **STATE**
