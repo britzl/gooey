@@ -29,7 +29,7 @@ return function()
 		test("it should be possible to type text", function()
 			local node = gui.new_text_node(vmath.vector3(10, 10, 0), "")
 			gui.set_id(node, "text")
-			
+
 			-- select and enter some text
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, action_ids.TOUCH, actions.pressed(10, 10))
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, action_ids.TOUCH, actions.released(10, 10))
@@ -45,7 +45,7 @@ return function()
 		test("it should be possible to erase typed text", function()
 			local node = gui.new_text_node(vmath.vector3(10, 10, 0), "")
 			gui.set_id(node, "text")
-			
+
 			-- select and enter some text
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, action_ids.TOUCH, actions.pressed(10, 10))
 			gooey.input("text", gui.KEYBOARD_TYPE_DEFAULT, action_ids.TOUCH, actions.released(10, 10))
@@ -68,7 +68,7 @@ return function()
 			local input = gooey.input("text", gui.KEYBOARD_TYPE_PASSWORD, action_ids.TOUCH, actions.pressed(1000, 1000))
 			assert(input.deselected_now)
 		end)
-		
+
 		test("it should mask entered text if it is a password", function()
 			local node = gui.new_text_node(vmath.vector3(10, 10, 0), "")
 			gui.set_id(node, "text")

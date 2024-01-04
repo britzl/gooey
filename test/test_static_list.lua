@@ -32,7 +32,7 @@ return function()
 			gui.set_parent(item2, stencil)
 			gui.set_parent(item3, stencil)
 			gui.set_parent(item4, stencil)
-			
+
 			local stencil_id = gui.get_id(stencil)
 			local item1_id = gui.get_id(item1)
 			local item2_id = gui.get_id(item2)
@@ -41,12 +41,12 @@ return function()
 			local item_ids = { item1_id, item2_id, item3_id, item4_id }
 
 			local click_fn = callback_listener()
-			
+
 			gooey.static_list(list_id, stencil_id, item_ids, action_ids.TOUCH, actions.pressed(50, 50), nil, click_fn)
 			gooey.static_list(list_id, stencil_id, item_ids, action_ids.TOUCH, actions.released(50, 50), nil, click_fn)
 
 			assert(click_fn.calls == 1)
 		end)
-		
+
 	end)
 end

@@ -15,7 +15,7 @@ return function()
 			mock_gui.add_box("root", 10, 10)
 			mock_gui.add_box("branch", 20, 20)
 			mock_gui.add_box("leaf", 20, 20)
-			
+
 			local root = gui.get_node("root")
 			local branch = gui.get_node("branch")
 			local leaf = gui.get_node("leaf")

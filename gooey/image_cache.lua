@@ -67,7 +67,7 @@ end
 function M.load(cache, url, node, cb)
 	assert(url, "You must provide a url")
 	assert(node, "You must provide a node")
-	
+
 	-- is the node using another texture?
 	-- remove texture refence and unload if it is no longer in use
 	local url_on_node = cache.node_to_url[node]

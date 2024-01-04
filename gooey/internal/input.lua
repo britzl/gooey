@@ -74,10 +74,10 @@ function INPUT.set_text(input, text)
 		-- prevent text from overflowing the input field
 		local field_width = gui.get_size(input.node).x * gui.get_scale(input.node).x
 		if (text_width + marked_text_width) > field_width then
-			
+
 			-- guess how long the new text should be based on the previous text in the node
 			local field_text = gui.get_text(input.node)
-			local length = #field_text 
+			local length = #field_text
 
 			-- generate a best guess
 			local truncated = string.sub(text, -length, -1)
@@ -99,11 +99,11 @@ function INPUT.set_text(input, text)
 			-- finalize
 			text = truncated
 		end
-		
+
 		input.text_width = text_width
 		input.marked_text_width = marked_text_width
 		input.total_width = text_width + marked_text_width
-		
+
 		gui.set_text(input.node, text .. marked_text)
 	end
 end
@@ -128,7 +128,7 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 	input.text = input.text or "" .. (not use_marked_text and input.marked_text or "")
 	input.marked_text = input.marked_text or ""
 	input.keyboard_type = keyboard_type
-	
+
 	if not action then
 		input.empty = #input.text == 0 and #input.marked_text == 0
 		input.refresh()

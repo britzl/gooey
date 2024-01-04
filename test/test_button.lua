@@ -44,7 +44,7 @@ return function()
 			gooey.button("button", action_ids.TOUCH, actions.released(10, 10), click)
 			assert(click.calls == 0)
 		end)
-		
+
 		test("it should not treat a press inside and release outside as a click", function()
 			mock_gui.add_box("button", 10, 10, 100, 40)
 
@@ -71,7 +71,7 @@ return function()
 			local refresh = callback_listener()
 			-- move outside
 			gooey.button("button", action_ids.TOUCH, actions.move(0, 0), click, refresh)
-			
+
 			-- move over
 			gooey.button("button", action_ids.TOUCH, actions.move(10, 10), click, refresh)
 			assert(refresh.params[1].over)
@@ -81,7 +81,7 @@ return function()
 			gooey.button("button", action_ids.TOUCH, actions.move(10, 10), click, refresh)
 			assert(refresh.params[1].over)
 			assert(not refresh.params[1].over_now)
-			
+
 			-- move out
 			gooey.button("button", action_ids.TOUCH, actions.move(0, 0), click, refresh)
 			assert(not refresh.params[1].over)
@@ -90,7 +90,7 @@ return function()
 			-- move
 			gooey.button("button", action_ids.TOUCH, actions.move(0, 0), click, refresh)
 			assert(not refresh.params[1].out_now)
-			
+
 			-- pressed
 			gooey.button("button", action_ids.TOUCH, actions.pressed(10, 10), click)
 			assert(refresh.params[1].pressed)
@@ -110,6 +110,6 @@ return function()
 			gooey.button("button", action_ids.TOUCH, actions.move(10, 10), click, refresh)
 			assert(not refresh.params[1].released_now)
 		end)
-		
+
 	end)
 end

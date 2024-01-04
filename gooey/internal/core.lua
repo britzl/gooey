@@ -25,7 +25,7 @@ local function handle_action(component, action_id, action)
 			component.touch_id = nil
 			component.long_pressed = socket.gettime() - long_press_start > component.long_pressed_time
 		end
-		
+
 		component.pressed_now = pressed and not component.pressed
 		component.released_now = released and component.pressed
 		component.pressed = pressed or (component.pressed and not released)

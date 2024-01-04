@@ -22,12 +22,12 @@ return function()
 		after(function()
 			mock_gui.unmock()
 		end)
-		
+
 		test("it should be clickable", function()
 			mock_gui.add_box("radio1", 10, 10, 100, 40)
 			mock_gui.add_box("radio2", 10, 60, 100, 40)
 			mock_gui.add_box("radio3", 10, 110, 100, 40)
-			
+
 			local radio1 = gui.get_node("radio1")
 			local radio2 = gui.get_node("radio2")
 			local radio3 = gui.get_node("radio3")
@@ -39,7 +39,7 @@ return function()
 			local refresh3 = callback_listener()
 			local group1 = "group1"
 
-			
+
 			--
 			-- select second radio button
 			--
@@ -58,14 +58,14 @@ return function()
 			assert(refresh1.calls == 3) -- press, release, deselect
 			assert(refresh3.calls == 3) -- press, release, deselect
 			assert(refresh2.calls == 2) -- press, release
-			
+
 			-- check that second radio button is selected
 			assert(not refresh1.params[1].selected)
 			assert(not refresh3.params[1].selected)
 			assert(refresh2.params[1].selected)
 			assert(refresh2.params[1].selected_now)
 
-			
+
 			--
 			-- select first radio button
 			--
@@ -84,7 +84,7 @@ return function()
 			assert(refresh2.calls == 2 + 3) -- press, release, deselect
 			assert(refresh3.calls == 3 + 3) -- press, release, deselect
 			assert(refresh1.calls == 3 + 2) -- press, release
-						
+
 			-- check that first radio button is selected and the second deselected
 			assert(refresh1.params[1].selected)
 			assert(not refresh2.params[1].selected)
@@ -108,12 +108,11 @@ return function()
 			-- check there is no change in the "now" state
 			assert(not refresh1.params[1].selected_now)
 			assert(not refresh2.params[1].deselected_now)
-						
+
 			assert(refresh2.calls == (2 + 3) + 2) -- press, release
 			assert(refresh3.calls == (3 + 3) + 2) -- press, release
 			assert(refresh1.calls == (3 + 2) + 2) -- press, release
-			
-			
+
 			--
 			-- generate a touch outside
 			--
