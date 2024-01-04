@@ -6,14 +6,6 @@ local gooey = require "gooey.gooey"
 local actions = require "test.actions"
 local action_ids = require "gooey.actions"
 
-
-local function callback_listener()
-	local listener = {}
-	function listener.callback() end
-	mock.mock(listener)
-	return listener.callback
-end
-
 return function()
 	describe("input", function()
 		before(function()
