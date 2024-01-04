@@ -59,8 +59,8 @@ function M.clear(cache)
 	for url,_ in pairs(cache.url_to_image) do
 		gui.delete_texture(url)
 	end
-	url_to_image = {}
-	node_to_url = {}
+	cache.url_to_image = {}
+	cache.node_to_url = {}
 end
 
 
