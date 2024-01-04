@@ -65,15 +65,15 @@ end
 
 function on_input(self, action_id, action)
 	local group = gooey.group("group1", function()
-		gooey.button("button", action_id,action, function(button)
+		gooey.button("button", action_id, action, function(button)
 			if button.long_pressed then
 				print("Button was long pressed")
 			else
 				print("Button was pressed")
 			end
 		end, update_button)
-		gooey.button("back", action_id,action, function(button)
 
+		gooey.button("back", action_id, action, function(button)
 			msg.post("controller:/go", "show_menu")
 		end, update_button)
 
