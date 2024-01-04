@@ -58,7 +58,7 @@ end
 
 
 function M.group(group_id, action_id, action, fn)
-	local group_id = core.to_hash(group_id)
+	group_id = core.to_hash(group_id)
 
 	fn(group_id, action_id, action)
 
