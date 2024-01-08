@@ -1,6 +1,7 @@
 [project]
 title = Gooey
 dependencies#0 = https://github.com/britzl/deftest/archive/2.7.0.zip
+dependencies#1 = https://github.com/defold/lua-language-server/releases/download/v0.0.5/release.zip
 
 [bootstrap]
 main_collection = /example/controller.collectionc
