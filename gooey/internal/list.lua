@@ -176,7 +176,7 @@ local function handle_input(list, action_id, action, click_fn)
 	else
 		list.scrolling = false
 	end
-	-- limit to scroll bounds unlss this is a carousel list
+	-- limit to scroll bounds unless this is a carousel list
 	if list.scrolling and not list.carousel then
 		if list.horizontal then
 			list.scroll_pos.x = math.min(list.scroll_pos.x, list.max_x)
