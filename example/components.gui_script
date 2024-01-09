@@ -28,12 +28,12 @@ local function update_checkbox(checkbox)
 end
 
 local function update_button(button)
-	if button.over_now then
+	if button.pressed_now then
+		utils.shake(button.node, vmath.vector3(1))
+	elseif button.over_now then
 		gui.set_color(button.node, COLOR_LIGHTGREY)
 	elseif button.out_now then
 		gui.set_color(button.node, COLOR_WHITE)
-	elseif button.pressed_now then
-		utils.shake(button.node, vmath.vector3(1))
 	end
 end
 
@@ -64,7 +64,11 @@ function init(self)
 end
 
 function on_input(self, action_id, action)
-	local group = gooey.group("group1", function()
+	local group = gooey.group("components", action_id, action, function()
+		gooey.button("back", action_id, action, function(button)
+			msg.post("controller:/go", "show_menu")
+		end, update_button)
+
 		gooey.button("button", action_id, action, function(button)
 			if button.long_pressed then
 				print("Button was long pressed")
@@ -73,9 +77,12 @@ function on_input(self, action_id, action)
 			end
 		end, update_button)
 
-		gooey.button("back", action_id, action, function(button)
-			msg.post("controller:/go", "show_menu")
-		end, update_button)
+		gooey.input("input_text", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, { empty_text = "EMPTY, MAX 8 CHARS", max_length = 8 }, update_input)
+		gooey.input("input_alphanumeric", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, { empty_text = "ALPHA NUMERIC CHARS", allowed_characters = "[%a%d%s]", use_marked_text = false}, update_input)
+
+		gooey.dynamic_list("dynamiclist", "dynamiclist_bounds", "listitem", self.list_data, action_id, action, nil, function(list)
+			print("selected item", list.selected_item.index, list.data[list.selected_item.index])
+		end, update_list)
 
 		gooey.checkbox("checkbox", action_id, action, function(checkbox)
 			print("checkbox", checkbox.checked)
@@ -92,13 +99,15 @@ function on_input(self, action_id, action)
 				print("radio 3", radio.selected)
 			end, update_radiobutton)
 		end)
-
-		gooey.input("input_text", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, { empty_text = "EMPTY, MAX 8 CHARS", max_length = 8 }, update_input)
-		gooey.input("input_alphanumeric", gui.KEYBOARD_TYPE_DEFAULT, action_id, action, { empty_text = "ALPHA NUMERIC CHARS", allowed_characters = "[%a%d%s]", use_marked_text = false}, update_input)
-
-		gooey.dynamic_list("dynamiclist", "dynamiclist_bounds", "listitem", self.list_data, action_id, action, nil, function(list)
-			print("selected item", list.selected_item.index, list.data[list.selected_item.index])
-		end, update_list)
 	end)
+
+	if group.focus.component then
+		local focus_indicator = gui.get_node("focus")
+		local focus_node = gui.get_node(group.focus.component.id)
+		local pos = gui.get_position(focus_node)
+		local size = gui.get_size(focus_node)
+		pos.x = pos.x - size.x / 2 - 10
+		gui.set_position(focus_indicator, pos)
+	end
 	return group.consumed
 end

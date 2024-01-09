@@ -108,9 +108,8 @@ end
 
 -- get a list instance and set up some basics of a list on the instance
 local function get_instance(list_id, stencil_id, refresh_fn, lists)
-	stencil_id = core.to_hash(stencil_id)
-	local list = core.instance(stencil_id, lists, LIST)
-	list.id = list_id
+	list_id = core.to_hash(list_id)
+	local list = core.instance(list_id, lists, LIST)
 	list.scroll = list.scroll or vmath.vector3()
 	list.stencil = list.stencil or gui.get_node(stencil_id)
 	list.stencil_size = list.stencil_size or gui.get_size(list.stencil)

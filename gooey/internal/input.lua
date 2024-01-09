@@ -147,7 +147,10 @@ function M.input(node_id, keyboard_type, action_id, action, config, refresh_fn)
 			input.marked_text = ""
 			gui.reset_keyboard()
 			gui.show_keyboard(keyboard_type, true)
-		elseif input.selected and action.pressed and action_id == actions.TOUCH and not input.over then
+		elseif input.selected
+		and action.pressed
+		and (action_id == actions.TOUCH or action_id == actions.SELECT or action_id == actions.NEXT)
+		and not input.over then
 			input.selected = false
 			input.deselected_now = true
 			input.text = input.text .. (not use_marked_text and input.marked_text or "")

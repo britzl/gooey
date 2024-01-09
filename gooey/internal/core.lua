@@ -11,11 +11,14 @@ local function handle_action(component, action_id, action)
 	component.long_pressed_time = component.long_pressed_time or 1.5
 	if not component.touch_id or component.touch_id == action.id then
 		local over = gui.pick_node(component.node, action.x, action.y)
+		if component.focus and action_id == actions.SELECT then
+			over = true
+		end
 		component.over_now = over and not component.over
 		component.out_now = not over and component.over
 		component.over = over
 
-		local touch = action_id == actions.TOUCH or action_id == actions.MULTITOUCH
+		local touch = action_id == actions.TOUCH or action_id == actions.MULTITOUCH or action_id == actions.SELECT
 		local pressed = touch and action.pressed and component.over
 		local released = touch and action.released
 		if pressed then
@@ -111,6 +114,7 @@ end
 -- @return instance Instance data for the node (public data)
 -- @return state Internal state of the node (private data)
 function M.instance(id, instances, functions)
+	id = M.to_hash(id)
 	local key = M.to_key(id)
 	local instance = instances[key]
 	-- detect a reload (unload and load cycle) and start with an
@@ -128,6 +132,7 @@ function M.instance(id, instances, functions)
 	instances[key] = instances[key] or { __script = script_instance }
 	if not instances[key].data then
 		local data = {}
+		data.id = id
 		instances[key].data = data
 		for name,fn in pairs(functions or {}) do
 			data[name] = function(...)
