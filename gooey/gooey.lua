@@ -5,6 +5,7 @@ local radio = require "gooey.internal.radio"
 local list = require "gooey.internal.list"
 local input = require "gooey.internal.input"
 local scrollbar = require "gooey.internal.scrollbar"
+local actions = require "gooey.actions"
 
 local M = {}
 
@@ -35,7 +36,7 @@ end
 
 function M.create_theme()
 	local theme = {}
-	
+
 	theme.is_enabled = function(component)
 		if component.node then
 			return M.is_enabled(component.node)
@@ -187,11 +188,27 @@ end
 -- @param id
 -- @param fn Interact with gooey components inside this function
 -- @return Group state
-function M.group(id, fn)
+function M.group(id, action_id, action, fn)
 	assert(id, "You must provide a group id")
 	assert(fn, "You must provide a group function")
-	groups[id] = groups[id] or { consumed = false, components = {} }
+	if not groups[id] then
+		groups[id] = {
+			consumed = false,     -- true if a component in the group consumed input
+			components = {},      -- list of all components in the group
+			focus = {
+				component = nil,  -- component with focus
+				index = nil,      -- index of component with focus
+			},
+		}
+	end
 	local group = groups[id]
+	local components = group.components
+	local focus = group.focus
+
+	-- clear list of components
+	for i=1,#components do
+		components[i] = nil
+	end
 
 	-- set current group and call the group function
 	-- then reset current group again once we're done
@@ -199,16 +216,95 @@ function M.group(id, fn)
 	fn()
 	current_group = nil
 
+	-- exit early if there are no components in the group
+	if #components == 0 then
+		focus.component = nil
+		focus.index = nil
+		return group
+	end
+
 	-- go through the components in the group and check if
 	-- any of them consumed input
-	local components = group.components
+	-- also check which component has focus and if another
+	-- component was selected and should gain focus
 	local consumed = false
+	local current_focus_index = nil
+	local new_focus_index = nil
 	for i=1,#components do
-		consumed = components[i].consumed or consumed
-		components[i] = nil
+		local component = components[i]
+		consumed = component.consumed or consumed
+		if component.focus then
+			current_focus_index = i
+		elseif component.released_now or component.released_item_now then
+			new_focus_index = i
+		end
+	end
+
+	if not new_focus_index then
+		new_focus_index = current_focus_index
+	end
+
+	-- assign focus to the next component or first if
+	-- no component currently has focus
+	if not consumed then
+		if action_id == actions.NEXT then
+			if action.pressed then
+				if new_focus_index then
+					new_focus_index = new_focus_index + 1
+					if new_focus_index > #components then
+						new_focus_index = 1
+					end
+				else
+					new_focus_index = 1
+				end
+			end
+			consumed = true
+		elseif action_id == actions.PREVIOUS then
+			if action.pressed then
+				if new_focus_index then
+					new_focus_index = new_focus_index - 1
+					if new_focus_index == 0 then
+						new_focus_index = #components
+					end
+				else
+					new_focus_index = 1
+				end
+			end
+			consumed = true
+		end
+	end
+
+	-- changing focus
+	if current_focus_index ~= new_focus_index then
+		if current_focus_index then
+			local component = components[current_focus_index]
+			component.focus = false
+			component.refresh()
+			focus.index = nil
+			focus.component = nil
+		end
+		if new_focus_index then
+			local component = components[new_focus_index]
+			component.focus = true
+			component.refresh()
+			focus.index = new_focus_index
+			focus.component = component
+		end
 	end
 	group.consumed = consumed
 	return group
+end
+
+function M.set_focus(group, index)
+	assert(group)
+	assert(index)
+	local component = group.components[index]
+	if component then
+		component.focus = true
+		component.refresh()
+		group.focus.index = index
+		group.focus.component = component
+	end
 end
 
 return M
