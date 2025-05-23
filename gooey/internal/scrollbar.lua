@@ -62,7 +62,7 @@ function M.vertical(handle_id, bounds_id, action_id, action, fn, refresh_fn)
 	scrollbar.bounds_size = bounds_size
 	scrollbar.handle_size = handle_size
 
-	if action then
+	if action and action.x and action.y then
 		local action_pos = vmath.vector3(action.x, action.y, 0)
 
 		core.clickable(scrollbar, action_id, action)
@@ -104,7 +104,7 @@ function M.horizontal(handle_id, bounds_id, action_id, action, fn, refresh_fn)
 	scrollbar.bounds_size = bounds_size
 	scrollbar.handle_size = handle_size
 
-	if action then
+	if action and action.x and action.y then
 		local action_pos = vmath.vector3(action.x, action.y, 0)
 
 		core.clickable(scrollbar, action_id, action)

@@ -7,6 +7,7 @@ local EMPTY = hash("")
 local long_press_start = 0
 
 local function handle_action(component, action_id, action)
+	if not action.x or not action.y then return end
 	action.id = action.id or -1
 	component.long_pressed_time = component.long_pressed_time or 1.5
 	if not component.touch_id or component.touch_id == action.id then

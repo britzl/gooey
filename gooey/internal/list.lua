@@ -121,6 +121,7 @@ end
 
 
 local function handle_input(list, action_id, action, click_fn)
+	if not action.x or not action.y then return end
 	local over_stencil = gui.pick_node(list.stencil, action.x, action.y)
 	list.over = over_stencil
 
