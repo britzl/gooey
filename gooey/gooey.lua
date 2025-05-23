@@ -193,6 +193,7 @@ function M.group(id, action_id, action, fn)
 	assert(fn, "You must provide a group function")
 	if not groups[id] then
 		groups[id] = {
+			id = id,
 			consumed = false,     -- true if a component in the group consumed input
 			components = {},      -- list of all components in the group
 			focus = {
@@ -209,6 +210,8 @@ function M.group(id, action_id, action, fn)
 	for i=1,#components do
 		components[i] = nil
 	end
+	-- clear focus component
+	focus.component = nil
 
 	-- set current group and call the group function
 	-- then reset current group again once we're done
@@ -274,7 +277,7 @@ function M.group(id, action_id, action, fn)
 		end
 	end
 
-	-- changing focus
+	-- change focus or keep same
 	if current_focus_index ~= new_focus_index then
 		if current_focus_index then
 			local component = components[current_focus_index]
@@ -290,6 +293,9 @@ function M.group(id, action_id, action, fn)
 			focus.index = new_focus_index
 			focus.component = component
 		end
+	elseif current_focus_index then
+		focus.index = current_focus_index
+		focus.component = components[current_focus_index]
 	end
 	group.consumed = consumed
 	return group

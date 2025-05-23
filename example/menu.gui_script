@@ -16,6 +16,13 @@ function on_input(self, action_id, action)
 			msg.post("controller:/go", "show_horizontallist")
 		end)
 	end)
+
+	for _,component in ipairs(group.components) do
+		gui.set_scale(component.node, vmath.vector3(1))
+	end
+	if group.focus.component then
+		gui.set_scale(group.focus.component.node, vmath.vector3(1.1))
+	end
 	return group.consumed
 end
 
