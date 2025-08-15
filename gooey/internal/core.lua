@@ -117,8 +117,8 @@ end
 -- @return instance Instance data for the node (public data)
 -- @return state Internal state of the node (private data)
 function M.instance(id, instances, functions)
-	id = M.to_hash(id)
-	local key = M.to_key(id)
+	local id_hash = M.to_hash(id)
+	local key = M.to_key(id_hash)
 	local instance = instances[key]
 	-- detect a reload (unload and load cycle) and start with an
 	-- empty instance
