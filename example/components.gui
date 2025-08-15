@@ -9,7 +9,7 @@ nodes {
     y: 552.0
   }
   type: TYPE_BOX
-  id: "buttons"
+  id: "components"
   inherit_alpha: true
 }
 nodes {
@@ -23,7 +23,7 @@ nodes {
   }
   type: TYPE_BOX
   id: "button"
-  parent: "buttons"
+  parent: "components"
   inherit_alpha: true
 }
 nodes {
@@ -69,7 +69,7 @@ nodes {
   }
   type: TYPE_BOX
   id: "dynamiclist"
-  parent: "buttons"
+  parent: "components"
   inherit_alpha: true
 }
 nodes {
@@ -134,7 +134,7 @@ nodes {
   }
   type: TYPE_BOX
   id: "radio1"
-  parent: "buttons"
+  parent: "components"
   layer: "below"
   inherit_alpha: true
 }
@@ -149,7 +149,7 @@ nodes {
   }
   type: TYPE_BOX
   id: "radio2"
-  parent: "buttons"
+  parent: "components"
   layer: "below"
   inherit_alpha: true
 }
@@ -164,7 +164,7 @@ nodes {
   }
   type: TYPE_BOX
   id: "radio3"
-  parent: "buttons"
+  parent: "components"
   layer: "below"
   inherit_alpha: true
 }
@@ -179,7 +179,7 @@ nodes {
   }
   type: TYPE_BOX
   id: "checkbox"
-  parent: "buttons"
+  parent: "components"
   layer: "below"
   inherit_alpha: true
 }
@@ -211,7 +211,7 @@ nodes {
     y: 1.0
     z: 1.0
   }
-  parent: "buttons"
+  parent: "components"
   layer: "text"
   inherit_alpha: true
 }
@@ -254,7 +254,7 @@ nodes {
     y: 1.0
     z: 1.0
   }
-  parent: "buttons"
+  parent: "components"
   layer: "text"
   inherit_alpha: true
 }
@@ -280,7 +280,7 @@ nodes {
   }
   type: TYPE_BOX
   id: "back"
-  parent: "buttons"
+  parent: "components"
   inherit_alpha: true
 }
 nodes {
