@@ -9,6 +9,9 @@ local dynamic_lists = {}
 
 -- update the positions of the list items and set their data indices
 local function update_dynamic_listitem_positions(list)
+	if list.data_size == 0 then
+		return
+	end
 	local top_i, top_y, top_x
 	if list.horizontal then
 		top_i = list.scroll_pos.x / list.item_size.x
@@ -22,7 +25,7 @@ local function update_dynamic_listitem_positions(list)
 		local item = list.items[i]
 		local item_pos = gui.get_position(item.root)
 		local index = first_index + i - 1
-		item.index = ((index - 1) % #list.data) + 1
+		item.index = ((index - 1) % list.data_size) + 1
 		if list.horizontal then
 			item_pos.x = list.first_item_pos.x - (list.item_size.x * (i - 1)) + top_x
 		else
