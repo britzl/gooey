@@ -168,8 +168,8 @@ function M.clamp(v, min, max)
 	end
 end
 
-local DISPLAY_WIDTH = tonumber(sys.get_config("display.width")) or 960
-local DISPLAY_HEIGHT = tonumber(sys.get_config("display.height")) or 640
+local DISPLAY_WIDTH = sys.get_config_number("display.width") or 960
+local DISPLAY_HEIGHT = sys.get_config_number("display.height") or 640
 local WINDOW_WIDTH = nil
 local WINDOW_HEIGHT = nil
 
