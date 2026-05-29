@@ -9,9 +9,9 @@ local inputfields = {}
 
 -- calculate text width with font
 local function get_text_width(node, text)
-	local font = gui.get_font(node)
+	local font = gui.get_font_resource(gui.get_font(node))
 	local scale = gui.get_scale(node)
-	local result = gui.get_text_metrics(font, text, 0, false, 0, 0).width
+	local result = resource.get_text_metrics(font, text, { width = 0, line_break = false, leading = 0, tracking = 0 }).width
 	result = result * scale.x
 	return result
 end
